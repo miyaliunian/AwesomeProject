@@ -5,11 +5,7 @@ import {observable} from 'mobx'
 
 class Account {
     @observable
-    ID = ''; //doctor_account_info 表主键
-    @observable
-    code = '';//医生编号
-    @observable
-    mobilePhone = '';
+    name = '初始化'
 }
 
 export default new Account()
