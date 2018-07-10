@@ -19,7 +19,7 @@ import LoginScreen from './src/screens/signIn/LoginScreen'
 
 import  HomeScreen from './src/screens/home/HomeScreen'
 
-import  ServiceScreen from './src/screens/manage/ManagerScreen'
+import  ManagerScreen from './src/screens/manage/ManagerScreen'
 
 import  ProfileScreen from './src/screens/profile/ProfileScreen'
 
@@ -59,7 +59,7 @@ const TabStack = createBottomTabNavigator(
         manage: {
             screen: createStackNavigator({
                 index: {
-                    screen: ServiceScreen
+                    screen: ManagerScreen
                 }
             }, {
                 navigationOptions: {
@@ -86,7 +86,8 @@ const TabStack = createBottomTabNavigator(
                 navigationOptions: {
                     headerStyle: {
                         backgroundColor: theme.navColor,
-
+                        borderBottomWidth:0,
+                        borderBottomColor:'transparent'
                     }
                 }
 
@@ -101,7 +102,7 @@ const TabStack = createBottomTabNavigator(
     },
     {
 
-        initialRouteName: 'home',
+        initialRouteName: 'profile',
         order: ['home', 'manage', 'profile'],
     }
 )
@@ -154,7 +155,7 @@ const AuthLoading = createStackNavigator(
         navigationOptions: {
             gesturesEnabled: false,
             headerStyle: {
-                //backgroundColor:'red',
+
             },
             header: null
         }
@@ -169,7 +170,7 @@ const SwitchNavigator = createSwitchNavigator(
 
     },
     {
-        initialRouteName: 'App',
+        initialRouteName: 'AuthLoading',
     }
 )
 

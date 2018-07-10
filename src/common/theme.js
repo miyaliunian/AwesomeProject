@@ -53,7 +53,7 @@ export default module = {
     barContentPad: (Platform.OS === 'android' ? 0 : (isIphoneX() ? 42 : 20)),
     bottomPadding: isIphoneX() ? 18 : 0,
     // 常用颜色
-    navColor: 'rgb(67,163,236)',
+    navColor: '#55acee',
     navItemColor:'black',
     primaryColor: 'white',
     buttonColor: '#97b5d3',
