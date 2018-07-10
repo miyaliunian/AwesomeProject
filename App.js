@@ -7,22 +7,19 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
 import RootSceen from './RootSceen'
+import {Provider} from 'mobx-react/native'
+import stores from './src/store'
+
 
 export default class App extends Component {
-  render() {
-    return (
-        <RootSceen/>
-    );
-  }
+    render() {
+        return (
+            <Provider {...stores}>
+                <RootSceen/>
+            </Provider>
+        );
+    }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'red',
-  },
-});
+
