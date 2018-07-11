@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react';
 import {
     AsyncStorage
@@ -39,7 +38,7 @@ export default class DataRepository {
                     } else if (error === 'abort promise') {
                         reject({status: '请求超时'});
                     } else {
-                       // reject({status: error.message});
+                        // reject({status: error.message});
                         reject({status: '请求超时：服务器无响应'});
                     }
                 })
@@ -56,21 +55,15 @@ export default class DataRepository {
      *  @param params
      *  @return {Promise}
      * */
-    postFormRepository(url, params) {
-        if (params) {
-            var formData = new FormData();
-            let paramsKeyArray = Object.keys(params);
-            paramsKeyArray.forEach(key => formData.append(key, params[key]))
-
-        }
+    postFormRepository(url, formData) {
         return new Promise((resolve, reject) => {
             this.timeout_fetch(fetch(url, {
                 method: 'POST',
+                mode: "cors",
                 headers: {
-                    'Accept': 'application/json',
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: JSON.stringify(params),
+                body: formData,
             }))
                 .then(response => response.json())
                 .then(response => {

@@ -10,7 +10,8 @@ import {
     ImageBackground,
     TouchableOpacity,
     DeviceEventEmitter,
-    SafeAreaView
+    SafeAreaView,
+
 } from 'react-native';
 // import {SafeAreaView} from 'react-navigation';
 import LoginInput from './LoginInput'
@@ -23,8 +24,9 @@ import LoadingModal from "../../components/LoadingModal";
 import {Button, Toast} from 'teaset';
 import {observer, inject} from 'mobx-react/native'
 import {MoreMenu} from '../../config/moreMenu';
-
-
+import {Config} from '../../config/config';
+// RN自带加密包
+import MD5 from 'blueimp-md5'
 @observer
 export default class LoginScreen extends Component {
 
@@ -71,6 +73,7 @@ export default class LoginScreen extends Component {
     }
 
     onLoginBtn() {
+        debugger
         //手机号格式验证
         let regex = /^1[34578]\d{9}$/;
         if (!regex.test(this.mobxStore.USER_INFO.cell_phone)) {
@@ -82,12 +85,13 @@ export default class LoginScreen extends Component {
             isLoginModal: true,
         })
         //拼接登录参数
-        let PARAM = {};
-        PARAM.mobilePhone = this.mobxStore.USER_INFO.cell_phone;
-        PARAM.oldPassword = this.mobxStore.USER_INFO.user_password;
+        let PARAM = new FormData() ;
+        PARAM.append('phone',this.mobxStore.USER_INFO.cell_phone)
+        PARAM.append('pwd',MD5(this.mobxStore.USER_INFO.user_password))
         //发送登录请求
         this.dataRepository.postFormRepository(Config.BASE_URL + Config.API_LOGIN, PARAM)
             .then((data) => {
+                debugger
                 if (data.status === 'success') {
                     this.setState({
                         isLoginModal: false,
@@ -192,7 +196,7 @@ const LoginView = (props) => {
                 justifyContent: 'space-around',
                 alignItems: 'flex-start',
                 flexDirection: 'row',
-                marginTop:13
+                marginTop: 13
             }}>
                 <TouchableOpacity onPress={props.onTextPress}>
                     <Text style={styles.forgetPassStyle}>
@@ -209,7 +213,7 @@ const LoginView = (props) => {
 
             <View style={{
                 flexDirection: 'row', width: theme.screenWidth, justifyContent: 'space-around', alignItems: 'center',
-                height: px2dp(100),marginTop:px2dp(33)
+                height: px2dp(100), marginTop: px2dp(33)
             }}>
                 <View style={[theme.line, {width: px2dp(190)}]}/>
                 <Text>第三方平台登录</Text>
@@ -235,7 +239,7 @@ const styles = StyleSheet.create({
     bg_logo: {
         width: px2dp(180),
         height: px2dp(180),
-        marginTop: isIphoneX() == true ? 57 :26
+        marginTop: isIphoneX() == true ? 57 : 26
     },
     loginViewStyle: {
         flex: 1,
@@ -274,7 +278,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: theme.onePixel,
         borderColor: 'black',
-        marginTop:px2dp(33)
+        marginTop: px2dp(33)
     }
 });
 
