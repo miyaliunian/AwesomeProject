@@ -50,6 +50,7 @@ export default module = {
         backgroundColor: '#fff'
     },
     barContentPad: (Platform.OS === 'android' ? 0 : (isIphoneX() ? 42 : 20)),
+    //登录页面logo的位置
     bottomPadding: isIphoneX() ? 18 : 0,
     // 常用颜色
     sBarColor:'rgba(20,108,187,0.85)',
@@ -67,6 +68,7 @@ const X_WIDTH = 375;
 const X_HEIGHT = 812;
 
 export function isIphoneX() {
+
     return (
         Platform.OS === 'ios' &&
         ((Dimensions.get('window').height === X_HEIGHT && Dimensions.get('window').width === X_WIDTH) ||

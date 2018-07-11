@@ -66,7 +66,7 @@ const iStyle = StyleSheet.create({
         marginLeft:px2dp(15),
         borderColor:'transparent',
         borderRadius:0,
-        height:px2dp(86),
+        height:px2dp(114),
         flex:1,
         backgroundColor:'transparent',
     },

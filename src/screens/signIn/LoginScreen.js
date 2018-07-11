@@ -10,10 +10,12 @@ import {
     ImageBackground,
     TouchableOpacity,
     DeviceEventEmitter,
+    SafeAreaView
 } from 'react-native';
-import {SafeAreaView} from 'react-navigation';
+// import {SafeAreaView} from 'react-navigation';
 import LoginInput from './LoginInput'
 import theme from '../../common/theme'
+import {isIphoneX} from '../../common/theme'
 import px2dp from '../../common/px2dp'
 import DataRepository from '../../common/DataRepository'
 import LoginMobxStore from './LoginMobxStore'
@@ -67,8 +69,6 @@ export default class LoginScreen extends Component {
     componentWillUnmount() {
         this.subscription.remove();
     }
-
-
 
     onLoginBtn() {
         this.setState({
@@ -135,7 +135,7 @@ export default class LoginScreen extends Component {
         return (
             <SafeAreaView style={{flex: 1, backgroundColor: theme.sBarColor}}>
                 <View>
-                    <ImageBackground source={require('../../icons/login/1.png')} style={styles.bg}
+                    <ImageBackground source={require('../../icons/login/bg.png')} style={styles.bg}
                                      resizeMode={'stretch'}>
                         {/*logo*/}
                         <Image source={require('../../icons/login/29拷贝.png')} style={styles.bg_logo}/>
@@ -173,7 +173,6 @@ const LoginView = (props) => {
                         onChangeText={props.onChangeBottomText}
             />
 
-
             <Button title={'登 录'}
                     style={props.btnSabled ? styles.loginDisableButtonStyle : styles.loginEnableButtonStyle}
                     titleStyle={{fontSize: 18, color: 'white'}}
@@ -181,33 +180,38 @@ const LoginView = (props) => {
                     onPress={props.onPress}
             />
 
-            <TouchableOpacity onPress={props.onTextPress}>
-                <View style={{
-                    backgroundColor: 'transparent',
-                    justifyContent: 'space-around',
-                    alignItems: 'flex-start',
-                    flexDirection:'row'
-                }}>
+            <View style={{
+                backgroundColor: 'transparent',
+                justifyContent: 'space-around',
+                alignItems: 'flex-start',
+                flexDirection: 'row',
+                marginTop:13
+            }}>
+                <TouchableOpacity onPress={props.onTextPress}>
                     <Text style={styles.forgetPassStyle}>
                         注册账户
                     </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={props.onTextPress}>
                     <Text style={styles.forgetPassStyle}>
                         忘记密码?
                     </Text>
-                </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
+            </View>
+
 
             <View style={{
                 flexDirection: 'row', width: theme.screenWidth, justifyContent: 'space-around', alignItems: 'center',
-                height: px2dp(100),
+                height: px2dp(100),marginTop:px2dp(33)
             }}>
                 <View style={[theme.line, {width: px2dp(190)}]}/>
                 <Text>第三方平台登录</Text>
                 <View style={[theme.line, {width: px2dp(190)}]}/>
             </View>
             <View style={styles.vchart}>
-                <Image source={require('../../icons/login/pic_vchat.png')} resizeMode={'center'} style={{marginLeft:px2dp(40),marginRight:px2dp(100)}}/>
-                <Text style={{fontSize:15}}>微信账号登录</Text>
+                <Image source={require('../../icons/login/pic_vchat.png')} resizeMode={'center'}
+                       style={{marginLeft: px2dp(40), marginRight: px2dp(100)}}/>
+                <Text style={{fontSize: 15}}>微信账号登录</Text>
             </View>
 
         </View>
@@ -224,17 +228,17 @@ const styles = StyleSheet.create({
     bg_logo: {
         width: px2dp(180),
         height: px2dp(180),
-        marginVertical: px2dp(100)
+        marginTop: isIphoneX() == true ? 57 :26
     },
     loginViewStyle: {
         flex: 1,
-
+        marginTop: 50,
     },
     loginEnableButtonStyle: {
         marginLeft: px2dp(90),
         marginRight: px2dp(90),
-        height: px2dp(80),
-        marginTop: px2dp(86),
+        height: px2dp(68),
+        marginTop: 27,
         backgroundColor: theme.themeColor,
         borderColor: 'transparent',
         borderRadius: 30
@@ -242,8 +246,8 @@ const styles = StyleSheet.create({
     loginDisableButtonStyle: {
         marginLeft: px2dp(90),
         marginRight: px2dp(90),
-        height: px2dp(80),
-        marginTop: px2dp(86),
+        height: px2dp(86),
+        marginTop: 27,
         backgroundColor: theme.lightGray,
         borderColor: 'transparent',
         borderRadius: 30
@@ -254,15 +258,16 @@ const styles = StyleSheet.create({
         color: theme.themeColor,
         fontSize: 14,
     },
-    vchart:{
+    vchart: {
         marginLeft: px2dp(90),
         marginRight: px2dp(90),
         borderRadius: 30,
-        height: px2dp(80),
-        flexDirection:'row',
-        alignItems:'center',
-        borderWidth:theme.onePixel,
-        borderColor:'black'
+        height: px2dp(86),
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderWidth: theme.onePixel,
+        borderColor: 'black',
+        marginTop:px2dp(33)
     }
 });
 
