@@ -92,26 +92,23 @@ export default class LoginScreen extends Component {
         this.dataRepository.postFormRepository(Config.BASE_URL + Config.API_LOGIN, PARAM)
             .then((data) => {
                 debugger
-                if (data.status === 'success') {
+                if (data.flag == '1') {
                     this.setState({
                         isLoginModal: false,
                     });
-                    if (undefined == data.data.failInfo) {
-                        this.saveAccountInfo(data.data);
-                        this.props.navigation.navigate(data.data.route_key)
-                    } else {
-                        DeviceEventEmitter.emit('signInToastInfo', data.data.failInfo, 'sad');
-                    }
-
-                }
-                if (data.status === 'fail') {
+                    DeviceEventEmitter.emit('signInToastInfo', '可以登录', 'smile');
+                    // if (undefined == data.data.failInfo) {
+                    //     this.saveAccountInfo(data.data);
+                    //     this.props.navigation.navigate(data.data.route_key)
+                    // } else {
+                    //     DeviceEventEmitter.emit('signInToastInfo', data.data.failInfo, 'sad');
+                    // }
+                }else{
                     this.setState({
                         isLoginModal: false,
                     });
                     DeviceEventEmitter.emit('signInToastInfo', data.msg, 'sad');
                 }
-
-
             })
             .catch((err) => {
                 this.setState({
