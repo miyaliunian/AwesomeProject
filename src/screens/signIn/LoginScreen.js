@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     },
     loginViewStyle: {
         flex: 1,
-        marginTop: 50,
+        marginTop: 70,
     },
     loginEnableButtonStyle: {
         marginLeft: px2dp(90),
