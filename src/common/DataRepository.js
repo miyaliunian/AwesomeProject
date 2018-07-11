@@ -1,13 +1,10 @@
-/**
- * Created by wufei on 2017/11/18.
- */
+
 import React, {Component} from 'react';
 import {
     AsyncStorage
 } from 'react-native';
 
 
-export var FLAG_STORAGE = {serverUrl: "http://10.101.22.208:8766"};
 const STATUS = {
     SUCCESS: true,
     FAILED: false
@@ -37,7 +34,6 @@ export default class DataRepository {
                     resolve(response);
                 })
                 .catch((error) => {
-              //  console.log(error);
                     if (error.message == 'Network request failed') {
                         reject({status: '网络出错'});
                     } else if (error === 'abort promise') {
@@ -81,8 +77,6 @@ export default class DataRepository {
                     resolve(response);
                 })
                 .catch((error) => {
-              //  console.log(error);
-
                     if (error.message == 'Network request failed') {
                         reject({status: '网络出错'});
                     } else if (error === 'abort promise') {

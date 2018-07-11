@@ -41,7 +41,7 @@ export default class LoginScreen extends Component {
     }
 
     componentDidMount() {
-        this.subscription = DeviceEventEmitter.addListener('ToastInfo', (info, type) => {
+        this.subscription = DeviceEventEmitter.addListener('signInToastInfo', (info, type) => {
             if (type === 'success') {
                 Toast.success(info, 1500, 'center');
                 return
@@ -71,6 +71,13 @@ export default class LoginScreen extends Component {
     }
 
     onLoginBtn() {
+        //手机号格式验证
+        let regex = /^1[34578]\d{9}$/;
+        if (!regex.test(this.mobxStore.USER_INFO.cell_phone)) {
+            DeviceEventEmitter.emit('signInToastInfo', '手机号格式不正确', 'sad');
+            return;
+        }
+        //弹出Modal
         this.setState({
             isLoginModal: true,
         })
@@ -79,7 +86,7 @@ export default class LoginScreen extends Component {
         PARAM.mobilePhone = this.mobxStore.USER_INFO.cell_phone;
         PARAM.oldPassword = this.mobxStore.USER_INFO.user_password;
         //发送登录请求
-        this.dataRepository.postJsonRepository(Config.BASE_URL + Config.API_LOGIN, PARAM)
+        this.dataRepository.postFormRepository(Config.BASE_URL + Config.API_LOGIN, PARAM)
             .then((data) => {
                 if (data.status === 'success') {
                     this.setState({
@@ -89,7 +96,7 @@ export default class LoginScreen extends Component {
                         this.saveAccountInfo(data.data);
                         this.props.navigation.navigate(data.data.route_key)
                     } else {
-                        DeviceEventEmitter.emit('ToastInfo', data.data.failInfo, 'sad');
+                        DeviceEventEmitter.emit('signInToastInfo', data.data.failInfo, 'sad');
                     }
 
                 }
@@ -97,7 +104,7 @@ export default class LoginScreen extends Component {
                     this.setState({
                         isLoginModal: false,
                     });
-                    DeviceEventEmitter.emit('ToastInfo', data.msg, 'sad');
+                    DeviceEventEmitter.emit('signInToastInfo', data.msg, 'sad');
                 }
 
 
@@ -106,7 +113,7 @@ export default class LoginScreen extends Component {
                 this.setState({
                     isLoginModal: false,
                 })
-                DeviceEventEmitter.emit('ToastInfo', err.status, 'stop');
+                DeviceEventEmitter.emit('signInToastInfo', err.status, 'stop');
             })
             .done()
     }
