@@ -61,7 +61,7 @@ export default class DataRepository {
                 method: 'POST',
                 mode: "cors",
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                 },
                 body: formData,
             }))
