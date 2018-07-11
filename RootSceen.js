@@ -102,7 +102,7 @@ const TabStack = createBottomTabNavigator(
     },
     {
 
-        initialRouteName: 'profile',
+        initialRouteName: 'home',
         order: ['home', 'manage', 'profile'],
     }
 )
@@ -170,7 +170,7 @@ const SwitchNavigator = createSwitchNavigator(
 
     },
     {
-        initialRouteName: 'AuthLoading',
+        initialRouteName: 'Auth',
     }
 )
 

@@ -44,7 +44,6 @@ export default module = {
         flex: 1,
         backgroundColor:'white'
     },
-
     btnActiveOpacity: 0.5,
     actionBar: {
         height: 44,//Platform.OS === 'android' ? 56 : 44 //根据不通平台高度不一致
@@ -53,13 +52,13 @@ export default module = {
     barContentPad: (Platform.OS === 'android' ? 0 : (isIphoneX() ? 42 : 20)),
     bottomPadding: isIphoneX() ? 18 : 0,
     // 常用颜色
+    sBarColor:'rgba(20,108,187,0.85)',
     navColor: '#55acee',
-    navItemColor:'black',
+    themeColor:'rgb(75,162,253)',
     primaryColor: 'white',
     buttonColor: '#97b5d3',
     lightGray: '#cccccc',
     darkGray: '#e5e5e5',
-    themeColor:'rgb(246,246,246)'
 };
 
 

@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Text,
     View,
+    SafeAreaView,
     Image
 } from 'react-native';
 
@@ -19,9 +20,9 @@ export default class HomeScreen extends Component {
 
     render() {
         return (
-            <View style={theme.root_container}>
+            <SafeAreaView style={theme.root_container}>
                 <Text>首页</Text>
-            </View>
+            </SafeAreaView>
         );
     }
 }

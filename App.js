@@ -1,25 +1,41 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
-import RootSceen from './RootSceen'
+import RootScene from './RootSceen'
 import {Provider} from 'mobx-react/native'
 import stores from './src/store'
 
+export default class App extends Component<> {
 
-export default class App extends Component {
+    componentDidMount() {
+        //     SplashScreen.hide();
+
+        if (!__DEV__) {
+            global.console = {
+                info: () =>{
+
+                },
+                log: () =>{
+
+                },
+                warn: () =>{
+
+                },
+                error: () =>{
+
+                },
+            }
+        }else {
+
+        }
+    }
+
     render() {
         return (
+
             <Provider {...stores}>
-                <RootSceen/>
+              <RootScene/>
             </Provider>
+
+
         );
     }
 }
-
-
