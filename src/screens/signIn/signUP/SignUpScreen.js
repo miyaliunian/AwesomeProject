@@ -113,6 +113,41 @@ export default class SignUpScreen extends Component {
             .done()
     }
 
+    // 获取验证码
+    getVerifyCode(){
+        if ( '' == this.mobxStore.USER_INFO.phone) {
+            DeviceEventEmitter.emit('signInToastInfo', '请填写手机号,再获取验证码', 'sad');
+            return;
+        }
+        //弹出Modal
+        this.setState({
+            isLoginModal: true,
+        })
+        let param = this.mobxStore.USER_INFO.phone;
+        this.dataRepository.getRepository(Config.BASE_URL + Config.API_VALIDCODE + param)
+            .then((data) => {
+            debugger
+                if (data.flag == '1') {
+                    this.setState({
+                        isLoginModal: false,
+                    });
+                    DeviceEventEmitter.emit('signInToastInfo', data.data, 'smile');
+                }else{
+                    this.setState({
+                        isLoginModal: false,
+                    });
+                    DeviceEventEmitter.emit('signInToastInfo', data.msg, 'sad');
+                }
+            })
+            .catch((err) => {
+                this.setState({
+                    isLoginModal: false,
+                })
+                DeviceEventEmitter.emit('signInToastInfo', err.status, 'stop');
+            })
+            .done()
+    }
+
     render() {
         return (
             <SafeAreaView style={{flex: 1, backgroundColor: theme.sBarColor}}>
@@ -125,9 +160,7 @@ export default class SignUpScreen extends Component {
                             onChanger1Text={(text) => {
                                 this.mobxStore.USER_INFO.phone = text;
                             }}
-                            getVerifyCode={() => {
-                                alert('getVerifyCode');
-                            }}
+                            getVerifyCode={() => this.getVerifyCode()}
                             onChanger2Text={(text) => {
                                 this.mobxStore.USER_INFO.verify = text;
                             }}
@@ -139,7 +172,7 @@ export default class SignUpScreen extends Component {
                             }}
                             btnSabled={this.mobxStore.btnState}
                         />
-                        <LoadingModal txtTitle={'正在登录...'} visible={this.state.isLoginModal}/>
+                        <LoadingModal txtTitle={'正在注册...'} visible={this.state.isLoginModal}/>
                     </ImageBackground>
                 </View>
 

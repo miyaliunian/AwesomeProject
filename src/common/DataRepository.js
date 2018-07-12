@@ -11,6 +11,41 @@ const STATUS = {
 
 export default class DataRepository {
 
+
+     /**
+     *  Get请求 :获取验证码
+     *  @param url
+     *  @return {Promise}
+     * */
+    getRepository(url) {
+        return new Promise((resolve, reject) => {
+            this.timeout_fetch(fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8',
+                },
+            }))
+                .then(response => response.json())
+                .then(response => {
+                    resolve(response);
+                })
+                .catch((error) => {
+                    if (error.message == 'Network request failed') {
+                        reject({status: '网络出错'});
+                    } else if (error === 'abort promise') {
+                        reject({status: '请求超时'});
+                    } else {
+                        // reject({status: error.message});
+                        reject({status: '请求超时：服务器无响应'});
+                    }
+                })
+                .done()
+
+        })
+    }
+
+
+
     /**
      *
      *  POST:JSON请求
