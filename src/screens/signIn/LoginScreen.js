@@ -23,7 +23,6 @@ import LoginMobxStore from './LoginMobxStore'
 import LoadingModal from "../../components/LoadingModal";
 import {Button, Toast} from 'teaset';
 import {observer, inject} from 'mobx-react/native'
-import {MoreMenu} from '../../config/moreMenu';
 import {Config} from '../../config/config';
 // RN自带加密包
 import MD5 from 'blueimp-md5'
@@ -73,7 +72,6 @@ export default class LoginScreen extends Component {
     }
 
     onLoginBtn() {
-        debugger
         //手机号格式验证
         let regex = /^1[34578]\d{9}$/;
         if (!regex.test(this.mobxStore.USER_INFO.cell_phone)) {
@@ -155,7 +153,8 @@ export default class LoginScreen extends Component {
                             onChangeBottomText={(text) => {
                                 this.mobxStore.USER_INFO.user_password = text;
                             }}
-                            onTextPress={() => this.onClickText('SettingPassword')}
+                            onSignUpTextPress={() => this.onClickText('SignUp')}
+                            onTextPress={() => this.onClickText('setPwd')}
                             btnSabled={this.mobxStore.btnState}
                         />
                         <LoadingModal txtTitle={'正在登录...'} visible={this.state.isLoginModal}/>
@@ -195,7 +194,7 @@ const LoginView = (props) => {
                 flexDirection: 'row',
                 marginTop: 13
             }}>
-                <TouchableOpacity onPress={props.onTextPress}>
+                <TouchableOpacity onPress={props.onSignUpTextPress}>
                     <Text style={styles.forgetPassStyle}>
                         注册账户
                     </Text>

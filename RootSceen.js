@@ -14,8 +14,10 @@ import Icon from 'react-native-vector-icons/Ionicons'
 //业务导入
 
 import  LoadingScreen from './src/screens/LoadingScreen'
-
+// 登录-注册-忘记密码
 import LoginScreen from './src/screens/signIn/LoginScreen'
+import SignUpScreen from './src/screens/signIn/signUP/SignUpScreen'
+import SetPwdScreen from './src/screens/signIn/setPwd/SetPwdScreen'
 
 import  HomeScreen from './src/screens/home/HomeScreen'
 
@@ -150,10 +152,17 @@ const AuthLoading = createStackNavigator(
         Loading: {
             screen: LoadingScreen,
         },
+        SignUp: {
+            screen: SignUpScreen,
+        },
+        setPwd: {
+            screen: SetPwdScreen,
+        },
     },
     {
+        initialRouteName: 'SignUp',
         navigationOptions: {
-            gesturesEnabled: false,
+            gesturesEnabled: true,
             headerStyle: {
 
             },
