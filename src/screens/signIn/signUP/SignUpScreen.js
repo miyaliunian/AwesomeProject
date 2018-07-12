@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import {
     StyleSheet,
-    Text,
+    TouchableOpacity,
     View,
     Image,
     ImageBackground,
@@ -19,8 +19,8 @@ import px2dp from '../../../common/px2dp'
 import DataRepository from '../../../common/DataRepository'
 import SignUpMobxStore from './SignUpMobxStore'
 import LoadingModal from "../../../components/LoadingModal";
-import {Button, Toast} from 'teaset';
-import {observer, inject} from 'mobx-react/native'
+import {Button} from 'teaset';
+import {observer} from 'mobx-react/native'
 import {Config} from '../../../config/config';
 import ImagePicker from "react-native-image-crop-picker";
 import MD5 from 'blueimp-md5'
@@ -66,6 +66,7 @@ export default class SignUpScreen extends Component {
         })
 
     }
+
 
     componentWillUnmount() {
         this.subscription.remove();
@@ -257,9 +258,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     avatar: {
-        width: 160,
-        height: 160,
-        borderRadius: 80,
+        width: 100,
+        height: 100,
+        borderRadius: 50,
         marginTop: isIphoneX() == true ? 57 : 26
     },
     loginViewStyle: {

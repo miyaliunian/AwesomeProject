@@ -138,6 +138,23 @@ export default class DataRepository {
     }
 
     /**
+     * 合并数据 ：将现有的 key - value 与 输入值合并
+     * @param KEY
+     * @return {Promise}
+     * */
+    mergeLocalRepository(KEY,DataForm) {
+        return new Promise((resolve, reject) => {
+            AsyncStorage.mergeItem(KEY, JSON.stringify(DataForm),(error) => {
+                if (!error) {
+                    resolve(STATUS.SUCCESS)
+                } else {
+                    reject(STATUS.FAILED)
+                }
+            })
+        })
+    }
+
+    /**
      * 获取本地数据
      * @param KEY
      * @return {Promise}
