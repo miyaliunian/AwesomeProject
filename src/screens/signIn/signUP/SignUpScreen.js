@@ -22,7 +22,10 @@ import LoadingModal from "../../../components/LoadingModal";
 import {Button, Toast} from 'teaset';
 import {observer, inject} from 'mobx-react/native'
 import {Config} from '../../../config/config';
+import ImagePicker from "react-native-image-crop-picker";
 import MD5 from 'blueimp-md5'
+
+
 @observer
 export default class SignUpScreen extends Component {
 
@@ -68,6 +71,7 @@ export default class SignUpScreen extends Component {
         this.subscription.remove();
     }
 
+    //注册
     onLoginBtn() {
         //手机号格式验证
         let regex = /^1[34578]\d{9}$/;
@@ -85,10 +89,10 @@ export default class SignUpScreen extends Component {
             isLoginModal: true,
         })
         //拼接登录参数
-        let PARAM = new FormData() ;
-        PARAM.append('phone',this.mobxStore.USER_INFO.phone)
-        PARAM.append('phone',MD5(this.mobxStore.USER_INFO.phone))
-        PARAM.append('phone',MD5(this.mobxStore.USER_INFO.phone))
+        let PARAM = new FormData();
+        PARAM.append('phone', this.mobxStore.USER_INFO.phone)
+        PARAM.append('phone', MD5(this.mobxStore.USER_INFO.phone))
+        PARAM.append('phone', MD5(this.mobxStore.USER_INFO.phone))
         //发送登录请求
         this.dataRepository.postFormRepository(Config.BASE_URL + Config.API_LOGIN, PARAM)
             .then((data) => {
@@ -97,7 +101,7 @@ export default class SignUpScreen extends Component {
                         isLoginModal: false,
                     });
                     DeviceEventEmitter.emit('signInToastInfo', '可以登录', 'smile');
-                }else{
+                } else {
                     this.setState({
                         isLoginModal: false,
                     });
@@ -114,8 +118,8 @@ export default class SignUpScreen extends Component {
     }
 
     // 获取验证码
-    getVerifyCode(){
-        if ( '' == this.mobxStore.USER_INFO.phone) {
+    getVerifyCode() {
+        if ('' == this.mobxStore.USER_INFO.phone) {
             DeviceEventEmitter.emit('signInToastInfo', '请填写手机号,再获取验证码', 'sad');
             return;
         }
@@ -126,13 +130,13 @@ export default class SignUpScreen extends Component {
         let param = this.mobxStore.USER_INFO.phone;
         this.dataRepository.getRepository(Config.BASE_URL + Config.API_VALIDCODE + param)
             .then((data) => {
-            debugger
+                debugger
                 if (data.flag == '1') {
                     this.setState({
                         isLoginModal: false,
                     });
                     DeviceEventEmitter.emit('signInToastInfo', data.data, 'smile');
-                }else{
+                } else {
                     this.setState({
                         isLoginModal: false,
                     });
@@ -148,13 +152,38 @@ export default class SignUpScreen extends Component {
             .done()
     }
 
+    //调用相机胶卷
+    picPicker() {
+        ImagePicker.openPicker({
+            width: 300,
+            height: 300,
+            cropping: true
+        }).then(image => {
+            this.mobxStore.USER_INFO.avatar = image.path
+        })
+    }
+
     render() {
         return (
             <SafeAreaView style={{flex: 1, backgroundColor: theme.sBarColor}}>
                 <View>
                     <ImageBackground source={require('../../../icons/login/bg.png')} style={styles.bg}
                                      resizeMode={'stretch'}>
-                        <Image source={require('../../../icons/signup/头像.png')} style={styles.bg_avatar} resizeMode={'stretch'}/>
+                        <TouchableOpacity onPress={() => this.picPicker()}>
+                            {this.mobxStore.USER_INFO.avatar
+                                ?
+                                // 获取头像之后
+                                <Image
+                                    style={styles.avatar}
+                                    source={{uri: this.mobxStore.USER_INFO.avatar}}/>
+                                :
+                                // 没有头像
+                                <Image source={require('../../../icons/signup/头像.png')} style={styles.avatar}
+                                       resizeMode={'stretch'}/>
+
+                            }
+
+                        </TouchableOpacity>
                         <LoginView
                             onPress={() => this.onLoginBtn()}
                             onChanger1Text={(text) => {
@@ -172,7 +201,7 @@ export default class SignUpScreen extends Component {
                             }}
                             btnSabled={this.mobxStore.btnState}
                         />
-                        <LoadingModal txtTitle={'正在注册...'} visible={this.state.isLoginModal}/>
+                        <LoadingModal txtTitle={'请稍后...'} visible={this.state.isLoginModal}/>
                     </ImageBackground>
                 </View>
 
@@ -191,13 +220,12 @@ const LoginView = (props) => {
             />
 
 
-
             <LoginInput
-                        isVerify={true}
-                        placeholder='请输入验证码'
-                        getVerifyCode={props.getVerifyCode}
-                        icon={require('../../../icons/signup/icon_yzm.png')}
-                        onChangeText={props.onChanger2Text}
+                isVerify={true}
+                placeholder='请输入验证码'
+                getVerifyCode={props.getVerifyCode}
+                icon={require('../../../icons/signup/icon_yzm.png')}
+                onChangeText={props.onChanger2Text}
             />
 
             <LoginInput placeholder='请输入密码'
@@ -228,9 +256,10 @@ const styles = StyleSheet.create({
 
         alignItems: 'center',
     },
-    bg_avatar: {
+    avatar: {
         width: 160,
         height: 160,
+        borderRadius: 80,
         marginTop: isIphoneX() == true ? 57 : 26
     },
     loginViewStyle: {
@@ -243,7 +272,7 @@ const styles = StyleSheet.create({
         height: px2dp(68),
         backgroundColor: 'white',
         borderColor: 'black',
-        borderWidth:theme.onePixel,
+        borderWidth: theme.onePixel,
         borderRadius: 30
     },
     loginVerfiyEnableButtonStyle: {
@@ -251,7 +280,7 @@ const styles = StyleSheet.create({
         height: px2dp(86),
         backgroundColor: 'white',
         borderColor: 'black',
-        borderWidth:theme.onePixel,
+        borderWidth: theme.onePixel,
         borderRadius: 30
     },
     loginEnableButtonStyle: {

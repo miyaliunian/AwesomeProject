@@ -3,6 +3,7 @@ import {observable, action, computed, autorun} from 'mobx';
 export default class SignUpMobxStore {
     @observable
     USER_INFO = {
+        avatar:'',// 头像
         phone: '',//手机号
         verify:'',//验证码
         pwd: '',//密码
