@@ -35,8 +35,8 @@ export default class DataRepository {
                     } else if (error === 'abort promise') {
                         reject({status: '请求超时'});
                     } else {
-                        // reject({status: error.message});
-                        reject({status: '请求超时：服务器无响应'});
+                        reject({status: error.message});
+                        // reject({status: '请求超时：服务器无响应'});
                     }
                 })
                 .done()
