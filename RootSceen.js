@@ -18,11 +18,11 @@ import  LoadingScreen from './src/screens/LoadingScreen'
 import LoginScreen from './src/screens/signIn/LoginScreen'
 import SignUpScreen from './src/screens/signIn/signUP/SignUpScreen'
 import SetPwdScreen from './src/screens/signIn/setPwd/SetPwdScreen'
-
+// 首页
 import  HomeScreen from './src/screens/home/HomeScreen'
-
+// 管理
 import  ManagerScreen from './src/screens/manage/ManagerScreen'
-
+//我的
 import  ProfileScreen from './src/screens/profile/ProfileScreen'
 
 
