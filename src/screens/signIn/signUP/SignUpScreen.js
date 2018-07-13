@@ -24,7 +24,7 @@ import {observer} from 'mobx-react/native'
 import {Config} from '../../../config/config';
 import ImagePicker from "react-native-image-crop-picker";
 import MD5 from 'blueimp-md5'
-import  uuid from 'uuid'
+import uuid from 'uuid'
 
 
 @observer
@@ -153,7 +153,7 @@ export default class SignUpScreen extends Component {
 
     //
     uploadAvatar(imageUrl, imageUUID) {
-        debugger
+
         let PARAM = imageUUID;
         this.dataRepository.getRepository(Config.BASE_URL + Config.API_FETCH_TOKEN + PARAM)
             .then((data) => {
@@ -161,7 +161,49 @@ export default class SignUpScreen extends Component {
                     this.setState({
                         isLoginModal: false,
                     });
+                    debugger
+                    //上传头像到七牛图床
+                    let key = data.data.path;//文件名
+                    let token = data.data.token;//后台返回的token
+                    //创建FormData表单
+                    let body = new FormData();
+                    body.append('token', token);
+                    body.append('key', key);
+                    body.append('file', {
+                        type:'image/jpeg',
+                        uri:imageUrl,
+                        name:key,
+                    });
+                    //创建请求
+                    let xhr = new XMLHttpRequest();
+                    xhr.open('POST',Config.API_QI_NIU_UPLOAD)
+                    xhr.onload = () => {
+                        debugger
+                        if (xhr.status !== 200){
+                            DeviceEventEmitter.emit('signInToastInfo', '请求失败', 'sad');
+                            console.log(xhr.responseText)
+                            return
+                        }
 
+                        if ( !xhr.responseText ){
+                            DeviceEventEmitter.emit('signInToastInfo', '请求失败', 'sad');
+                            return
+                        }
+
+                        let response
+
+                        try {
+                            response = JSON.parse(xhr.response)
+                        } catch (e) {
+                            DeviceEventEmitter.emit('signInToastInfo', e, 'sad');
+                        }
+                        debugger
+                        if (response && response.key){
+                            this.mobxStore.USER_INFO.avatar = Config.API_QI_NIU_AVATAR+response.key;
+                        }
+                    }
+                    // 发起请求
+                    xhr.send(body)
                 } else {
                     this.setState({
                         isLoginModal: false,
@@ -185,8 +227,8 @@ export default class SignUpScreen extends Component {
             height: 300,
             cropping: true
         }).then(image => {
-            let imageUUID = uuid.v1() + '.jpeg'
-            this.mobxStore.USER_INFO.avatar = image.path
+            let imageUUID = uuid.v4() + '.jpeg'
+            //this.mobxStore.USER_INFO.avatar = image.path
             this.uploadAvatar(image.path, imageUUID)
         })
     }
@@ -208,9 +250,7 @@ export default class SignUpScreen extends Component {
                                 // 没有头像
                                 <Image source={require('../../../icons/signup/头像.png')} style={styles.avatar}
                                        resizeMode={'stretch'}/>
-
                             }
-
                         </TouchableOpacity>
                         <LoginView
                             onPress={() => this.onLoginBtn()}
@@ -287,8 +327,13 @@ const styles = StyleSheet.create({
     avatar: {
         width: px2dp(180),
         height: px2dp(180),
-        borderRadius: 50,
-        marginTop: isIphoneX() == true ? 57 : 26
+        borderRadius: px2dp(90),
+        marginTop: isIphoneX() == true ? 57 : 26,
+        shadowOffset: {width: 2, height: 2},
+        shadowColor: 'black',
+        shadowOpacity: 0.2,
+        elevation: 1,
+
     },
     loginViewStyle: {
         flex: 1,

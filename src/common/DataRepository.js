@@ -96,8 +96,10 @@ export default class DataRepository {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json, text/javascript, */*; q=0.01',
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-                    //'Content-Type': '*/*; charset=UTF-8'
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    // 'Accept':'application/json',
+                    // 'Content-Type':'application/json'
+
                 },
                 body: formData,
             }))

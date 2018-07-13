@@ -5,15 +5,14 @@ export const Config ={
 
 
     //图床配置
-    qi_niu:{
-        AK:'t80OfwrZh-tB8KCS6vtk5dtVjvlqq_2fZGjWvSDk',
-        SK:' zWlErdzxbs4eY6gOuu-Au-1qsxrjQyMMrf_B6X0c',
-    },
-    bucket:'freezer',
-    API_QI_NIU:'http://upload.qiniu.com/',
-    API_FETCH_TOKEN:'app/uploadPic/',
+       //上传
+    API_QI_NIU_UPLOAD:'http://upload-z0.qiniup.com/',
+
+    //显示
+    API_QI_NIU_AVATAR:'http://pbfc6gu8t.bkt.clouddn.com/',
 
     //App
     API_LOGIN: 'u/login', //登录
     API_VALIDCODE: 'app/validCode?phone=', //验证码
+    API_FETCH_TOKEN:'app/uploadPic/',
 };
