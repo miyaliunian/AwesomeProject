@@ -9,7 +9,7 @@ import {
     Text,
     ScrollView
 } from 'react-native';
-
+import {Button} from 'teaset';
 import theme from '../../../common/theme';
 import px2dp from '../../../common/px2dp';
 import {moreMenu} from '../../../config/moreMenu';
@@ -145,8 +145,13 @@ export default class ProfileInfoScreen extends Component<{}> {
                             />
                         </View>
                     </View>
-                    <View style={theme.line}/>
-                    <View style={theme.line}/>
+                    <View style={theme.line_space_10}/>
+                    <Button title={'保 存'}
+                            style={false ? styles.loginDisableButtonStyle : styles.loginEnableButtonStyle}
+                            titleStyle={{fontSize: 18, color: 'white'}}
+                            // disabled={props.btnSabled}
+                            // onPress={props.onPress}
+                    />
                 </ScrollView>
             </View>
         );
@@ -165,8 +170,9 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     row: {
+        flex:1,
         backgroundColor: 'rgb(255,255,255)',
-        height: px2dp(92),
+        height: px2dp(100),
         borderWidth: 0,
         justifyContent: 'space-between',
         flexDirection: 'row',
@@ -179,10 +185,12 @@ const styles = StyleSheet.create({
     rowContent: {
         flexDirection: 'row',
         alignItems: 'center',
+
     },
     TextInputStyle: {
-        marginRight: px2dp(82),
-        width: 200,
+        height: px2dp(90),
+        marginRight: px2dp(20),
+        width: theme.screenWidth,
         paddingTop: 0,
         paddingBottom: 0,
         paddingRight: 0,
@@ -196,6 +204,24 @@ const styles = StyleSheet.create({
     fontLabel: {
         fontSize: px2dp(28),
         color: 'rgb(51,51,51)'
+    },
+    loginEnableButtonStyle: {
+        marginLeft: px2dp(90),
+        marginRight: px2dp(90),
+        height: px2dp(68),
+        marginTop: 27,
+        backgroundColor: theme.themeColor,
+        borderColor: 'transparent',
+        borderRadius: 30
+    },
+    loginDisableButtonStyle: {
+        marginLeft: px2dp(90),
+        marginRight: px2dp(90),
+        height: px2dp(86),
+        marginTop: 27,
+        backgroundColor: theme.lightGray,
+        borderColor: 'transparent',
+        borderRadius: 30
     },
 });
 
