@@ -111,7 +111,8 @@ const TabStack = createBottomTabNavigator(
                     headerBackTitle:'返回',
                     headerBackTitleStyle:{
                         color: 'white'
-                    }
+                    },
+                    headerForceInset:{ left:7}
                 }
 
             }),
