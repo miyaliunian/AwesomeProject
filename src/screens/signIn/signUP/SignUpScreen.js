@@ -19,11 +19,12 @@ import px2dp from '../../../common/px2dp'
 import DataRepository from '../../../common/DataRepository'
 import SignUpMobxStore from './SignUpMobxStore'
 import LoadingModal from "../../../components/LoadingModal";
-import {Button} from 'teaset';
+import {Button, Toast} from 'teaset';
 import {observer} from 'mobx-react/native'
 import {Config} from '../../../config/config';
 import ImagePicker from "react-native-image-crop-picker";
 import MD5 from 'blueimp-md5'
+import  uuid from 'uuid'
 
 
 @observer
@@ -33,9 +34,7 @@ export default class SignUpScreen extends Component {
         super(props);
         this.state = {
             isLoginModal: false,
-            btnStatus: false,
-            mobileFontSize: 16,
-            passwordFontSize: 14
+
         };
         this.dataRepository = new DataRepository();
         this.mobxStore = new SignUpMobxStore();
@@ -62,9 +61,7 @@ export default class SignUpScreen extends Component {
             if (type === 'stop') {
                 Toast.stop(info, 1500, 'center');
             }
-
         })
-
     }
 
 
@@ -129,6 +126,7 @@ export default class SignUpScreen extends Component {
             isLoginModal: true,
         })
         let param = this.mobxStore.USER_INFO.phone;
+
         this.dataRepository.getRepository(Config.BASE_URL + Config.API_VALIDCODE + param)
             .then((data) => {
                 debugger
@@ -153,6 +151,33 @@ export default class SignUpScreen extends Component {
             .done()
     }
 
+    //
+    uploadAvatar(imageUrl, imageUUID) {
+        debugger
+        let PARAM = imageUUID;
+        this.dataRepository.getRepository(Config.BASE_URL + Config.API_FETCH_TOKEN + PARAM)
+            .then((data) => {
+                if (data.flag == '1') {
+                    this.setState({
+                        isLoginModal: false,
+                    });
+
+                } else {
+                    this.setState({
+                        isLoginModal: false,
+                    });
+                    DeviceEventEmitter.emit('signInToastInfo', data.msg, 'sad');
+                }
+            })
+            .catch((err) => {
+                this.setState({
+                    isLoginModal: false,
+                })
+                DeviceEventEmitter.emit('signInToastInfo', err.status, 'stop');
+            })
+            .done()
+    }
+
     //调用相机胶卷
     picPicker() {
         ImagePicker.openPicker({
@@ -160,7 +185,9 @@ export default class SignUpScreen extends Component {
             height: 300,
             cropping: true
         }).then(image => {
+            let imageUUID = uuid.v1() + '.jpeg'
             this.mobxStore.USER_INFO.avatar = image.path
+            this.uploadAvatar(image.path, imageUUID)
         })
     }
 
@@ -258,8 +285,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     avatar: {
-        width: 100,
-        height: 100,
+        width: px2dp(180),
+        height: px2dp(180),
         borderRadius: 50,
         marginTop: isIphoneX() == true ? 57 : 26
     },

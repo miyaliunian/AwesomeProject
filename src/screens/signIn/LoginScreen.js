@@ -33,9 +33,6 @@ export default class LoginScreen extends Component {
         super(props);
         this.state = {
             isLoginModal: false,
-            btnStatus: false,
-            mobileFontSize: 16,
-            passwordFontSize: 14
         };
         this.dataRepository = new DataRepository();
         this.mobxStore = new LoginMobxStore();

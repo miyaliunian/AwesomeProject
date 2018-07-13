@@ -58,7 +58,7 @@ export default class DataRepository {
             this.timeout_fetch(fetch(url, {
                 method: 'POST',
                 headers: {
-                    'Accept': 'application/json',
+                    'Accept': '*/*"',
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(params),
@@ -94,9 +94,10 @@ export default class DataRepository {
         return new Promise((resolve, reject) => {
             this.timeout_fetch(fetch(url, {
                 method: 'POST',
-                mode: "cors",
                 headers: {
+                    'Accept': 'application/json, text/javascript, */*; q=0.01',
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                    //'Content-Type': '*/*; charset=UTF-8'
                 },
                 body: formData,
             }))
@@ -110,7 +111,8 @@ export default class DataRepository {
                     } else if (error === 'abort promise') {
                         reject({status: '请求超时'});
                     } else {
-                        reject({status: '请求超时：服务器无响应'});
+                        reject({status: error.message});
+                        //reject({status: '请求超时：服务器无响应'});
                     }
                 })
                 .done()
