@@ -23,7 +23,7 @@ import {Button, Toast} from 'teaset';
 import {observer} from 'mobx-react/native'
 import {Config} from '../../../config/config';
 import ImagePicker from "react-native-image-crop-picker";
-import Account from '../../../store'
+import Account from '../../../store/common/Account'
 import MD5 from 'blueimp-md5'
 import uuid from 'uuid'
 

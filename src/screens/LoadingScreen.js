@@ -8,7 +8,7 @@ import {
     View,
 } from 'react-native';
 
-import Account from '../store'
+import Account from '../store/common/Account'
 import DataRepository from '../common/DataRepository'
 export default class LoadingScreen extends Component {
 
@@ -20,7 +20,6 @@ export default class LoadingScreen extends Component {
     componentDidMount() {
         this.dataRepository.fetchLocalRepository('ACCOUNT')
             .then(result => {
-                debugger
                 if (result !== '' && result !== null) {
                     this.account = Account;
                     this.account.avatar = result.avatar;

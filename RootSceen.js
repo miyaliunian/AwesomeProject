@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import theme from './src/common/theme'
 
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 //导航布局
 import {createStackNavigator, createBottomTabNavigator, createSwitchNavigator} from 'react-navigation'
 //切换动画
@@ -24,6 +25,7 @@ import  HomeScreen from './src/screens/home/HomeScreen'
 import  ManagerScreen from './src/screens/manage/ManagerScreen'
 //我的
 import  ProfileScreen from './src/screens/profile/ProfileScreen'
+import  ProfileInfoScreen from './src/screens/profile/profileInfo/ProfileInfoScreen'
 
 
 export default class App extends Component {
@@ -47,6 +49,8 @@ const TabStack = createBottomTabNavigator(
                 navigationOptions: {
                     headerStyle: {
                         backgroundColor: theme.navColor,
+                        borderBottomWidth: 0,
+                        borderBottomColor: 'transparent'
                     }
                 }
 
@@ -67,7 +71,8 @@ const TabStack = createBottomTabNavigator(
                 navigationOptions: {
                     headerStyle: {
                         backgroundColor: theme.navColor,
-
+                        borderBottomWidth: 0,
+                        borderBottomColor: 'transparent'
                     }
                 }
 
@@ -83,13 +88,29 @@ const TabStack = createBottomTabNavigator(
             screen: createStackNavigator({
                 index: {
                     screen: ProfileScreen
+                },
+                ProfileInfoScreen: {
+                    screen: ProfileInfoScreen
                 }
             }, {
                 navigationOptions: {
                     headerStyle: {
                         backgroundColor: theme.navColor,
                         borderBottomWidth: 0,
-                        borderBottomColor: 'transparent'
+                        borderBottomColor: 'transparent',
+                    },
+                    headerTitleStyle: {
+                        color: 'white'
+                    },
+                    headerBackImage: (tintColor, title) => (
+                        <SimpleLineIcons
+                            name={'arrow-left'}
+                            size={20}
+                            color={'white'}/>
+                    ),
+                    headerBackTitle:'返回',
+                    headerBackTitleStyle:{
+                        color: 'white'
                     }
                 }
 
@@ -106,6 +127,8 @@ const TabStack = createBottomTabNavigator(
 
         initialRouteName: 'home',
         order: ['home', 'manage', 'profile'],
+        mode: 'card',// 页面切换模式, 左右是card(相当于iOS中的push效果), 上下是modal(相当于iOS中的modal效果)
+        headerMode: 'screen',
     }
 )
 
@@ -123,7 +146,7 @@ const AppStack = createStackNavigator(
             gesturesEnabled: true,
         },
         transitionConfig: () => ({ //切换动画
-            screenInterpolator: CardStackStyleInterpolator.forFade //水平动画
+            screenInterpolator: CardStackStyleInterpolator.forHorizontal //水平动画
         })
     }
 );

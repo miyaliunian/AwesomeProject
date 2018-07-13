@@ -21,7 +21,7 @@ export const moreMenu = {
 
     // 我的
     ProfileScreen: {
-
+        menu_profile_info:'ProfileInfoScreen'
     },
 
 };

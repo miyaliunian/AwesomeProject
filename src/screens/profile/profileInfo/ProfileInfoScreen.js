@@ -10,19 +10,19 @@ import {
     ScrollView
 } from 'react-native';
 
-import theme from '../../common/theme';
-import px2dp from '../../common/px2dp';
-import {moreMenu} from '../../config/moreMenu';
-import ProfileItem from '../../components/ProfileItem'
+import theme from '../../../common/theme';
+import px2dp from '../../../common/px2dp';
+import {moreMenu} from '../../../config/moreMenu';
+import ProfileItem from '../../../components/ProfileItem'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 import {inject} from 'mobx-react/native'
 
 @inject('account')
-export default class MyPage extends Component<{}> {
+export default class ProfileInfoScreen extends Component<{}> {
     static navigationOptions = ({navigation}) => ({
         // header: null
-        headerTitle: "我的",
+        headerTitle: "",
     })
 
     constructor(props) {
@@ -51,7 +51,7 @@ export default class MyPage extends Component<{}> {
             <View style={theme.root_container}>
                 <View style={styles.headerStyle}>
                     <View style={{flexDirection: 'row'}}>
-                        <Image source={require('../../icons/profile/default_portrait.png')}
+                        <Image source={require('../../../icons/profile/default_portrait.png')}
                                style={{
                                    height: px2dp(160),
                                    width: px2dp(160),
@@ -70,19 +70,19 @@ export default class MyPage extends Component<{}> {
                 </View>
                 <View style={theme.line_space_10}/>
                 <ScrollView>
-                    <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='我的消息'
+                    <ProfileItem icon={require('../../../icons/profile/to_pay.png')} title='我的消息'
                                  callBack={() => this.itemClick(moreMenu.ProfileScreen.menu_profile_info)}/>
-                    <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='公司消息'
+                    <ProfileItem icon={require('../../../icons/profile/to_pay.png')} title='公司消息'
                                  callBack={() => this.itemClick('公司消息')}/>
-                    <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='员工管理'
+                    <ProfileItem icon={require('../../../icons/profile/to_pay.png')} title='员工管理'
                                  callBack={() => this.itemClick('员工管理')}/>
-                    <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='租客管理'
+                    <ProfileItem icon={require('../../../icons/profile/to_pay.png')} title='租客管理'
                                  callBack={() => this.itemClick('租客管理')}/>
-                    <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='退出公司'
+                    <ProfileItem icon={require('../../../icons/profile/to_pay.png')} title='退出公司'
                                  callBack={() => this.itemClick('退出公司')}/>
-                    <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='我的账单'
+                    <ProfileItem icon={require('../../../icons/profile/to_pay.png')} title='我的账单'
                                  callBack={() => this.itemClick('我的账单')}/>
-                    <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='退出登录'
+                    <ProfileItem icon={require('../../../icons/profile/to_pay.png')} title='退出登录'
                                  callBack={() => this.itemClick('退出登录')}/>
                     <View style={theme.line}/>
                 </ScrollView>
