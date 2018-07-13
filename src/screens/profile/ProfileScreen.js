@@ -107,9 +107,5 @@ const styles = StyleSheet.create({
         fontSize: 17,
         marginVertical: 5,
     },
-    imgTabBar: {
-        height: px2dp(410) + (Platform.OS === 'android' ? 0 : theme.barContentPad),
-        paddingTop: theme.barContentPad,
-    },
 });
 
