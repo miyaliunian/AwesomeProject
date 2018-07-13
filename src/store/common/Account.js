@@ -5,7 +5,17 @@ import {observable} from 'mobx'
 
 class Account {
     @observable
-    name = '初始化'
+    avatar = ''
+    @observable
+    phone = ''
+    @observable
+    pushId = ''
+    @observable
+    userId = ''
+    @observable
+    userName = ''
+    @observable
+    userRole = ''
 }
 
 export default new Account()

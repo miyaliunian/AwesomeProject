@@ -23,6 +23,7 @@ import {Button, Toast} from 'teaset';
 import {observer} from 'mobx-react/native'
 import {Config} from '../../../config/config';
 import ImagePicker from "react-native-image-crop-picker";
+import Account from '../../../store'
 import MD5 from 'blueimp-md5'
 import uuid from 'uuid'
 
@@ -71,7 +72,6 @@ export default class SignUpScreen extends Component {
 
     //注册
     onLoginBtn() {
-        debugger
         //手机号格式验证
         let regex = /^1[34578]\d{9}$/;
         if (!regex.test(this.mobxStore.USER_INFO.phone)) {
@@ -92,15 +92,20 @@ export default class SignUpScreen extends Component {
         PARAM.append('phone', this.mobxStore.USER_INFO.phone)
         PARAM.append('validCode', this.mobxStore.USER_INFO.verify)
         PARAM.append('pwd', MD5(this.mobxStore.USER_INFO.pwd))
+        PARAM.append('avatar', this.mobxStore.USER_INFO.avatar)
+
         //发送登录请求
-        this.dataRepository.putFormRepository(Config.BASE_URL + Config.API_SIGN, PARAM)
+        this.dataRepository.postFormRepository(Config.BASE_URL + Config.API_SIGN, PARAM)
             .then((data) => {
             debugger
                 if (data.flag == '1') {
                     this.setState({
                         isLoginModal: false,
                     });
-                    DeviceEventEmitter.emit('signInToastInfo', '可以登录', 'smile');
+                    //缓存用户信息 = 1：头像、2：手机号
+                    DeviceEventEmitter.emit('signInToastInfo', '注册成功...', 'smile');
+                    this.saveAccountInfo(data.data);
+                    this.props.navigation.navigate('App')
                 } else {
                     this.setState({
                         isLoginModal: false,
@@ -113,6 +118,25 @@ export default class SignUpScreen extends Component {
                     isLoginModal: false,
                 })
                 DeviceEventEmitter.emit('signInToastInfo', err.status, 'stop');
+            })
+            .done()
+    }
+
+    //本地缓存策略
+    saveAccountInfo(data){
+        this.account = Account;
+        this.account.avatar = data.avatar;
+        this.account.phone = data.phone;
+        this.account.pushId = data.pushId;
+        this.account.userId = data.userId;
+        this.account.userName = data.userName;
+        this.account.userRole = data.userRole;
+        this.dataRepository.mergeLocalRepository('ACCOUNT', data)
+            .then(result => {
+                console.log(result)
+            })
+            .catch(error => {
+                console.log(error)
             })
             .done()
     }
@@ -131,7 +155,7 @@ export default class SignUpScreen extends Component {
 
         this.dataRepository.getRepository(Config.BASE_URL + Config.API_VALIDCODE + param)
             .then((data) => {
-                debugger
+
                 if (data.flag == '1') {
                     this.setState({
                         isLoginModal: false,
@@ -162,7 +186,6 @@ export default class SignUpScreen extends Component {
                     this.setState({
                         isLoginModal: false,
                     });
-                    debugger
                     //上传头像到七牛图床
                     let key = data.data.path;//文件名
                     let token = data.data.token;//后台返回的token
@@ -229,7 +252,7 @@ export default class SignUpScreen extends Component {
             cropping: true
         }).then(image => {
             let imageUUID = uuid.v4() + '.jpeg'
-            //this.mobxStore.USER_INFO.avatar = image.path
+            this.mobxStore.USER_INFO.avatar = image.path
             this.uploadAvatar(image.path, imageUUID)
         })
     }

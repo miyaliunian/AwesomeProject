@@ -217,7 +217,6 @@ const LoginView = (props) => {
                        style={{marginLeft: px2dp(40), marginRight: px2dp(100)}}/>
                 <Text style={{fontSize: 15}}>微信账号登录</Text>
             </View>
-
         </View>
     )
 };

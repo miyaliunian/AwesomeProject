@@ -6,13 +6,37 @@ import {
     StyleSheet,
     Text,
     View,
-    Image
 } from 'react-native';
 
+import Account from '../store'
+import DataRepository from '../common/DataRepository'
 export default class LoadingScreen extends Component {
 
     constructor(props) {
         super(props)
+        this.dataRepository = new DataRepository();
+    }
+
+    componentDidMount() {
+        this.dataRepository.fetchLocalRepository('ACCOUNT')
+            .then(result => {
+                debugger
+                if (result !== '' && result !== null) {
+                    this.account = Account;
+                    this.account.avatar = result.avatar;
+                    this.account.phone = result.phone;
+                    this.account.pushId = result.pushId;
+                    this.account.userId = result.userId;
+                    this.account.userName = result.userName;
+                    this.account.userRole = result.userRole;
+                    this.props.navigation.navigate('App')
+                } else { //本机没有账户信息 则跳转到登录
+                    this.props.navigation.navigate('Auth')
+                }
+            })
+            .catch(error => {
+            })
+            .done()
     }
 
     render() {
