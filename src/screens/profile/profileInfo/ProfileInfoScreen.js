@@ -67,7 +67,7 @@ export default class ProfileInfoScreen extends Component<{}> {
                                        placeholderTextColor='rgb(196,196,196)'
                                        //placeholder={'请输入'}
                                        //keyboardType={'numeric'}
-                                       returnKeyType={'next'}
+                                       returnKeyType={'done'}
                                        onFocus={() => {
                                        }}
                                        onChangeText={(text) => {
@@ -90,7 +90,7 @@ export default class ProfileInfoScreen extends Component<{}> {
                                        placeholderTextColor='rgb(196,196,196)'
                                        //placeholder={'请输入'}
                                 //keyboardType={'numeric'}
-                                       returnKeyType={'next'}
+                                       returnKeyType={'done'}
                                        onFocus={() => {
                                        }}
                                        onChangeText={(text) => {
@@ -113,7 +113,7 @@ export default class ProfileInfoScreen extends Component<{}> {
                                        placeholderTextColor='rgb(196,196,196)'
                                        //placeholder={'请输入'}
                                         keyboardType={'numeric'}
-                                       returnKeyType={'next'}
+                                       returnKeyType={'done'}
                                        onFocus={() => {
                                        }}
                                        onChangeText={(text) => {
@@ -152,6 +152,7 @@ export default class ProfileInfoScreen extends Component<{}> {
                             // disabled={props.btnSabled}
                             // onPress={props.onPress}
                     />
+                    <View style={theme.line_space_10}/>
                 </ScrollView>
             </View>
         );
@@ -202,26 +203,19 @@ const styles = StyleSheet.create({
 
     },
     fontLabel: {
-        fontSize: px2dp(28),
+        fontSize: 16,
         color: 'rgb(51,51,51)'
     },
     loginEnableButtonStyle: {
-        marginLeft: px2dp(90),
-        marginRight: px2dp(90),
-        height: px2dp(68),
-        marginTop: 27,
+        height: px2dp(100),
         backgroundColor: theme.themeColor,
         borderColor: 'transparent',
-        borderRadius: 30
     },
     loginDisableButtonStyle: {
-        marginLeft: px2dp(90),
-        marginRight: px2dp(90),
-        height: px2dp(86),
-        marginTop: 27,
+        height: px2dp(100),
         backgroundColor: theme.lightGray,
-        borderColor: 'transparent',
-        borderRadius: 30
+
+
     },
 });
 

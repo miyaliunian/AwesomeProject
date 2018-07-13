@@ -72,7 +72,7 @@ export default class MyPage extends Component<{}> {
                 <ScrollView>
                     <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='我的消息'
                                  callBack={() => this.itemClick(moreMenu.ProfileScreen.menu_profile_info)}/>
-                    <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='公司消息'
+                    <ProfileItem icon={require('../../icons/profile/icon_comInfo.png')} title='公司消息'
                                  callBack={() => this.itemClick('公司消息')}/>
                     <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='员工管理'
                                  callBack={() => this.itemClick('员工管理')}/>
@@ -93,7 +93,7 @@ export default class MyPage extends Component<{}> {
 
 const styles = StyleSheet.create({
     headerStyle: {
-        height:px2dp(240),
+        height:px2dp(190),
         width:theme.screenWidth,
         backgroundColor: theme.navColor,
         flexDirection: 'row',
