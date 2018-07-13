@@ -88,8 +88,8 @@ const TabStack = createBottomTabNavigator(
                 navigationOptions: {
                     headerStyle: {
                         backgroundColor: theme.navColor,
-                        borderBottomWidth:0,
-                        borderBottomColor:'transparent'
+                        borderBottomWidth: 0,
+                        borderBottomColor: 'transparent'
                     }
                 }
 
@@ -128,22 +128,41 @@ const AppStack = createStackNavigator(
     }
 );
 
+
+const AuthStackConfigs = {
+    initialRouteName: 'Login',
+    navigationOptions: {
+        headerStyle: {},
+        alignSelf: 'center',
+        // headerTitleStyle: {
+        //     fontWeight: 'bold',
+        //     color: 'white'
+        // },
+        header: null,
+        gesturesEnabled: true,
+        headerMode: 'screen'
+    },
+    transitionConfig: () => ({
+        screenInterpolator: CardStackStyleInterpolator.forHorizontal
+    }),
+};
+
 const AuthStack = createStackNavigator(
     {
+        // 登录
         Login: {
             screen: LoginScreen,
         },
+        // 注册
+        SignUp: {
+            screen: SignUpScreen,
+        },
+        // 设置密码
+        setPwd: {
+            screen: SetPwdScreen,
+        },
     },
-    {
-        initialRouteName: 'Login',
-        navigationOptions: {
-            gesturesEnabled: false,
-            headerStyle: {
-                backgroundColor: 'red',
-            },
-            header: null
-        }
-    }
+    AuthStackConfigs
 )
 
 
@@ -152,22 +171,11 @@ const AuthLoading = createStackNavigator(
         Loading: {
             screen: LoadingScreen,
         },
-        SignUp: {
-            screen: SignUpScreen,
-        },
-        setPwd: {
-            screen: SetPwdScreen,
-        },
     },
     {
-        initialRouteName: 'SignUp',
         navigationOptions: {
-            gesturesEnabled: true,
-            headerStyle: {
-
-            },
-            header: null
-        }
+            header: null,
+        },
     }
 )
 
