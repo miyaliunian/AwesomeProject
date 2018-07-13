@@ -5,6 +5,7 @@ export const Config ={
 
 
     //图床配置
+    API_FETCH_TOKEN:'app/uploadPic/',
        //上传
     API_QI_NIU_UPLOAD:'http://upload-z0.qiniup.com/',
 
@@ -14,5 +15,5 @@ export const Config ={
     //App
     API_LOGIN: 'u/login', //登录
     API_VALIDCODE: 'app/validCode?phone=', //验证码
-    API_FETCH_TOKEN:'app/uploadPic/',
+    API_SIGN: 'u/info', //验证码
 };

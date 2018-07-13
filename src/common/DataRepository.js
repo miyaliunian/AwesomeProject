@@ -85,6 +85,46 @@ export default class DataRepository {
 
     /**
      *
+     *  PUT:Form请求
+     *  @param url
+     *  @param params
+     *  @return {Promise}
+     * */
+    putFormRepository(url, formData) {
+        return new Promise((resolve, reject) => {
+            this.timeout_fetch(fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json; q=0.01',
+                    // 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    // 'Accept':'application/json',
+                    // 'Content-Type':'application/json'
+
+                },
+                body: formData,
+            }))
+                .then(response => response.json())
+                .then(response => {
+                    resolve(response);
+                })
+                .catch((error) => {
+                    if (error.message == 'Network request failed') {
+                        reject({status: '网络出错'});
+                    } else if (error === 'abort promise') {
+                        reject({status: '请求超时'});
+                    } else {
+                        reject({status: error.message});
+                        //reject({status: '请求超时：服务器无响应'});
+                    }
+                })
+                .done()
+
+        })
+    }
+
+
+    /**
+     *
      *  POST:Form请求
      *  @param url
      *  @param params

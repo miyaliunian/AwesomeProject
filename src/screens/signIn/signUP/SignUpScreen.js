@@ -71,6 +71,7 @@ export default class SignUpScreen extends Component {
 
     //注册
     onLoginBtn() {
+        debugger
         //手机号格式验证
         let regex = /^1[34578]\d{9}$/;
         if (!regex.test(this.mobxStore.USER_INFO.phone)) {
@@ -89,11 +90,12 @@ export default class SignUpScreen extends Component {
         //拼接登录参数
         let PARAM = new FormData();
         PARAM.append('phone', this.mobxStore.USER_INFO.phone)
-        PARAM.append('phone', MD5(this.mobxStore.USER_INFO.phone))
-        PARAM.append('phone', MD5(this.mobxStore.USER_INFO.phone))
+        PARAM.append('validCode', this.mobxStore.USER_INFO.verify)
+        PARAM.append('pwd', MD5(this.mobxStore.USER_INFO.pwd))
         //发送登录请求
-        this.dataRepository.postFormRepository(Config.BASE_URL + Config.API_LOGIN, PARAM)
+        this.dataRepository.putFormRepository(Config.BASE_URL + Config.API_SIGN, PARAM)
             .then((data) => {
+            debugger
                 if (data.flag == '1') {
                     this.setState({
                         isLoginModal: false,
@@ -151,9 +153,8 @@ export default class SignUpScreen extends Component {
             .done()
     }
 
-    //
+    //上传头像到七牛图床
     uploadAvatar(imageUrl, imageUUID) {
-
         let PARAM = imageUUID;
         this.dataRepository.getRepository(Config.BASE_URL + Config.API_FETCH_TOKEN + PARAM)
             .then((data) => {
@@ -178,7 +179,7 @@ export default class SignUpScreen extends Component {
                     let xhr = new XMLHttpRequest();
                     xhr.open('POST',Config.API_QI_NIU_UPLOAD)
                     xhr.onload = () => {
-                        debugger
+
                         if (xhr.status !== 200){
                             DeviceEventEmitter.emit('signInToastInfo', '请求失败', 'sad');
                             console.log(xhr.responseText)
@@ -197,7 +198,7 @@ export default class SignUpScreen extends Component {
                         } catch (e) {
                             DeviceEventEmitter.emit('signInToastInfo', e, 'sad');
                         }
-                        debugger
+
                         if (response && response.key){
                             this.mobxStore.USER_INFO.avatar = Config.API_QI_NIU_AVATAR+response.key;
                         }
@@ -316,6 +317,7 @@ const LoginView = (props) => {
         </View>
     )
 };
+
 
 const styles = StyleSheet.create({
     bg: {
