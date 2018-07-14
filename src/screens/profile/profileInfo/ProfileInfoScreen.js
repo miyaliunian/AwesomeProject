@@ -25,7 +25,8 @@ export default class ProfileInfoScreen extends Component<{}> {
         super(props);
         this.state = {
             phone: '',
-            userName: ''
+            userName: '',
+            isShowModal:false,
         }
     }
 
@@ -38,8 +39,8 @@ export default class ProfileInfoScreen extends Component<{}> {
     }
 
 
-    navBtn(target) {
-        this.props.navigation.navigate(target)
+    navBtn() {
+
     }
 
     render() {
@@ -156,7 +157,7 @@ export default class ProfileInfoScreen extends Component<{}> {
                     <View style={theme.line_space_10}/>
                     <View style={styles.footerContent}>
                         <Text style={styles.footerLabel}>所属角色：暂无</Text>
-                        <TouchableOpacity onPress={() => this.navBtn(moreMenu.ProfileScreen.menu_supplier_info)}>
+                        <TouchableOpacity onPress={() => this.setState({isShowModal:true})}>
                             <Text style={[styles.footerLabel, {color: theme.navColor}]}>申请成为供应商</Text>
                         </TouchableOpacity>
 
@@ -164,7 +165,12 @@ export default class ProfileInfoScreen extends Component<{}> {
                 </ScrollView>
 
                 {/*申请成为供应商*/}
-                <Modal visible={true} transparent={true}>
+                <Modal
+                    visible={this.state.isShowModal}
+                    transparent={true}
+                    animationType={'fade'}
+
+                >
                     <View style={styles.modalBackgroundStyle}>
                         <View style={styles.innerContainerTransparentStyle}>
                             <View style={{height:50,justifyContent:'center',alignItems:'center'}}>
@@ -201,10 +207,12 @@ export default class ProfileInfoScreen extends Component<{}> {
                                     <Button title={'取 消'}
                                             titleStyle={{fontSize: 15, color: 'black'}}
                                             style={styles.innderButton}
+                                            onPress={() => this.setState({isShowModal:false})}
                                     />
                                     <Button title={'确 定'}
                                             titleStyle={{fontSize: 15, color: 'white'}}
                                             style={[styles.innderButton,{backgroundColor:theme.navColor}]}
+                                            onPress={() => this.setState({isShowModal:false})}
                                     />
                                 </View>
                             </View>
