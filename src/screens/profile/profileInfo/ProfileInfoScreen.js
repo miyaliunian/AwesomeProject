@@ -274,6 +274,7 @@ const styles = StyleSheet.create({
     },
     TextInputStyle: {
         height: px2dp(90),
+        width:200,
         marginRight: px2dp(20),
         paddingTop: 0,
         paddingBottom: 0,
