@@ -19,9 +19,10 @@ export const moreMenu = {
 
     },
 
-    // 我的
+    // 我的S
     ProfileScreen: {
-        menu_profile_info:'ProfileInfoScreen'
+        menu_profile_info:'ProfileInfoScreen',
+        menu_supplier_info:'SupplierInfoScreen'
     },
 
 };

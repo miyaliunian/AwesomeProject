@@ -26,6 +26,7 @@ import  ManagerScreen from './src/screens/manage/ManagerScreen'
 //我的
 import  ProfileScreen from './src/screens/profile/ProfileScreen'
 import  ProfileInfoScreen from './src/screens/profile/profileInfo/ProfileInfoScreen'
+import  SupplierInfoScreen from './src/screens/profile/supplier/SupplierInfoScreen'
 
 
 export default class App extends Component {
@@ -91,7 +92,10 @@ const TabStack = createBottomTabNavigator(
                 },
                 ProfileInfoScreen: {
                     screen: ProfileInfoScreen
-                }
+                },
+                SupplierInfoScreen: {
+                    screen: SupplierInfoScreen
+                },
             }, {
                 navigationOptions: {
                     headerStyle: {

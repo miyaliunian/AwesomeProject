@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import {
     StyleSheet,
     View,
-    Platform,
     TouchableOpacity,
     Image,
+    Modal,
     TextInput,
     Text,
     ScrollView
 } from 'react-native';
+// import Modal from 'react-native-modal'
 import {Button} from 'teaset';
 import theme from '../../../common/theme';
 import px2dp from '../../../common/px2dp';
@@ -37,13 +38,13 @@ export default class ProfileInfoScreen extends Component<{}> {
     }
 
 
-    itemClick(target) {
+    navBtn(target) {
         this.props.navigation.navigate(target)
     }
 
     render() {
         return (
-            <View style={theme.root_container}>
+            <View style={[theme.root_container, {alignItems: 'center'}]}>
                 <View style={styles.headerStyle}>
                     <Image source={require('../../../icons/profile/default_portrait.png')}
                            style={{
@@ -65,8 +66,8 @@ export default class ProfileInfoScreen extends Component<{}> {
                                        maxLength={18}
                                        underlineColorAndroid='rgb(255,255,255)'
                                        placeholderTextColor='rgb(196,196,196)'
-                                       //placeholder={'请输入'}
-                                       //keyboardType={'numeric'}
+                                       placeholder={'请输入'}
+                                //keyboardType={'numeric'}
                                        returnKeyType={'done'}
                                        onFocus={() => {
                                        }}
@@ -88,7 +89,7 @@ export default class ProfileInfoScreen extends Component<{}> {
                                        maxLength={18}
                                        underlineColorAndroid='rgb(255,255,255)'
                                        placeholderTextColor='rgb(196,196,196)'
-                                       //placeholder={'请输入'}
+                                       placeholder={'请输入'}
                                 //keyboardType={'numeric'}
                                        returnKeyType={'done'}
                                        onFocus={() => {
@@ -111,8 +112,8 @@ export default class ProfileInfoScreen extends Component<{}> {
                                        maxLength={18}
                                        underlineColorAndroid='rgb(255,255,255)'
                                        placeholderTextColor='rgb(196,196,196)'
-                                       //placeholder={'请输入'}
-                                        keyboardType={'numeric'}
+                                       placeholder={'请输入'}
+                                       keyboardType={'numeric'}
                                        returnKeyType={'done'}
                                        onFocus={() => {
                                        }}
@@ -134,7 +135,7 @@ export default class ProfileInfoScreen extends Component<{}> {
                                        maxLength={18}
                                        underlineColorAndroid='rgb(255,255,255)'
                                        placeholderTextColor='rgb(196,196,196)'
-                                       //placeholder={'请输入'}
+                                       placeholder={'请输入'}
                                        returnKeyType={'done'}
                                        onFocus={() => {
                                        }}
@@ -149,11 +150,68 @@ export default class ProfileInfoScreen extends Component<{}> {
                     <Button title={'保 存'}
                             style={false ? styles.loginDisableButtonStyle : styles.loginEnableButtonStyle}
                             titleStyle={{fontSize: 18, color: 'white'}}
-                            // disabled={props.btnSabled}
-                            // onPress={props.onPress}
+                        // disabled={props.btnSabled}
+                        // onPress={props.onPress}
                     />
                     <View style={theme.line_space_10}/>
+                    <View style={styles.footerContent}>
+                        <Text style={styles.footerLabel}>所属角色：暂无</Text>
+                        <TouchableOpacity onPress={() => this.navBtn(moreMenu.ProfileScreen.menu_supplier_info)}>
+                            <Text style={[styles.footerLabel, {color: theme.navColor}]}>申请成为供应商</Text>
+                        </TouchableOpacity>
+
+                    </View>
                 </ScrollView>
+
+                {/*申请成为供应商*/}
+                <Modal visible={true} transparent={true}>
+                    <View style={styles.modalBackgroundStyle}>
+                        <View style={styles.innerContainerTransparentStyle}>
+                            <View style={{height:50,justifyContent:'center',alignItems:'center'}}>
+                                <Text style={styles.innnerTitle}>申请成为供应商</Text>
+                            </View>
+                            <View style={{backgroundColor: 'white',alignItems:'center',borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
+                                <TextInput style={{
+                                    height: 106,
+                                    marginTop:12,
+                                    width:theme.screenWidth-80,
+                                    borderWidth: 1,
+                                    borderColor: 'rgba(190,190,190,0.5)',
+                                    color: '#333',
+                                    textAlignVertical: 'top',
+                                    backgroundColor: '#f0eff0'
+                                }}
+                                           placeholder={'申请成为工程商需要填写申请说明'}
+                                           ref="textInput"
+                                           placeholderTextColor='#b3b3b3'
+                                           multiline={true}
+                                           underlineColorAndroid='#f0eff0'
+                                           returnKeyType='done'
+                                           maxLength={500}
+                                />
+                                <Text style={styles.innnerSubTitle}> 说明 : 申请成为供应商,警告平台进行审核，通过以后,</Text>
+                                <Text style={[styles.innnerSubTitle,{marginTop:2}]}> 你就可以添加工程人员并安卓冷库工程了</Text>
+
+                                <View style={{
+                                    marginVertical: 17,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
+                                    <Button title={'取 消'}
+                                            titleStyle={{fontSize: 15, color: 'black'}}
+                                            style={styles.innderButton}
+                                    />
+                                    <Button title={'确 定'}
+                                            titleStyle={{fontSize: 15, color: 'white'}}
+                                            style={[styles.innderButton,{backgroundColor:theme.navColor}]}
+                                    />
+                                </View>
+                            </View>
+
+                        </View>
+                    </View>
+                </Modal>
             </View>
         );
     }
@@ -164,14 +222,13 @@ const styles = StyleSheet.create({
         height: px2dp(190),
         width: theme.screenWidth,
         backgroundColor: theme.navColor,
-        // backgroundColor: 'red',
         paddingLeft: px2dp(24),
         paddingRight: px2dp(24),
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
     row: {
-        flex:1,
+        flex: 1,
         backgroundColor: 'rgb(255,255,255)',
         height: px2dp(100),
         borderWidth: 0,
@@ -191,7 +248,6 @@ const styles = StyleSheet.create({
     TextInputStyle: {
         height: px2dp(90),
         marginRight: px2dp(20),
-        width: theme.screenWidth,
         paddingTop: 0,
         paddingBottom: 0,
         paddingRight: 0,
@@ -200,7 +256,6 @@ const styles = StyleSheet.create({
     fontText: {
         fontSize: px2dp(28),
         color: 'rgb(196,196,196)',
-
     },
     fontLabel: {
         fontSize: 16,
@@ -214,8 +269,43 @@ const styles = StyleSheet.create({
     loginDisableButtonStyle: {
         height: px2dp(100),
         backgroundColor: theme.lightGray,
-
-
     },
+    footerContent: {
+        flexDirection: 'row',
+        height: px2dp(70),
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    },
+
+    // modal
+    modalBackgroundStyle: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    innerContainerTransparentStyle: {
+        backgroundColor: theme.navColor,
+        borderRadius: 10,
+        width: theme.screenWidth - 50,
+    },
+    innnerTitle: {
+        fontSize: 20,
+        color: 'white',
+        marginTop: 13
+    },
+    innnerSubTitle: {
+        fontSize: 12,
+        color: '#333333',
+        marginTop: 13
+    },
+    innderButton:{
+        width: 110,
+        height:40,
+        marginRight: 20,
+        backgroundColor: 'rgb(153,153,153)',
+        borderColor: 'transparent',
+        borderRadius:20,
+    }
 });
 
