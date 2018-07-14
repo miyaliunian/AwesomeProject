@@ -106,7 +106,7 @@ export default class SignUpScreen extends Component {
                     //缓存用户信息 = 1：头像、2：手机号
                     DeviceEventEmitter.emit('signInToastInfo', '注册成功...', 'smile');
                     this.saveAccountInfo(data.data);
-                    this.props.navigation.navigate('App')
+                    this.props.navigation.navigate('ImpAuthStack')
                 } else {
                     this.setState({
                         isLoginModal: false,

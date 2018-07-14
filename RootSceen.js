@@ -15,8 +15,9 @@ import Icon from 'react-native-vector-icons/Ionicons'
 //业务导入
 
 import  LoadingScreen from './src/screens/LoadingScreen'
-// 登录-注册-忘记密码
+// 登录-注册-完善个人-忘记密码
 import LoginScreen from './src/screens/signIn/LoginScreen'
+import ImpProfileInfo from './src/screens/signIn/impProInfo/ImpProfileInfo'
 import SignUpScreen from './src/screens/signIn/signUP/SignUpScreen'
 import SetPwdScreen from './src/screens/signIn/setPwd/SetPwdScreen'
 // 首页
@@ -112,11 +113,11 @@ const TabStack = createBottomTabNavigator(
                             size={20}
                             color={'white'}/>
                     ),
-                    headerBackTitle:'返回',
-                    headerBackTitleStyle:{
+                    headerBackTitle: '返回',
+                    headerBackTitleStyle: {
                         color: 'white'
                     },
-                    headerForceInset:{ left:7}
+                    headerForceInset: {left: 7}
                 }
 
             }),
@@ -157,6 +158,38 @@ const AppStack = createStackNavigator(
 );
 
 
+const ImpAuthStack = createStackNavigator(
+    {
+        //完善资料:(注册之后强制跳转到此页面)
+        index: {
+            screen: ImpProfileInfo,
+        },
+    },
+    {
+        navigationOptions: {
+            headerStyle: {
+                backgroundColor: theme.navColor,
+                borderBottomWidth: 0,
+                borderBottomColor: 'transparent',
+            },
+            headerTitleStyle: {
+                color: 'white'
+            },
+            headerBackImage: (tintColor, title) => (
+                <SimpleLineIcons
+                    name={'arrow-left'}
+                    size={20}
+                    color={'white'}/>
+            ),
+            headerBackTitle: '返回',
+            headerBackTitleStyle: {
+                color: 'white'
+            },
+            headerForceInset: {left: 7}
+        }
+    }
+)
+
 const AuthStackConfigs = {
     initialRouteName: 'Login',
     navigationOptions: {
@@ -193,7 +226,6 @@ const AuthStack = createStackNavigator(
     AuthStackConfigs
 )
 
-
 const AuthLoading = createStackNavigator(
     {
         Loading: {
@@ -211,11 +243,12 @@ const SwitchNavigator = createSwitchNavigator(
     {
         AuthLoading: AuthLoading,
         Auth: AuthStack,
+        ImpAuth: ImpAuthStack,
         App: AppStack,
 
     },
     {
-        initialRouteName: 'AuthLoading',
+        initialRouteName: 'ImpAuth',
     }
 )
 
