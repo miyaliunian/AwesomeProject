@@ -26,14 +26,16 @@ export default class ProfileInfoScreen extends Component<{}> {
         this.state = {
             phone: '',
             userName: '',
-            isShowModal:false,
+            avatar: '',
+            isShowModal: false,
         }
     }
 
     componentDidMount() {
         let {account} = this.props
         this.setState({
-            phone: account.phone
+            phone: account.phone,
+            avatar: account.avatar,
         })
         console.log(account)
     }
@@ -47,13 +49,25 @@ export default class ProfileInfoScreen extends Component<{}> {
         return (
             <View style={[theme.root_container, {alignItems: 'center'}]}>
                 <View style={styles.headerStyle}>
-                    <Image source={require('../../../icons/profile/default_portrait.png')}
-                           style={{
-                               height: px2dp(160),
-                               width: px2dp(160),
-                               borderRadius: px2dp(80),
-                               marginRight: 10
-                           }}/>
+                    {this.state.avatar
+                        ?
+                        <Image source={{uri:this.state.avatar}}
+                               style={{
+                                   height: px2dp(160),
+                                   width: px2dp(160),
+                                   borderRadius: px2dp(80),
+                                   marginRight: 10
+                               }}/>
+                        :
+                        <Image source={require('../../../icons/profile/default_portrait.png')}
+                               style={{
+                                   height: px2dp(160),
+                                   width: px2dp(160),
+                                   borderRadius: px2dp(80),
+                                   marginRight: 10
+                               }}/>
+                    }
+
                 </View>
                 <View style={theme.line_space_10}/>
                 <ScrollView>
@@ -157,7 +171,7 @@ export default class ProfileInfoScreen extends Component<{}> {
                     <View style={theme.line_space_10}/>
                     <View style={styles.footerContent}>
                         <Text style={styles.footerLabel}>所属角色：暂无</Text>
-                        <TouchableOpacity onPress={() => this.setState({isShowModal:true})}>
+                        <TouchableOpacity onPress={() => this.setState({isShowModal: true})}>
                             <Text style={[styles.footerLabel, {color: theme.navColor}]}>申请成为供应商</Text>
                         </TouchableOpacity>
 
@@ -173,14 +187,19 @@ export default class ProfileInfoScreen extends Component<{}> {
                 >
                     <View style={styles.modalBackgroundStyle}>
                         <View style={styles.innerContainerTransparentStyle}>
-                            <View style={{height:50,justifyContent:'center',alignItems:'center'}}>
+                            <View style={{height: 50, justifyContent: 'center', alignItems: 'center'}}>
                                 <Text style={styles.innnerTitle}>申请成为供应商</Text>
                             </View>
-                            <View style={{backgroundColor: 'white',alignItems:'center',borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
+                            <View style={{
+                                backgroundColor: 'white',
+                                alignItems: 'center',
+                                borderBottomLeftRadius: 10,
+                                borderBottomRightRadius: 10
+                            }}>
                                 <TextInput style={{
                                     height: 106,
-                                    marginTop:12,
-                                    width:theme.screenWidth-80,
+                                    marginTop: 12,
+                                    width: theme.screenWidth - 80,
                                     borderWidth: 1,
                                     borderColor: 'rgba(190,190,190,0.5)',
                                     color: '#333',
@@ -196,7 +215,7 @@ export default class ProfileInfoScreen extends Component<{}> {
                                            maxLength={500}
                                 />
                                 <Text style={styles.innnerSubTitle}> 说明 : 申请成为供应商,警告平台进行审核，通过以后,</Text>
-                                <Text style={[styles.innnerSubTitle,{marginTop:2}]}> 你就可以添加工程人员并安卓冷库工程了</Text>
+                                <Text style={[styles.innnerSubTitle, {marginTop: 2}]}> 你就可以添加工程人员并安卓冷库工程了</Text>
 
                                 <View style={{
                                     marginVertical: 17,
@@ -207,12 +226,12 @@ export default class ProfileInfoScreen extends Component<{}> {
                                     <Button title={'取 消'}
                                             titleStyle={{fontSize: 15, color: 'black'}}
                                             style={styles.innderButton}
-                                            onPress={() => this.setState({isShowModal:false})}
+                                            onPress={() => this.setState({isShowModal: false})}
                                     />
                                     <Button title={'确 定'}
                                             titleStyle={{fontSize: 15, color: 'white'}}
-                                            style={[styles.innderButton,{backgroundColor:theme.navColor}]}
-                                            onPress={() => this.setState({isShowModal:false})}
+                                            style={[styles.innderButton, {backgroundColor: theme.navColor}]}
+                                            onPress={() => this.setState({isShowModal: false})}
                                     />
                                 </View>
                             </View>
@@ -307,13 +326,13 @@ const styles = StyleSheet.create({
         color: '#333333',
         marginTop: 13
     },
-    innderButton:{
+    innderButton: {
         width: 110,
-        height:40,
+        height: 40,
         marginRight: 20,
         backgroundColor: 'rgb(153,153,153)',
         borderColor: 'transparent',
-        borderRadius:20,
+        borderRadius: 20,
     }
 });
 

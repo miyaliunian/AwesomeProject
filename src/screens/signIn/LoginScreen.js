@@ -94,6 +94,7 @@ export default class LoginScreen extends Component {
                     });
                     DeviceEventEmitter.emit('signInToastInfo', '可以登录', 'smile');
                     this.saveAccountInfo(data.data);
+                    this.props.navigation.navigate('App')
                 }else{
                     this.setState({
                         isLoginModal: false,

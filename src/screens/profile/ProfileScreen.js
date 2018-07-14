@@ -5,7 +5,8 @@ import {
     Image,
     AsyncStorage,
     Text,
-    ScrollView
+    ScrollView,
+    TouchableOpacity,
 } from 'react-native';
 
 import theme from '../../common/theme';
@@ -65,10 +66,10 @@ export default class MyPage extends Component<{}> {
             //清除App注入缓存
             this.removeRepository()
             this.props.navigation.navigate('Auth');
-
         }
     }
 
+    //清除App注入缓存
     removeRepository() {
         this.account = Account;
         this.account.avatar = '';
@@ -78,6 +79,7 @@ export default class MyPage extends Component<{}> {
         this.account.userName = ''
         this.account.userRole = ''
     }
+
 
     render() {
         return (
@@ -107,15 +109,17 @@ export default class MyPage extends Component<{}> {
                             <Text style={styles.txtStyle}>{this.state.phone}</Text>
                         </View>
                     </View>
-                    <SimpleLineIcons
-                        name={'arrow-right'}
-                        size={20}
-                        color={'white'}/>
+                    <TouchableOpacity style={{width:50,height:50,alignItems:'flex-end'}} onPress = {() => this.itemClick(moreMenu.ProfileScreen.menu_profile_info)}>
+                        <SimpleLineIcons
+                            name={'arrow-right'}
+                            size={20}
+                            color={'white'}/>
+                    </TouchableOpacity>
                 </View>
                 <View style={theme.line_space_10}/>
                 <ScrollView>
                     <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='我的消息'
-                                 callBack={() => this.itemClick(moreMenu.ProfileScreen.menu_profile_info)}/>
+                                 callBack={() => this.itemClick()}/>
                     <ProfileItem icon={require('../../icons/profile/icon_comInfo.png')} title='公司消息'
                                  callBack={() => this.itemClick('公司消息')}/>
                     <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='员工管理'
