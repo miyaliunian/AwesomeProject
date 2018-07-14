@@ -27,7 +27,6 @@ import Account from '../../../store/common/Account'
 import MD5 from 'blueimp-md5'
 import uuid from 'uuid'
 
-
 @observer
 export default class SignUpScreen extends Component {
 
@@ -70,8 +69,10 @@ export default class SignUpScreen extends Component {
         this.subscription.remove();
     }
 
+
     //注册
     onLoginBtn() {
+        debugger
         //手机号格式验证
         let regex = /^1[34578]\d{9}$/;
         if (!regex.test(this.mobxStore.USER_INFO.phone)) {
@@ -147,15 +148,15 @@ export default class SignUpScreen extends Component {
             DeviceEventEmitter.emit('signInToastInfo', '请填写手机号,再获取验证码', 'sad');
             return;
         }
+
         //弹出Modal
         this.setState({
             isLoginModal: true,
         })
-        let param = this.mobxStore.USER_INFO.phone;
 
+        let param = this.mobxStore.USER_INFO.phone;
         this.dataRepository.getRepository(Config.BASE_URL + Config.API_VALIDCODE + param)
             .then((data) => {
-
                 if (data.flag == '1') {
                     this.setState({
                         isLoginModal: false,
@@ -291,6 +292,7 @@ export default class SignUpScreen extends Component {
                             onChanger4Text={(text) => {
                                 this.mobxStore.USER_INFO.conPwd = text;
                             }}
+                            secureTextEntry={true}
                             btnSabled={this.mobxStore.btnState}
                         />
                         <LoadingModal txtTitle={'请稍后...'} visible={this.state.isLoginModal}/>
@@ -323,11 +325,13 @@ const LoginView = (props) => {
             <LoginInput placeholder='请输入密码'
                         icon={require('../../../icons/login/icon_mm.png')}
                         onChangeText={props.onChanger3Text}
+                        secureTextEntry={props.secureTextEntry}
             />
 
             <LoginInput placeholder='请再次输入密码'
                         icon={require('../../../icons/login/icon_mm.png')}
                         onChangeText={props.onChanger4Text}
+                        secureTextEntry={props.secureTextEntry}
             />
 
             <Button title={'注 册'}

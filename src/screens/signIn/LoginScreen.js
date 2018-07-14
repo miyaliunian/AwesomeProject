@@ -150,6 +150,7 @@ export default class LoginScreen extends Component {
                             onChangeBottomText={(text) => {
                                 this.mobxStore.USER_INFO.user_password = text;
                             }}
+                            secureTextEntry={true}
                             onSignUpTextPress={() => this.onClickText('SignUp')}
                             onTextPress={() => this.onClickText('setPwd')}
                             btnSabled={this.mobxStore.btnState}
@@ -175,6 +176,7 @@ const LoginView = (props) => {
             <LoginInput placeholder='密码'
                         icon={require('../../icons/login/icon_mm.png')}
                         onChangeText={props.onChangeBottomText}
+                        secureTextEntry={props.secureTextEntry}
             />
 
             <Button title={'登 录'}
