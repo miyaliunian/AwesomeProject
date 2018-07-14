@@ -15,5 +15,6 @@ export const Config ={
     //App
     API_LOGIN: 'u/login', //登录
     API_VALIDCODE: 'app/validCode?phone=', //验证码
-    API_SIGN: '/u/register', //验证码
+    API_SIGN: '/u/register', //注册
+    API_PRO_INFO:'/u/info',//完善资料
 };

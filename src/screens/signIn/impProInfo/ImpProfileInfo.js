@@ -14,14 +14,17 @@ import {
     Text,
     ScrollView
 } from 'react-native';
-// import Modal from 'react-native-modal'
-import {Button} from 'teaset';
+import {Button, Toast} from 'teaset';
 import theme from '../../../common/theme';
+import LoadingModal from "../../../components/LoadingModal";
 import px2dp from '../../../common/px2dp';
 import {moreMenu} from '../../../config/moreMenu';
+import DataRepository from '../../../common/DataRepository'
 import HeaderButtons from 'react-navigation-header-buttons'
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import {inject} from 'mobx-react/native'
+import ImpProMobxStore from '../../../components/ImpProMobxStore'
+import {inject,observer} from 'mobx-react/native'
+@observer
 @inject('account')
 export default class ImpProfileInfo extends Component<{}> {
     static navigationOptions = ({navigation}) => ({
@@ -36,34 +39,146 @@ export default class ImpProfileInfo extends Component<{}> {
     constructor(props) {
         super(props);
         this.state = {
-            phone: '',
-            userName: '',
             avatar: '',
+            userName: '',
+            nickName: '',
+            phone: '',
+            address: '',
             isShowModal: false,
+            isLoginModal: false,
         }
+        this.dataRepository = new DataRepository();
+        this.mobxStore = new ImpProMobxStore();
     }
 
     componentDidMount() {
         let {account} = this.props
         this.setState({
-            phone: account.phone,
             avatar: account.avatar,
+            userName: account.userName,
+            nickName: account.nickName,
+            phone: account.phone,
+            address: account.address,
         })
-        console.log(account)
     }
 
+    //保存个人信息
+    onSave() {
+        debugger
+        //头像
+        if (this.mobxStore.IMP_PRO_INFO.avatar == ''){
+            if (this.state.avatar != '') {
+                this.mobxStore.IMP_PRO_INFO.avatar = this.state.avatar
+            }else{
+                DeviceEventEmitter.emit('toastInfo', '头像不能为空!', 'sad');
+            }
+        }
 
-    navBtn() {
+        // 姓名
+        if (this.mobxStore.IMP_PRO_INFO.userName == ''){
+            if (this.state.userName != '') {
+                this.mobxStore.IMP_PRO_INFO.userName = this.state.userName
+            }else{
+                DeviceEventEmitter.emit('toastInfo', '姓名不能为空!', 'sad');
+            }
+        }
 
+        // 昵称
+        if (this.mobxStore.IMP_PRO_INFO.nickName == ''){
+            if (this.state.nickName != undefined) {
+                this.mobxStore.IMP_PRO_INFO.nickName = this.state.nickName
+            }
+        }
+
+        // 电话
+        if (this.mobxStore.IMP_PRO_INFO.phone == ''){
+            if (this.state.phone != '') {
+                this.mobxStore.IMP_PRO_INFO.phone = this.state.phone
+            }else{
+                DeviceEventEmitter.emit('toastInfo', '电话不能为空!', 'sad');
+            }
+        }
+
+        // 地址
+        if (this.mobxStore.IMP_PRO_INFO.address == ''){
+            if (this.state.address != undefined) {
+                this.mobxStore.IMP_PRO_INFO.address = this.state.address
+            }else{
+                DeviceEventEmitter.emit('toastInfo', '地址不能为空!', 'sad');
+            }
+        }
+
+        let regex = /^1[34578]\d{9}$/;
+        if (!regex.test(this.mobxStore.IMP_PRO_INFO.phone)) {
+            DeviceEventEmitter.emit('toastInfo', '手机号格式不正确', 'sad');
+            return;
+        }
+
+        //弹出Modal
+        this.setState({
+            isLoginModal: true,
+        })
+
+        //拼接登录参数
+        let PARAM = new FormData();
+        PARAM.append('userName', this.mobxStore.IMP_PRO_INFO.userName)
+        PARAM.append('avatar', this.mobxStore.IMP_PRO_INFO.avatar)
+        PARAM.append('addr', this.mobxStore.IMP_PRO_INFO.address)
+        PARAM.append('phone', this.mobxStore.IMP_PRO_INFO.phone)
+
+        //发送登录请求
+        this.dataRepository.postFormRepository(Config.BASE_URL + Config.API_PRO_INFO, PARAM)
+            .then((data) => {
+                debugger
+                if (data.flag == '1') {
+                    this.setState({
+                        isLoginModal: false,
+                    });
+                    this.saveAccountInfo(data.data);
+                    this.props.navigation.navigate('ImpAuthStack')
+                } else {
+                    this.setState({
+                        isLoginModal: false,
+                    });
+                    DeviceEventEmitter.emit('signInToastInfo', data.msg, 'sad');
+                }
+            })
+            .catch((err) => {
+                this.setState({
+                    isLoginModal: false,
+                })
+                DeviceEventEmitter.emit('signInToastInfo', err.status, 'stop');
+            })
+            .done()
     }
 
+    //本地缓存策略
+    saveAccountInfo(data){
+        this.account = Account;
+        this.account.avatar = data.avatar;
+        this.account.phone = data.phone;
+        this.account.pushId = data.pushId;
+        this.account.userId = data.userId;
+        this.account.userName = data.userName;
+        this.account.userRole = data.userRole;
+        this.dataRepository.mergeLocalRepository('ACCOUNT', data)
+            .then(result => {
+                console.log(result)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+            .done()
+    }
+
+    //页面渲染
     render() {
         return (
             <View style={[theme.root_container, {alignItems: 'center'}]}>
                 <View style={styles.headerStyle}>
                     {this.state.avatar
                         ?
-                        <Image source={{uri:this.state.avatar}}
+                        <Image source={{uri: this.state.avatar}}
                                style={{
                                    height: px2dp(160),
                                    width: px2dp(160),
@@ -94,14 +209,11 @@ export default class ImpProfileInfo extends Component<{}> {
                                        underlineColorAndroid='rgb(255,255,255)'
                                        placeholderTextColor='rgb(196,196,196)'
                                        placeholder={'请输入'}
-                                //keyboardType={'numeric'}
                                        returnKeyType={'done'}
-                                       onFocus={() => {
-                                       }}
                                        onChangeText={(text) => {
-                                           this.state.name = text
+                                           this.mobxStore.IMP_PRO_INFO.userName = text;
                                        }}
-                                       defaultValue={this.state.name}
+                                       defaultValue={this.state.userName}
                             />
                         </View>
                     </View>
@@ -117,14 +229,11 @@ export default class ImpProfileInfo extends Component<{}> {
                                        underlineColorAndroid='rgb(255,255,255)'
                                        placeholderTextColor='rgb(196,196,196)'
                                        placeholder={'请输入'}
-                                //keyboardType={'numeric'}
                                        returnKeyType={'done'}
-                                       onFocus={() => {
-                                       }}
                                        onChangeText={(text) => {
-                                           this.state.nickname = text
+                                           this.mobxStore.IMP_PRO_INFO.nickName = text;
                                        }}
-                                       defaultValue={this.state.nickname}
+                                       defaultValue={this.state.nickName}
                             />
                         </View>
                     </View>
@@ -142,10 +251,8 @@ export default class ImpProfileInfo extends Component<{}> {
                                        placeholder={'请输入'}
                                        keyboardType={'numeric'}
                                        returnKeyType={'done'}
-                                       onFocus={() => {
-                                       }}
                                        onChangeText={(text) => {
-                                           this.state.phone = text
+                                           this.mobxStore.IMP_PRO_INFO.phone = text;
                                        }}
                                        defaultValue={this.state.phone}
                             />
@@ -164,10 +271,8 @@ export default class ImpProfileInfo extends Component<{}> {
                                        placeholderTextColor='rgb(196,196,196)'
                                        placeholder={'请输入'}
                                        returnKeyType={'done'}
-                                       onFocus={() => {
-                                       }}
                                        onChangeText={(text) => {
-                                           this.state.address = text
+                                           this.mobxStore.IMP_PRO_INFO.address = text;
                                        }}
                                        defaultValue={this.state.address}
                             />
@@ -175,10 +280,9 @@ export default class ImpProfileInfo extends Component<{}> {
                     </View>
                     <View style={theme.line_space_10}/>
                     <Button title={'保 存'}
-                            style={false ? styles.loginDisableButtonStyle : styles.loginEnableButtonStyle}
+                            style={ styles.loginEnableButtonStyle}
                             titleStyle={{fontSize: 18, color: 'white'}}
-                        // disabled={props.btnSabled}
-                        // onPress={props.onPress}
+                            onPress={() => this.onSave()}
                     />
                     <View style={theme.line_space_10}/>
                     <View style={styles.footerContent}>
@@ -251,6 +355,7 @@ export default class ImpProfileInfo extends Component<{}> {
                         </View>
                     </View>
                 </Modal>
+                <LoadingModal txtTitle={'请稍后...'} visible={this.state.isLoginModal}/>
             </View>
         );
     }
@@ -286,7 +391,7 @@ const styles = StyleSheet.create({
     },
     TextInputStyle: {
         height: px2dp(90),
-        width:200,
+        width: 200,
         marginRight: px2dp(20),
         paddingTop: 0,
         paddingBottom: 0,
@@ -302,13 +407,14 @@ const styles = StyleSheet.create({
         color: 'rgb(51,51,51)'
     },
     loginEnableButtonStyle: {
-        height: px2dp(100),
+        height: px2dp(96),
         backgroundColor: theme.themeColor,
         borderColor: 'transparent',
     },
     loginDisableButtonStyle: {
-        height: px2dp(100),
+        height: px2dp(96),
         backgroundColor: theme.lightGray,
+        borderColor: 'transparent',
     },
     footerContent: {
         flexDirection: 'row',

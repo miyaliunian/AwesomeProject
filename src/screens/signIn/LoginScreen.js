@@ -116,9 +116,10 @@ export default class LoginScreen extends Component {
         this.account.avatar = data.avatar;
         this.account.phone = data.phone;
         this.account.pushId = data.pushId;
-        this.account.userId = data.userId;
         this.account.userName = data.userName;
         this.account.userRole = data.userRole;
+        this.account.nickName = data.nickName;
+        this.account.address = data.address;
         this.dataRepository.mergeLocalRepository('ACCOUNT', data)
             .then(result => {
                 console.log(result)

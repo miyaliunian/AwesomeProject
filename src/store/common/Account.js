@@ -11,7 +11,9 @@ class Account {
     @observable
     pushId = ''
     @observable
-    userId = ''
+    nickName = ''
+    @observable
+    address = ''
     @observable
     userName = ''
     @observable

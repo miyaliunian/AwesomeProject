@@ -248,7 +248,7 @@ const SwitchNavigator = createSwitchNavigator(
 
     },
     {
-        initialRouteName: 'ImpAuth',
+        initialRouteName: 'AuthLoading',
     }
 )
 

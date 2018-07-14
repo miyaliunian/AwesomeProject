@@ -20,12 +20,13 @@ export default class LoadingScreen extends Component {
     componentDidMount() {
         this.dataRepository.fetchLocalRepository('ACCOUNT')
             .then(result => {
+                console.log(result)
                 if (result !== '' && result !== null) {
                     this.account = Account;
                     this.account.avatar = result.avatar;
                     this.account.phone = result.phone;
                     this.account.pushId = result.pushId;
-                    this.account.userId = result.userId;
+                    this.account.nickName = result.nickName;
                     this.account.userName = result.userName;
                     this.account.userRole = result.userRole;
                     this.props.navigation.navigate('App')

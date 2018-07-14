@@ -64,11 +64,9 @@ export default class SignUpScreen extends Component {
         })
     }
 
-
     componentWillUnmount() {
         this.subscription.remove();
     }
-
 
     //注册
     onLoginBtn() {
@@ -129,7 +127,6 @@ export default class SignUpScreen extends Component {
         this.account.avatar = data.avatar;
         this.account.phone = data.phone;
         this.account.pushId = data.pushId;
-        this.account.userId = data.userId;
         this.account.userName = data.userName;
         this.account.userRole = data.userRole;
         this.dataRepository.mergeLocalRepository('ACCOUNT', data)
