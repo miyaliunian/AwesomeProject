@@ -34,14 +34,17 @@ export default class MyPage extends Component<{}> {
         super(props);
         this.state = {
             phone:'',
-            userName:''
+            userName:'',
+            avatar:''
         }
     }
 
     componentDidMount() {
         let {account} = this.props
         this.setState({
-            phone : account.phone
+            phone : account.phone,
+            userName:account.userName,
+            avatar: account.avatar
         })
         console.log(account)
     }
@@ -81,15 +84,26 @@ export default class MyPage extends Component<{}> {
             <View style={theme.root_container}>
                 <View style={styles.headerStyle}>
                     <View style={{flexDirection: 'row'}}>
-                        <Image source={require('../../icons/profile/default_portrait.png')}
-                               style={{
-                                   height: px2dp(160),
-                                   width: px2dp(160),
-                                   borderRadius: px2dp(80),
-                                   marginRight: 10
-                               }}/>
+                        {this.state.avatar ?
+                            <Image source={{uri:this.state.avatar}}
+                                   style={{
+                                       height: px2dp(160),
+                                       width: px2dp(160),
+                                       borderRadius: px2dp(80),
+                                       marginRight: 10
+                                   }}/>
+                        :
+                            <Image source={require('../../icons/profile/default_portrait.png')}
+                                   style={{
+                                       height: px2dp(160),
+                                       width: px2dp(160),
+                                       borderRadius: px2dp(80),
+                                       marginRight: 10
+                                   }}/>
+                        }
+
                         <View style={{justifyContent:'center'}}>
-                            <Text style={styles.txtStyle}>姓名</Text>
+                            <Text style={styles.txtStyle}>{this.state.userName}</Text>
                             <Text style={styles.txtStyle}>{this.state.phone}</Text>
                         </View>
                     </View>

@@ -18,6 +18,7 @@ import LoginInput from './LoginInput'
 import theme from '../../common/theme'
 import {isIphoneX} from '../../common/theme'
 import px2dp from '../../common/px2dp'
+import Account from '../../store/common/Account'
 import DataRepository from '../../common/DataRepository'
 import LoginMobxStore from './LoginMobxStore'
 import LoadingModal from "../../components/LoadingModal";
@@ -92,12 +93,7 @@ export default class LoginScreen extends Component {
                         isLoginModal: false,
                     });
                     DeviceEventEmitter.emit('signInToastInfo', '可以登录', 'smile');
-                    // if (undefined == data.data.failInfo) {
-                    //     this.saveAccountInfo(data.data);
-                    //     this.props.navigation.navigate(data.data.route_key)
-                    // } else {
-                    //     DeviceEventEmitter.emit('signInToastInfo', data.data.failInfo, 'sad');
-                    // }
+                    this.saveAccountInfo(data.data);
                 }else{
                     this.setState({
                         isLoginModal: false,
@@ -114,17 +110,21 @@ export default class LoginScreen extends Component {
             .done()
     }
 
-    saveAccountInfo(data) {
+    saveAccountInfo(data){
+        debugger
         this.account = Account;
-        this.account.code = data.account_info.code;
-        this.account.ID = data.account_info.id;
-        this.account.mobilePhone = data.account_info.mobilePhone;
-        this.account.password = data.account_info.oldPassword;
-        //存储 关系用户标识  start
+        this.account.avatar = data.avatar;
+        this.account.phone = data.phone;
+        this.account.pushId = data.pushId;
+        this.account.userId = data.userId;
+        this.account.userName = data.userName;
+        this.account.userRole = data.userRole;
         this.dataRepository.mergeLocalRepository('ACCOUNT', data)
             .then(result => {
+                console.log(result)
             })
             .catch(error => {
+                console.log(error)
             })
             .done()
     }
