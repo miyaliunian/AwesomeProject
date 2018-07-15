@@ -8,7 +8,9 @@ import {
     TextInput,
     Text,
     ScrollView,
-    DeviceEventEmitter
+    DeviceEventEmitter,
+    KeyboardAvoidingView,
+    Keyboard
 } from 'react-native';
 // import Modal from 'react-native-modal'
 import {Button} from 'teaset';
@@ -59,44 +61,44 @@ export default class ProfileInfoScreen extends Component<{}> {
     onSave() {
         debugger
         //头像
-        if (this.mobxStore.IMP_PRO_INFO.avatar == ''){
+        if (this.mobxStore.IMP_PRO_INFO.avatar == '') {
             if (this.state.avatar != '') {
                 this.mobxStore.IMP_PRO_INFO.avatar = this.state.avatar
-            }else{
+            } else {
                 DeviceEventEmitter.emit('toastInfo', '头像不能为空!', 'sad');
             }
         }
 
         // 姓名
-        if (this.mobxStore.IMP_PRO_INFO.userName == ''){
+        if (this.mobxStore.IMP_PRO_INFO.userName == '') {
             if (this.state.userName != '') {
                 this.mobxStore.IMP_PRO_INFO.userName = this.state.userName
-            }else{
+            } else {
                 DeviceEventEmitter.emit('toastInfo', '姓名不能为空!', 'sad');
             }
         }
 
         // 昵称
-        if (this.mobxStore.IMP_PRO_INFO.nickName == ''){
+        if (this.mobxStore.IMP_PRO_INFO.nickName == '') {
             if (this.state.nickName != undefined) {
                 this.mobxStore.IMP_PRO_INFO.nickName = this.state.nickName
             }
         }
 
         // 电话
-        if (this.mobxStore.IMP_PRO_INFO.phone == ''){
+        if (this.mobxStore.IMP_PRO_INFO.phone == '') {
             if (this.state.phone != '') {
                 this.mobxStore.IMP_PRO_INFO.phone = this.state.phone
-            }else{
+            } else {
                 DeviceEventEmitter.emit('toastInfo', '电话不能为空!', 'sad');
             }
         }
 
         // 地址
-        if (this.mobxStore.IMP_PRO_INFO.address == ''){
+        if (this.mobxStore.IMP_PRO_INFO.address == '') {
             if (this.state.address != undefined) {
                 this.mobxStore.IMP_PRO_INFO.address = this.state.address
-            }else{
+            } else {
                 DeviceEventEmitter.emit('toastInfo', '地址不能为空!', 'sad');
             }
         }
@@ -127,6 +129,7 @@ export default class ProfileInfoScreen extends Component<{}> {
                     this.setState({
                         isLoginModal: false,
                     });
+                    DeviceEventEmitter.emit('signInToastInfo', '成功', 'success');
                     this.saveAccountInfo(data.data);
                     this.props.navigation.navigate('ImpAuthStack')
                 } else {
@@ -146,7 +149,7 @@ export default class ProfileInfoScreen extends Component<{}> {
     }
 
     //本地缓存策略
-    saveAccountInfo(data){
+    saveAccountInfo(data) {
         this.account = Account;
         this.account.avatar = data.avatar;
         this.account.phone = data.phone;
@@ -293,16 +296,19 @@ export default class ProfileInfoScreen extends Component<{}> {
 
                 >
                     <View style={styles.modalBackgroundStyle}>
+
                         <View style={styles.innerContainerTransparentStyle}>
                             <View style={{height: 50, justifyContent: 'center', alignItems: 'center'}}>
                                 <Text style={styles.innnerTitle}>申请成为供应商</Text>
                             </View>
+
                             <View style={{
                                 backgroundColor: 'white',
                                 alignItems: 'center',
                                 borderBottomLeftRadius: 10,
                                 borderBottomRightRadius: 10
                             }}>
+
                                 <TextInput style={{
                                     height: 106,
                                     marginTop: 12,
@@ -317,9 +323,14 @@ export default class ProfileInfoScreen extends Component<{}> {
                                            ref="textInput"
                                            placeholderTextColor='#b3b3b3'
                                            multiline={true}
+                                           numberOfLines = {4}
+                                           keyboardType={'default'}
+                                           textContentType={'none'}
                                            underlineColorAndroid='#f0eff0'
                                            returnKeyType='done'
                                            maxLength={500}
+                                           blurOnSubmit={true}
+                                           onBlur={ () => {}}
                                 />
                                 <Text style={styles.innnerSubTitle}> 说明 : 申请成为供应商,警告平台进行审核，通过以后,</Text>
                                 <Text style={[styles.innnerSubTitle, {marginTop: 2}]}> 你就可以添加工程人员并安卓冷库工程了</Text>
@@ -343,7 +354,9 @@ export default class ProfileInfoScreen extends Component<{}> {
                                 </View>
                             </View>
 
+
                         </View>
+
                     </View>
                 </Modal>
                 <LoadingModal txtTitle={'请稍后...'} visible={this.state.isLoginModal}/>
