@@ -13,7 +13,7 @@ import {
     Keyboard
 } from 'react-native';
 // import Modal from 'react-native-modal'
-import {Button} from 'teaset';
+import {Button, Toast} from 'teaset';
 import theme from '../../../common/theme';
 import {Config} from '../../../config/config';
 import px2dp from '../../../common/px2dp';
@@ -37,7 +37,7 @@ export default class ProfileInfoScreen extends Component<{}> {
             userName: '',
             nickName: '',
             phone: '',
-            address: '',
+            addr: '',
             isShowModal: false,
             isLoginModal: false,
         }
@@ -53,7 +53,7 @@ export default class ProfileInfoScreen extends Component<{}> {
             userName: account.userName,
             nickName: account.nickName,
             phone: account.phone,
-            address: account.address,
+            addr: account.addr,
         })
     }
 
@@ -66,6 +66,7 @@ export default class ProfileInfoScreen extends Component<{}> {
                 this.mobxStore.IMP_PRO_INFO.avatar = this.state.avatar
             } else {
                 DeviceEventEmitter.emit('toastInfo', '头像不能为空!', 'sad');
+                return
             }
         }
 
@@ -75,6 +76,7 @@ export default class ProfileInfoScreen extends Component<{}> {
                 this.mobxStore.IMP_PRO_INFO.userName = this.state.userName
             } else {
                 DeviceEventEmitter.emit('toastInfo', '姓名不能为空!', 'sad');
+                return
             }
         }
 
@@ -91,15 +93,17 @@ export default class ProfileInfoScreen extends Component<{}> {
                 this.mobxStore.IMP_PRO_INFO.phone = this.state.phone
             } else {
                 DeviceEventEmitter.emit('toastInfo', '电话不能为空!', 'sad');
+                return
             }
         }
 
         // 地址
-        if (this.mobxStore.IMP_PRO_INFO.address == '') {
-            if (this.state.address != undefined) {
-                this.mobxStore.IMP_PRO_INFO.address = this.state.address
+        if (this.mobxStore.IMP_PRO_INFO.addr == '') {
+            if (this.state.addr != undefined) {
+                this.mobxStore.IMP_PRO_INFO.addr = this.state.addr
             } else {
                 DeviceEventEmitter.emit('toastInfo', '地址不能为空!', 'sad');
+                return
             }
         }
 
@@ -118,7 +122,7 @@ export default class ProfileInfoScreen extends Component<{}> {
         let PARAM = new FormData();
         PARAM.append('userName', this.mobxStore.IMP_PRO_INFO.userName)
         PARAM.append('avatar', this.mobxStore.IMP_PRO_INFO.avatar)
-        PARAM.append('addr', this.mobxStore.IMP_PRO_INFO.address)
+        PARAM.append('addr', this.mobxStore.IMP_PRO_INFO.addr)
         PARAM.append('phone', this.mobxStore.IMP_PRO_INFO.phone)
 
         //发送登录请求
@@ -129,21 +133,49 @@ export default class ProfileInfoScreen extends Component<{}> {
                     this.setState({
                         isLoginModal: false,
                     });
-                    DeviceEventEmitter.emit('signInToastInfo', '成功', 'success');
+                    DeviceEventEmitter.emit('toastInfo', '更新成功', 'success');
                     this.saveAccountInfo(data.data);
-                    this.props.navigation.navigate('ImpAuthStack')
                 } else {
                     this.setState({
                         isLoginModal: false,
                     });
-                    DeviceEventEmitter.emit('signInToastInfo', data.msg, 'sad');
+                    DeviceEventEmitter.emit('toastInfo', data.msg, 'sad');
                 }
             })
             .catch((err) => {
                 this.setState({
                     isLoginModal: false,
                 })
-                DeviceEventEmitter.emit('signInToastInfo', err.status, 'stop');
+                DeviceEventEmitter.emit('toastInfo', err.status, 'stop');
+            })
+            .done()
+    }
+
+    //申请成为供应商
+    subApplyInfo() {
+        debugger
+        if (this.mobxStore.IMP_PRO_INFO.applyInfo == '') {
+            alert('申请信息不能为空');
+            return
+        }
+
+        //拼参数
+        let PARAM = new FormData();
+        PARAM.append('applyInfo', this.mobxStore.IMP_PRO_INFO.applyInfo)
+
+        //发送请求
+        this.dataRepository.postFormRepository(Config.BASE_URL + Config.API_SUPPLIER_APPLICATION, PARAM)
+            .then((data) => {
+                debugger
+                if (data.flag == '1') {
+                    alert(data.data);
+                } else {
+                    alert(data.msg);
+                }
+            })
+            .catch((err) => {
+
+                alert(data.status);
             })
             .done()
     }
@@ -153,7 +185,7 @@ export default class ProfileInfoScreen extends Component<{}> {
         this.account = Account;
         this.account.avatar = data.avatar;
         this.account.phone = data.phone;
-        this.account.address = data.addr;
+        this.account.addr = data.addr;
         this.account.userName = data.userName;
         this.dataRepository.mergeLocalRepository('ACCOUNT', data)
             .then(result => {
@@ -266,9 +298,9 @@ export default class ProfileInfoScreen extends Component<{}> {
                                        placeholder={'请输入'}
                                        returnKeyType={'done'}
                                        onChangeText={(text) => {
-                                           this.mobxStore.IMP_PRO_INFO.address = text;
+                                           this.mobxStore.IMP_PRO_INFO.addr = text;
                                        }}
-                                       defaultValue={this.state.address}
+                                       defaultValue={this.state.addr}
                             />
                         </View>
                     </View>
@@ -293,6 +325,9 @@ export default class ProfileInfoScreen extends Component<{}> {
                     visible={this.state.isShowModal}
                     transparent={true}
                     animationType={'fade'}
+                    onRequestClose={() => {
+                        this.mobxStore.IMP_PRO_INFO.applyInfo = ''
+                    }}
 
                 >
                     <View style={styles.modalBackgroundStyle}>
@@ -323,14 +358,18 @@ export default class ProfileInfoScreen extends Component<{}> {
                                            ref="textInput"
                                            placeholderTextColor='#b3b3b3'
                                            multiline={true}
-                                           numberOfLines = {4}
+                                           numberOfLines={4}
                                            keyboardType={'default'}
                                            textContentType={'none'}
                                            underlineColorAndroid='#f0eff0'
                                            returnKeyType='done'
-                                           maxLength={500}
+                                           maxLength={240}
                                            blurOnSubmit={true}
-                                           onBlur={ () => {}}
+                                           onChangeText={(text) => {
+                                               this.mobxStore.IMP_PRO_INFO.applyInfo = text;
+                                           }}
+                                           onBlur={ () => {
+                                           }}
                                 />
                                 <Text style={styles.innnerSubTitle}> 说明 : 申请成为供应商,警告平台进行审核，通过以后,</Text>
                                 <Text style={[styles.innnerSubTitle, {marginTop: 2}]}> 你就可以添加工程人员并安卓冷库工程了</Text>
@@ -349,7 +388,8 @@ export default class ProfileInfoScreen extends Component<{}> {
                                     <Button title={'确 定'}
                                             titleStyle={{fontSize: 15, color: 'white'}}
                                             style={[styles.innderButton, {backgroundColor: theme.navColor}]}
-                                            onPress={() => this.setState({isShowModal: false})}
+                                        //onPress={() => this.setState({isShowModal: false})}
+                                            onPress={() => this.subApplyInfo()}
                                     />
                                 </View>
                             </View>

@@ -102,9 +102,9 @@ export default class SignUpScreen extends Component {
                         isLoginModal: false,
                     });
                     //缓存用户信息 = 1：头像、2：手机号
-                    DeviceEventEmitter.emit('signInToastInfo', '注册成功...', 'smile');
+                    //DeviceEventEmitter.emit('signInToastInfo', '注册成功...', 'smile');
                     this.saveAccountInfo(data.data);
-                    this.props.navigation.navigate('ImpAuthStack')
+                    this.props.navigation.navigate('ImpAuth')
                 } else {
                     this.setState({
                         isLoginModal: false,
@@ -355,11 +355,6 @@ const styles = StyleSheet.create({
         height: px2dp(180),
         borderRadius: px2dp(90),
         marginTop: isIphoneX() == true ? 57 : 26,
-        shadowOffset: {width: 2, height: 2},
-        shadowColor: 'black',
-        shadowOpacity: 0.2,
-        elevation: 1,
-
     },
     loginViewStyle: {
         flex: 1,

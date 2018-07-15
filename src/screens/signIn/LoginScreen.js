@@ -119,7 +119,7 @@ export default class LoginScreen extends Component {
         this.account.userName = data.userName;
         this.account.userRole = data.userRole;
         this.account.nickName = data.nickName;
-        this.account.address = data.address;
+        this.account.addr = data.addr;
         this.dataRepository.mergeLocalRepository('ACCOUNT', data)
             .then(result => {
                 console.log(result)

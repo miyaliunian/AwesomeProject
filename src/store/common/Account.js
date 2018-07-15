@@ -13,7 +13,7 @@ class Account {
     @observable
     nickName = ''
     @observable
-    address = ''
+    addr = ''
     @observable
     userName = ''
     @observable
