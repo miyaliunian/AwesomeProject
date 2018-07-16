@@ -47,6 +47,25 @@ export default class ProfileInfoScreen extends Component<{}> {
 
     componentDidMount() {
         let {account} = this.props
+        debugger
+        let userRoleName;
+        //用户角色解析
+        switch (account.userRole){
+            case '0':
+                return  userRoleName = '暂无角色';
+            case '1':
+                return  userRoleName = '工程商';
+            case '2':
+                return  userRoleName = '工程人员';
+            case '3':
+                return  userRoleName = '冷库老板';
+            case '4':
+                return  userRoleName = '冷库员工';
+            case '5':
+                return  userRoleName = '冷库租客';
+
+        }
+
         this.setState({
             avatar: account.avatar,
             userName: account.userName,
@@ -54,6 +73,7 @@ export default class ProfileInfoScreen extends Component<{}> {
             phone: account.phone,
             addr: account.addr,
             leftBtnTitle:'取 消',
+            userRoleName:userRoleName //对应的为用户权限
         })
     }
 
@@ -121,6 +141,7 @@ export default class ProfileInfoScreen extends Component<{}> {
         //拼接登录参数
         let PARAM = new FormData();
         PARAM.append('userName', this.mobxStore.IMP_PRO_INFO.userName)
+        PARAM.append('nickName', this.mobxStore.IMP_PRO_INFO.nickName)
         PARAM.append('avatar', this.mobxStore.IMP_PRO_INFO.avatar)
         PARAM.append('addr', this.mobxStore.IMP_PRO_INFO.addr)
         PARAM.append('phone', this.mobxStore.IMP_PRO_INFO.phone)
@@ -310,7 +331,7 @@ export default class ProfileInfoScreen extends Component<{}> {
                     />
                     <View style={theme.line_space_10}/>
                     <View style={styles.footerContent}>
-                        <Text style={styles.footerLabel}>所属角色：暂无</Text>
+                        <Text style={styles.footerLabel}>所属角色：{this.state.userRoleName}</Text>
                         <TouchableOpacity onPress={() => this.setState({isShowModal: true})}>
                             <Text style={[styles.footerLabel, {color: theme.navColor}]}>申请成为供应商</Text>
                         </TouchableOpacity>

@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import theme from './src/common/theme'
 
+import TabBarItem from './src/components/TabBarItem'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 //导航布局
 import {createStackNavigator, createBottomTabNavigator, createSwitchNavigator} from 'react-navigation'

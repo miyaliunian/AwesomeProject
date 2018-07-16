@@ -20,7 +20,6 @@ export default class LoadingScreen extends Component {
     componentDidMount() {
         this.dataRepository.fetchLocalRepository('ACCOUNT')
             .then(result => {
-                console.log(result)
                 if (result !== '' && result !== null) {
                     this.account = Account;
                     this.account.avatar = result.avatar;
@@ -29,6 +28,7 @@ export default class LoadingScreen extends Component {
                     this.account.nickName = result.nickName;
                     this.account.userName = result.userName;
                     this.account.userRole = result.userRole;
+                    this.account.addr = result.addr;
                     this.props.navigation.navigate('App')
                 } else { //本机没有账户信息 则跳转到登录
                     this.props.navigation.navigate('Auth')
