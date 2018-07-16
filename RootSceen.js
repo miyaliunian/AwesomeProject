@@ -29,6 +29,7 @@ import  ManagerScreen from './src/screens/manage/ManagerScreen'
 import  ProfileScreen from './src/screens/profile/ProfileScreen'
 import  ProfileInfoScreen from './src/screens/profile/profileInfo/ProfileInfoScreen'
 import  SupplierInfoScreen from './src/screens/profile/supplier/SupplierInfoScreen'
+import  CompanyInfoScreen from './src/screens/profile/companyInfo/CompanyInfoScreen'
 
 
 export default class App extends Component {
@@ -113,6 +114,9 @@ const TabStack = createBottomTabNavigator(
                 },
                 SupplierInfoScreen: {
                     screen: SupplierInfoScreen
+                },
+                CompanyInfoScreen: {
+                    screen: CompanyInfoScreen
                 },
             }, {
                 navigationOptions: {

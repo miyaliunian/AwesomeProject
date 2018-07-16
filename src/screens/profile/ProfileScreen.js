@@ -48,7 +48,6 @@ export default class MyPage extends Component<{}> {
             avatar: account.avatar,
             userRole: account.userRole
         })
-        console.log(account)
     }
 
 
@@ -123,7 +122,7 @@ export default class MyPage extends Component<{}> {
                     <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='我的消息'
                                  callBack={() => this.itemClick('我的消息')}/>
                     <ProfileItem icon={require('../../icons/profile/icon_comInfo.png')} title='公司消息'
-                                 callBack={() => this.itemClick('公司消息')}/>
+                                 callBack={() => this.itemClick(moreMenu.ProfileScreen.menu_company_info)}/>
 
                     {/*工程商、冷库老板 显示:员工管理:1、3*/}
                     {this.state.userRole == '1' || this.state.userRole == '3'

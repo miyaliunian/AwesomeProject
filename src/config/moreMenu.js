@@ -22,7 +22,9 @@ export const moreMenu = {
     // 我的S
     ProfileScreen: {
         menu_profile_info:'ProfileInfoScreen',
-        menu_supplier_info:'SupplierInfoScreen'
+        menu_supplier_info:'SupplierInfoScreen',
+        //公司信息
+        menu_company_info:'CompanyInfoScreen'
     },
 
 };
