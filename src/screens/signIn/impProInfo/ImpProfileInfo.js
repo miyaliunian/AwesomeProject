@@ -54,13 +54,13 @@ export default class ImpProfileInfo extends Component<{}> {
 
     componentDidMount() {
         let {account} = this.props
-        debugger
         this.setState({
             avatar: account.avatar,
             userName: account.userName,
             nickName: account.nickName,
             phone: account.phone,
             addr: account.addr,
+            leftBtnTitle:'取 消',
         })
     }
 
@@ -140,9 +140,8 @@ export default class ImpProfileInfo extends Component<{}> {
                     this.setState({
                         isLoginModal: false,
                     });
-                    DeviceEventEmitter.emit('toastInfo', '更新成功', 'success');
                     this.saveAccountInfo(data.data);
-                    this.props.navigation.navigate('App')
+                    this.props.navigation.navigate('App');
                 } else {
                     this.setState({
                         isLoginModal: false,
@@ -178,32 +177,30 @@ export default class ImpProfileInfo extends Component<{}> {
 
     //申请成为供应商
     subApplyInfo() {
-        debugger
         if (this.mobxStore.IMP_PRO_INFO.applyInfo == '') {
             alert('申请信息不能为空');
             return
         }
-
         //拼参数
         let PARAM = new FormData();
         PARAM.append('applyInfo', this.mobxStore.IMP_PRO_INFO.applyInfo)
-
         //发送请求
         this.dataRepository.postFormRepository(Config.BASE_URL + Config.API_SUPPLIER_APPLICATION, PARAM)
             .then((data) => {
                 debugger
                 if (data.flag == '1') {
                     alert(data.data);
+                    this.setState({leftBtnTitle: '关 闭'})
                 } else {
                     alert(data.msg);
                 }
             })
             .catch((err) => {
-
-                alert(data.status);
+                alert(err.status);
             })
             .done()
     }
+
 
     //页面渲染
     render() {
@@ -333,9 +330,8 @@ export default class ImpProfileInfo extends Component<{}> {
                     visible={this.state.isShowModal}
                     transparent={true}
                     animationType={'fade'}
-                    onRequestClose={() => {
-                        this.mobxStore.IMP_PRO_INFO.applyInfo = ''
-                    }}
+                    onRequestClose={() => {this.mobxStore.IMP_PRO_INFO.applyInfo = ''}}
+                    onDismiss = {() => {this.mobxStore.IMP_PRO_INFO.applyInfo = ''}}
 
                 >
                     <View style={styles.modalBackgroundStyle}>
@@ -388,7 +384,7 @@ export default class ImpProfileInfo extends Component<{}> {
                                     alignItems: 'center',
                                     justifyContent: 'center'
                                 }}>
-                                    <Button title={'取 消'}
+                                    <Button title={this.state.leftBtnTitle}
                                             titleStyle={{fontSize: 15, color: 'black'}}
                                             style={styles.innderButton}
                                             onPress={() => this.setState({isShowModal: false})}
@@ -396,7 +392,6 @@ export default class ImpProfileInfo extends Component<{}> {
                                     <Button title={'确 定'}
                                             titleStyle={{fontSize: 15, color: 'white'}}
                                             style={[styles.innderButton, {backgroundColor: theme.navColor}]}
-                                        //onPress={() => this.setState({isShowModal: false})}
                                             onPress={() => this.subApplyInfo()}
                                     />
                                 </View>

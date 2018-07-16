@@ -246,7 +246,7 @@ export default class DataRepository {
      * @param fetch_promise
      * @param timeout
      * */
-    timeout_fetch(fetch_promise, timeout = 5000) {
+    timeout_fetch(fetch_promise, timeout = 30000) {
         let timeout_fn = null;
         let timeout_promise = new Promise(function (resolve, reject) {
             timeout_fn = function () {
