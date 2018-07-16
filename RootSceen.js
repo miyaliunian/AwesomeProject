@@ -60,8 +60,16 @@ const TabStack = createBottomTabNavigator(
             }),
             navigationOptions: {
                 tabBarLabel: '首页',
+                // tabBarIcon: ({focused, tintColor}) => (
+                //     <Icon name={`ios-home${focused ? '' : '-outline'}`} size={25} color={tintColor}/>
+                // )
                 tabBarIcon: ({focused, tintColor}) => (
-                    <Icon name={`ios-home${focused ? '' : '-outline'}`} size={25} color={tintColor}/>
+                    <TabBarItem
+                        tintColor={tintColor}
+                        focused={focused}
+                        normalImage={require('./src/icons/tab/tab_home_n.png')}
+                        selectedImage={require('./src/icons/tab/tab_home_h.png')}
+                    />
                 )
             }
         },
@@ -82,8 +90,16 @@ const TabStack = createBottomTabNavigator(
             }),
             navigationOptions: {
                 tabBarLabel: '管理',
+                // tabBarIcon: ({focused, tintColor}) => (
+                //     <Icon name={`ios-apps${focused ? '' : '-outline'}`} size={25} color={tintColor}/>
+                // )
                 tabBarIcon: ({focused, tintColor}) => (
-                    <Icon name={`ios-apps${focused ? '' : '-outline'}`} size={25} color={tintColor}/>
+                    <TabBarItem
+                        tintColor={tintColor}
+                        focused={focused}
+                        normalImage={require('./src/icons/tab/tab_manger_n.png')}
+                        selectedImage={require('./src/icons/tab/tab_manger_h.png')}
+                    />
                 )
             }
         },
@@ -124,8 +140,16 @@ const TabStack = createBottomTabNavigator(
             }),
             navigationOptions: {
                 tabBarLabel: '我的',
+                // tabBarIcon: ({focused, tintColor}) => (
+                //     <Icon name={`ios-people${focused ? '' : '-outline'}`} size={25} color={tintColor}/>
+                // )
                 tabBarIcon: ({focused, tintColor}) => (
-                    <Icon name={`ios-people${focused ? '' : '-outline'}`} size={25} color={tintColor}/>
+                    <TabBarItem
+                        tintColor={tintColor}
+                        focused={focused}
+                        normalImage={require('./src/icons/tab/tab_me_n.png')}
+                        selectedImage={require('./src/icons/tab/tab_me_h.png')}
+                    />
                 )
             }
         },
