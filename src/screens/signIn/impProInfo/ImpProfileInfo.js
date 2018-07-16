@@ -57,22 +57,26 @@ export default class ImpProfileInfo extends Component<{}> {
         debugger
         let userRoleName;
         //用户角色解析
-        switch (account.userRole){
-            case '0':
-                return  userRoleName = '暂无角色';
-            case '1':
-                return  userRoleName = '工程商';
-            case '2':
-                return  userRoleName = '工程人员';
-            case '3':
-                return  userRoleName = '冷库老板';
-            case '4':
-                return  userRoleName = '冷库员工';
-            case '5':
-                return  userRoleName = '冷库租客';
-
+        if (account.userRole == '0'){
+            userRoleName = '暂无角色';
+        }
+        if (account.userRole == '1'){
+            userRoleName = '工程商';
+        }
+        if (account.userRole == '2'){
+            userRoleName = '工程人员';
+        }
+        if (account.userRole == '3'){
+            userRoleName = '冷库老板';
+        }
+        if (account.userRole == '4'){
+            userRoleName = '冷库员工';
+        }
+        if (account.userRole == '5'){
+            userRoleName = '冷库租客';
         }
 
+        debugger
         this.setState({
             avatar: account.avatar,
             userName: account.userName,
