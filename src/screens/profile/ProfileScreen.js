@@ -34,18 +34,19 @@ export default class MyPage extends Component<{}> {
     constructor(props) {
         super(props);
         this.state = {
-            phone:'',
-            userName:'',
-            avatar:''
+            phone: '',
+            userName: '',
+            avatar: ''
         }
     }
 
     componentDidMount() {
         let {account} = this.props
         this.setState({
-            phone : account.phone,
-            userName:account.userName,
-            avatar: account.avatar
+            phone: account.phone,
+            userName: account.userName,
+            avatar: account.avatar,
+            userRole: account.userRole
         })
         console.log(account)
     }
@@ -87,14 +88,14 @@ export default class MyPage extends Component<{}> {
                 <View style={styles.headerStyle}>
                     <View style={{flexDirection: 'row'}}>
                         {this.state.avatar ?
-                            <Image source={{uri:this.state.avatar}}
+                            <Image source={{uri: this.state.avatar}}
                                    style={{
                                        height: px2dp(160),
                                        width: px2dp(160),
                                        borderRadius: px2dp(80),
                                        marginRight: 10
                                    }}/>
-                        :
+                            :
                             <Image source={require('../../icons/profile/default_portrait.png')}
                                    style={{
                                        height: px2dp(160),
@@ -104,12 +105,13 @@ export default class MyPage extends Component<{}> {
                                    }}/>
                         }
 
-                        <View style={{justifyContent:'center'}}>
+                        <View style={{justifyContent: 'center'}}>
                             <Text style={styles.txtStyle}>{this.state.userName}</Text>
                             <Text style={styles.txtStyle}>{this.state.phone}</Text>
                         </View>
                     </View>
-                    <TouchableOpacity style={{width:50,height:50,alignItems:'flex-end'}} onPress = {() => this.itemClick(moreMenu.ProfileScreen.menu_profile_info)}>
+                    <TouchableOpacity style={{width: 50, height: 50, alignItems: 'flex-end'}}
+                                      onPress={() => this.itemClick(moreMenu.ProfileScreen.menu_profile_info)}>
                         <SimpleLineIcons
                             name={'arrow-right'}
                             size={20}
@@ -119,17 +121,47 @@ export default class MyPage extends Component<{}> {
                 <View style={theme.line_space_10}/>
                 <ScrollView>
                     <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='我的消息'
-                                 callBack={() => this.itemClick()}/>
+                                 callBack={() => this.itemClick('我的消息')}/>
                     <ProfileItem icon={require('../../icons/profile/icon_comInfo.png')} title='公司消息'
                                  callBack={() => this.itemClick('公司消息')}/>
-                    <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='员工管理'
-                                 callBack={() => this.itemClick('员工管理')}/>
-                    <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='租客管理'
-                                 callBack={() => this.itemClick('租客管理')}/>
-                    <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='退出公司'
-                                 callBack={() => this.itemClick('退出公司')}/>
-                    <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='我的账单'
-                                 callBack={() => this.itemClick('我的账单')}/>
+
+                    {/*工程商、冷库老板 显示:员工管理:1、3*/}
+                    {this.state.userRole == '1' || this.state.userRole == '3'
+                        ?
+                        <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='员工管理'
+                                     callBack={() => this.itemClick('员工管理')}/>
+                        :
+                        null
+                    }
+
+                    {/*冷库老板 显示:租客管理:3*/}
+                    {this.state.userRole == '3'
+                        ?
+                        <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='租客管理'
+                                     callBack={() => this.itemClick('租客管理')}/>
+                        :
+                        null
+                    }
+
+                    {/*工程人员、冷库员工、冷库租客 显示:提出公司:2、4、5*/}
+                    {this.state.userRole == '2' || this.state.userRole == '4' || this.state.userRole == '5'
+                        ?
+                        <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='退出公司'
+                                     callBack={() => this.itemClick('退出公司')}/>
+                        :
+                        null
+                    }
+
+
+                    {/*空角色、供应商 显示:我的账单:0、1、3、4*/}
+                    {this.state.userRole == '0' || this.state.userRole == '1' || this.state.userRole == '3' || this.state.userRole == '4'
+                        ?
+                        <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='我的账单'
+                                     callBack={() => this.itemClick('我的账单')}/>
+                        :
+                        null
+                    }
+
                     <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='退出登录'
                                  callBack={() => this.showActionSheet()}/>
                     <View style={theme.line}/>
@@ -149,13 +181,13 @@ export default class MyPage extends Component<{}> {
 
 const styles = StyleSheet.create({
     headerStyle: {
-        height:px2dp(190),
-        width:theme.screenWidth,
+        height: px2dp(190),
+        width: theme.screenWidth,
         backgroundColor: theme.navColor,
         flexDirection: 'row',
         paddingLeft: px2dp(24),
         paddingRight: px2dp(24),
-        justifyContent:'space-between',
+        justifyContent: 'space-between',
         alignItems: 'center'
     },
     txtStyle: {

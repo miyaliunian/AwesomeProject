@@ -45,7 +45,6 @@ export default class ProfileInfoScreen extends Component<{}> {
 
     componentDidMount() {
         let {account} = this.props
-        debugger
         let userRoleName;
         //用户角色解析
         if (account.userRole == '0'){
@@ -66,8 +65,6 @@ export default class ProfileInfoScreen extends Component<{}> {
         if (account.userRole == '5'){
             userRoleName = '冷库租客';
         }
-
-        debugger
         this.setState({
             avatar: account.avatar,
             userName: account.userName,
