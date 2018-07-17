@@ -6,7 +6,7 @@
  */
 
 #import "AppDelegate.h"
-
+#import <AMapFoundationKit/AMapFoundationKit.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
@@ -34,6 +34,8 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+   [AMapServices sharedServices].apiKey = @"09d9df752041d291324fe4269cdbbdc4";
   return YES;
 }
 

@@ -5,16 +5,13 @@
 import React, {Component} from 'react';
 import {
     StyleSheet,
-    Text,
     View,
     Image,
-    TouchableOpacity
 } from 'react-native';
 import theme from '../../../common/theme';
 import px2dp from '../../../common/px2dp';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {inject} from 'mobx-react/native'
-
+import { MapView } from 'react-native-amap3d'
 
 @inject('account')
 export default class CompanyInfoScreen extends Component {
@@ -34,6 +31,8 @@ export default class CompanyInfoScreen extends Component {
         let {account} = this.props
         this.setState({
             avatar: account.avatar,
+            latitude:'',
+            longitude:'',
         })
     }
 
@@ -60,6 +59,20 @@ export default class CompanyInfoScreen extends Component {
                                }}/>
                     }
 
+                    {/*地图信息*/}
+
+                    <MapView
+                        style={styles.mapStyle}
+                        locationEnabled
+                        locationInterval={10000}
+                        coordinate={{
+                            latitude: 55.755786,
+                            longitude: 37.617633,
+                        }}
+                        onLocation={({nativeEvent}) =>
+                            console.log(`${nativeEvent.latitude}, ${nativeEvent.longitude}`)}
+                    />
+
                 </View>
             </View>
         );
@@ -76,5 +89,11 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
+    mapStyle:{
+        flex:1,
+        width:theme.screenWidth,
+        height:theme.screenHeight - px2dp(),
+
+    }
 });
 

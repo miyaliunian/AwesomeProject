@@ -119,15 +119,15 @@ export default class MyPage extends Component<{}> {
                 </View>
                 <View style={theme.line_space_10}/>
                 <ScrollView>
-                    <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='我的消息'
+                    <ProfileItem icon={require('../../icons/profile/icon_me_info.png')} title='我的消息'
                                  callBack={() => this.itemClick('我的消息')}/>
-                    <ProfileItem icon={require('../../icons/profile/icon_comInfo.png')} title='公司消息'
+                    <ProfileItem icon={require('../../icons/profile/icon_company_info.png')} title='公司消息'
                                  callBack={() => this.itemClick(moreMenu.ProfileScreen.menu_company_info)}/>
 
                     {/*工程商、冷库老板 显示:员工管理:1、3*/}
                     {this.state.userRole == '1' || this.state.userRole == '3'
                         ?
-                        <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='员工管理'
+                        <ProfileItem icon={require('../../icons/profile/icon_yggl.png')} title='员工管理'
                                      callBack={() => this.itemClick('员工管理')}/>
                         :
                         null
@@ -136,7 +136,7 @@ export default class MyPage extends Component<{}> {
                     {/*冷库老板 显示:租客管理:3*/}
                     {this.state.userRole == '3'
                         ?
-                        <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='租客管理'
+                        <ProfileItem icon={require('../../icons/profile/icon_sz_info.png')} title='租客管理'
                                      callBack={() => this.itemClick('租客管理')}/>
                         :
                         null
@@ -145,7 +145,7 @@ export default class MyPage extends Component<{}> {
                     {/*工程人员、冷库员工、冷库租客 显示:提出公司:2、4、5*/}
                     {this.state.userRole == '2' || this.state.userRole == '4' || this.state.userRole == '5'
                         ?
-                        <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='退出公司'
+                        <ProfileItem icon={require('../../icons/profile/icon_tcgs.png')} title='退出公司'
                                      callBack={() => this.itemClick('退出公司')}/>
                         :
                         null
@@ -155,13 +155,13 @@ export default class MyPage extends Component<{}> {
                     {/*空角色、供应商 显示:我的账单:0、1、3、4*/}
                     {this.state.userRole == '0' || this.state.userRole == '1' || this.state.userRole == '3' || this.state.userRole == '4'
                         ?
-                        <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='我的账单'
+                        <ProfileItem icon={require('../../icons/profile/icon_wdzd.png')} title='我的账单'
                                      callBack={() => this.itemClick('我的账单')}/>
                         :
                         null
                     }
 
-                    <ProfileItem icon={require('../../icons/profile/to_pay.png')} title='退出登录'
+                    <ProfileItem icon={require('../../icons/profile/icon_tcdl.png')} title='退出登录'
                                  callBack={() => this.showActionSheet()}/>
                     <View style={theme.line}/>
                 </ScrollView>
