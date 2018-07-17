@@ -19,6 +19,7 @@
 		026A490620F73E2A00B57DA6 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026A48C720F73DDD00B57DA6 /* RSKImageCropper.framework */; };
 		026A490720F73E2A00B57DA6 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 026A48C720F73DDD00B57DA6 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		02D0F1C820FA2A7800FB7E88 /* bundle in Resources */ = {isa = PBXBuildFile; fileRef = 02D0F1A020FA2A7700FB7E88 /* bundle */; };
+		02D5188220FDAB0D00C7DE62 /* libdouble-conversion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF0FFE92056DD460020B375 /* libdouble-conversion.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -48,7 +49,6 @@
 		5495C04DFFCF4062981FC137 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69B68B5DD17B47C7BE71B5F9 /* Foundation.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		63AA922EB9B64FE099D58B4E /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD0350A5CF0347578D9375BA /* Entypo.ttf */; };
-		7710D91E4AB2DA08BCD9AACD /* libPods-AwesomeProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88465BE780AD04BEB24B8432 /* libPods-AwesomeProject.a */; };
 		7FC02D9B50FD45CBAF5EC92D /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 051D0C6FD4FF43728E19534C /* Ionicons.ttf */; };
 		81001356921B4B02AEEC20D4 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C64D978AC53480FB070D955 /* MaterialCommunityIcons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -57,6 +57,7 @@
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		AEFFE97ABDAB4ADE91A73F75 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B06DFD0B10F4C619A2E1D3A /* MaterialIcons.ttf */; };
 		B7FB0C0F07214659ADF8A0F2 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 346718DD59F0405DAC6A70B3 /* Zocial.ttf */; };
+		C02634B9F1F92CDD26E7386B /* libPods-AwesomeProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88465BE780AD04BEB24B8432 /* libPods-AwesomeProject.a */; };
 		DD7E9D9BECFB4EF3AB3558FA /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DDD36BE158694BB6A90765B2 /* SimpleLineIcons.ttf */; };
 		E4998C01B24B48EA8017AB82 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB3CA99EC74A481484395038 /* Roboto_medium.ttf */; };
 		EC89AA2823544797B50D4D13 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB977FA5E104A7DB7CD8CD5 /* libimageCropPicker.a */; };
@@ -433,6 +434,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02D5188220FDAB0D00C7DE62 /* libdouble-conversion.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -450,7 +452,7 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				1AE855009F544D21AA9086C5 /* libRNVectorIcons.a in Frameworks */,
 				EC89AA2823544797B50D4D13 /* libimageCropPicker.a in Frameworks */,
-				7710D91E4AB2DA08BCD9AACD /* libPods-AwesomeProject.a in Frameworks */,
+				C02634B9F1F92CDD26E7386B /* libPods-AwesomeProject.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -850,6 +852,14 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 54FH99KRV2;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
