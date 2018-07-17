@@ -138,7 +138,6 @@ export default class CompanyInfoScreen extends Component {
                                        height: px2dp(160),
                                        width: px2dp(160),
                                        borderRadius: px2dp(80),
-                                       marginRight: 10
                                    }}/>
                             :
                             <Image source={require('../../../icons/profile/default_portrait.png')}
@@ -146,7 +145,6 @@ export default class CompanyInfoScreen extends Component {
                                        height: px2dp(160),
                                        width: px2dp(160),
                                        borderRadius: px2dp(80),
-                                       marginRight: 10
                                    }}/>
                         }
                     </TouchableOpacity>
@@ -250,7 +248,7 @@ const styles = StyleSheet.create({
         marginVertical: 3.5
     },
     rowLabel: {
-        width: 100,
+        width: 40,
         marginLeft: px2dp(30)
     },
     rowContent: {
@@ -260,11 +258,15 @@ const styles = StyleSheet.create({
     },
     TextInputStyle: {
         height: px2dp(90),
-        width: 180,
+        width: theme.screenWidth ,
         paddingTop: 0,
         paddingBottom: 0,
         paddingRight: 7,
-        textAlign: 'right'
+        textAlign: 'left'
+    },
+    fontText: {
+        fontSize: px2dp(28),
+        color: 'rgb(196,196,196)',
     },
     loginEnableButtonStyle: {
         height: px2dp(96),

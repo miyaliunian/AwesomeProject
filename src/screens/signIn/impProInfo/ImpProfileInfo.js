@@ -398,8 +398,8 @@ export default class ImpProfileInfo extends Component<{}> {
                                            onBlur={ () => {
                                            }}
                                 />
-                                <Text style={styles.innnerSubTitle}> 说明 : 申请成为供应商,警告平台进行审核，通过以后,</Text>
-                                <Text style={[styles.innnerSubTitle, {marginTop: 2}]}> 你就可以添加工程人员并安卓冷库工程了</Text>
+                                <Text style={styles.innnerSubTitle}> 说明 : 申请成为供应商,经过平台进行审核，通过以后,</Text>
+                                <Text style={[styles.innnerSubTitle, {marginTop: 2}]}> 你就可以添加工程人员并安装冷库工程了</Text>
                                 <View style={{
                                     width:theme.screenWidth - 100,
                                     marginVertical: 17,

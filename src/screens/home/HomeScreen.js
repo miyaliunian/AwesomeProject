@@ -67,40 +67,6 @@ export default class HomeScreen extends Component {
     render() {
         return (
             <SafeAreaView style={theme.root_container}>
-                <View style={styles.headerStyle}>
-                    {this.state.avatar
-                        ?
-                        <Image source={{uri: this.state.avatar}}
-                               style={{
-                                   height: px2dp(160),
-                                   width: px2dp(160),
-                                   borderRadius: px2dp(80),
-                                   marginRight: 10
-                               }}/>
-                        :
-                        <Image source={require('../../icons/profile/default_portrait.png')}
-                               style={{
-                                   height: px2dp(160),
-                                   width: px2dp(160),
-                                   borderRadius: px2dp(80),
-                                   marginRight: 10
-                               }}/>
-                    }
-                </View>
-                <MapView
-                    style={styles.absoluteFill}
-                    mapType='standard'
-                    locationEnabled={true}
-                    locationInterval={10000}
-                    distanceFilter={10}
-                    zoomLevel={18}
-                    coordinate={{
-                        latitude:  123.484027,
-                        longitude: 41.70987,
-                    }}
-                    onLocation={({nativeEvent}) =>
-                        console.log(`${nativeEvent.latitude}, ${nativeEvent.longitude}`)}
-                />
             </SafeAreaView>
         );
     }
