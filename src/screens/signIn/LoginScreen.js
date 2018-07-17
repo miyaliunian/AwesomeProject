@@ -87,7 +87,7 @@ export default class LoginScreen extends Component {
         //发送登录请求
         this.dataRepository.postFormRepository(Config.BASE_URL + Config.API_LOGIN, PARAM)
             .then((data) => {
-                debugger
+                
                 if (data.flag == '1') {
                     this.setState({
                         isLoginModal: false,
@@ -111,7 +111,7 @@ export default class LoginScreen extends Component {
     }
 
     saveAccountInfo(data){
-        debugger
+        
         this.account = Account;
         this.account.avatar = data.avatar;
         this.account.phone = data.phone;
@@ -142,7 +142,7 @@ export default class LoginScreen extends Component {
                     <ImageBackground source={require('../../icons/login/bg.png')} style={styles.bg}
                                      resizeMode={'stretch'}>
                         {/*logo*/}
-                        <Image source={require('../../icons/login/29拷贝.png')} style={styles.bg_logo}/>
+                        <Image source={require('../../icons/login/logo.png')} style={styles.bg_logo}/>
                         <LoginView
                             onPress={() => this.onLoginBtn()}
                             onChangeTopText={(text) => {
