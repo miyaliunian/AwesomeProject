@@ -392,10 +392,11 @@ export default class ProfileInfoScreen extends Component<{}> {
                                 <Text style={[styles.innnerSubTitle, {marginTop: 2}]}> 你就可以添加工程人员并安卓冷库工程了</Text>
 
                                 <View style={{
+                                    width:theme.screenWidth - 100,
                                     marginVertical: 17,
                                     flexDirection: 'row',
                                     alignItems: 'center',
-                                    justifyContent: 'center'
+                                    justifyContent: 'space-around'
                                 }}>
                                     <Button title={this.state.leftBtnTitle}
                                             titleStyle={{fontSize: 15, color: 'black'}}
@@ -508,7 +509,6 @@ const styles = StyleSheet.create({
     innderButton: {
         width: 110,
         height: 40,
-        marginRight: 20,
         backgroundColor: 'rgb(153,153,153)',
         borderColor: 'transparent',
         borderRadius: 20,

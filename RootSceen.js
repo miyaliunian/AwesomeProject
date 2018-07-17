@@ -30,7 +30,7 @@ import  ProfileScreen from './src/screens/profile/ProfileScreen'
 import  ProfileInfoScreen from './src/screens/profile/profileInfo/ProfileInfoScreen'
 import  SupplierInfoScreen from './src/screens/profile/supplier/SupplierInfoScreen'
 import  CompanyInfoScreen from './src/screens/profile/companyInfo/CompanyInfoScreen'
-
+import  TenantsInfoScreen from './src/screens/profile/tenants/TenantsInfoScreen'
 
 export default class App extends Component {
 
@@ -40,7 +40,6 @@ export default class App extends Component {
         );
     }
 }
-
 
 
 /**
@@ -96,6 +95,10 @@ const profile = createStackNavigator(
         CompanyInfoScreen: {
             screen: CompanyInfoScreen
         },
+        TenantsInfoScreen: {
+            screen: TenantsInfoScreen
+        },
+
     }
     , {
         navigationOptions: {
@@ -188,8 +191,8 @@ const TabStack = createBottomTabNavigator(
  * @param navigation
  */
 
-home.navigationOptions=({navigation})=>{
-    let { routeName } = navigation.state.routes[navigation.state.index];
+home.navigationOptions = ({navigation}) => {
+    let {routeName} = navigation.state.routes[navigation.state.index];
     let navigationOptions = {};
     if (routeName !== 'index') {
         navigationOptions.tabBarVisible = false;
@@ -197,8 +200,8 @@ home.navigationOptions=({navigation})=>{
     return navigationOptions;
 };
 
-manager.navigationOptions=({navigation})=>{
-    let { routeName } = navigation.state.routes[navigation.state.index];
+manager.navigationOptions = ({navigation}) => {
+    let {routeName} = navigation.state.routes[navigation.state.index];
     let navigationOptions = {};
     if (routeName !== 'index') {
         navigationOptions.tabBarVisible = false;
@@ -206,15 +209,14 @@ manager.navigationOptions=({navigation})=>{
     return navigationOptions;
 };
 
-profile.navigationOptions=({navigation})=>{
-    let { routeName } = navigation.state.routes[navigation.state.index];
+profile.navigationOptions = ({navigation}) => {
+    let {routeName} = navigation.state.routes[navigation.state.index];
     let navigationOptions = {};
     if (routeName !== 'index') {
         navigationOptions.tabBarVisible = false;
     }
     return navigationOptions;
 };
-
 
 
 const AppStack = createStackNavigator(

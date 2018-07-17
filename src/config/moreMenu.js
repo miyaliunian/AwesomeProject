@@ -24,7 +24,9 @@ export const moreMenu = {
         menu_profile_info:'ProfileInfoScreen',
         menu_supplier_info:'SupplierInfoScreen',
         //公司信息
-        menu_company_info:'CompanyInfoScreen'
+        menu_company_info:'CompanyInfoScreen',
+        //租客管理
+        menu_tenants_info:'TenantsInfoScreen'
     },
 
 };

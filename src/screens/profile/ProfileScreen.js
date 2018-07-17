@@ -137,7 +137,7 @@ export default class MyPage extends Component<{}> {
                     {this.state.userRole == '3'
                         ?
                         <ProfileItem icon={require('../../icons/profile/icon_sz_info.png')} title='租客管理'
-                                     callBack={() => this.itemClick('租客管理')}/>
+                                     callBack={() => this.itemClick(moreMenu.ProfileScreen.menu_tenants_info)}/>
                         :
                         null
                     }
