@@ -62,7 +62,6 @@ export default class LoginScreen extends Component {
             }
 
         })
-
     }
 
     componentWillUnmount() {

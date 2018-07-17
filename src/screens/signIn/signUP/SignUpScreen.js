@@ -257,7 +257,7 @@ export default class SignUpScreen extends Component {
 
     render() {
         return (
-            <SafeAreaView style={{flex: 1, backgroundColor: theme.sBarColor}}>
+            <SafeAreaView style={theme.root_container}>
                 <View>
                     <ImageBackground source={require('../../../icons/login/bg.png')} style={styles.bg}
                                      resizeMode={'stretch'}>
@@ -347,7 +347,6 @@ const styles = StyleSheet.create({
     bg: {
         width: theme.screenWidth,
         height: theme.screenHeight,
-
         alignItems: 'center',
     },
     avatar: {

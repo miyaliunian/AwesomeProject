@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import theme from './src/common/theme'
-
+import { View, Text, TabBarIOS } from 'react-native';
 import TabBarItem from './src/components/TabBarItem'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 //导航布局
@@ -133,12 +133,7 @@ const TabStack = createBottomTabNavigator(
             navigationOptions: {
                 tabBarLabel: '首页',
                 tabBarIcon: ({focused, tintColor}) => (
-                    <TabBarItem
-                        tintColor={tintColor}
-                        focused={focused}
-                        normalImage={require('./src/icons/tab/tab_home_n.png')}
-                        selectedImage={require('./src/icons/tab/tab_home_h.png')}
-                    />
+                    <Icon name={`ios-home${focused ? '' : ''}`} size={25} color={tintColor}/>
                 )
             }
         },
@@ -147,29 +142,17 @@ const TabStack = createBottomTabNavigator(
             navigationOptions: {
                 tabBarLabel: '管理',
                 tabBarIcon: ({focused, tintColor}) => (
-                    <TabBarItem
-                        tintColor={tintColor}
-                        focused={focused}
-                        normalImage={require('./src/icons/tab/tab_manger_n.png')}
-                        selectedImage={require('./src/icons/tab/tab_manger_h.png')}
-                    />
+                    <Icon name={`ios-archive${focused ? '' : ''}`} size={25} color={tintColor}/>
                 )
+
             }
         },
         profile: {
             screen: profile,
             navigationOptions: {
                 tabBarLabel: '我的',
-                // tabBarIcon: ({focused, tintColor}) => (
-                //     <Icon name={`ios-people${focused ? '' : '-outline'}`} size={25} color={tintColor}/>
-                // )
                 tabBarIcon: ({focused, tintColor}) => (
-                    <TabBarItem
-                        tintColor={tintColor}
-                        focused={focused}
-                        normalImage={require('./src/icons/tab/tab_me_n.png')}
-                        selectedImage={require('./src/icons/tab/tab_me_h.png')}
-                    />
+                    <Icon name={`ios-person${focused ? '' : ''}`} size={25} color={tintColor}/>
                 )
             }
         },
@@ -182,6 +165,14 @@ const TabStack = createBottomTabNavigator(
         navigationOptions: {
             gesturesEnabled: true,
         },
+        tabBarOptions: {
+            // label和icon的前景色 活跃状态下（选中）
+            activeTintColor: theme.navColor,
+            // label和icon的背景色 不活跃状态下
+            // inactiveBackgroundColor: theme.lightGray,
+            // label和icon的前景色 不活跃状态下(未选中)
+            inactiveTintColor: theme.lightGray,
+        }
     }
 )
 
