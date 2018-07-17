@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
         backgroundColor: theme.navColor,
         paddingLeft: px2dp(24),
         paddingRight: px2dp(24),
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center'
     },
     absoluteFill: {

@@ -120,7 +120,7 @@ const profile = createStackNavigator(
             headerBackTitleStyle: {
                 color: 'white'
             },
-            headerForceInset: {left: 7},
+            headerForceInset: {left: 7,right:7},
         }
     }
 );

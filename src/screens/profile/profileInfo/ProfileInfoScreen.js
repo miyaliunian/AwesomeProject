@@ -25,7 +25,7 @@ import {inject} from 'mobx-react/native'
 @inject('account')
 export default class ProfileInfoScreen extends Component<{}> {
     static navigationOptions = ({navigation}) => ({
-        headerTitle: "",
+        headerTitle: "个人资料",
     })
 
     constructor(props) {
@@ -227,7 +227,6 @@ export default class ProfileInfoScreen extends Component<{}> {
                                    height: px2dp(160),
                                    width: px2dp(160),
                                    borderRadius: px2dp(80),
-                                   marginRight: 10
                                }}/>
                         :
                         <Image source={require('../../../icons/profile/default_portrait.png')}
@@ -235,7 +234,6 @@ export default class ProfileInfoScreen extends Component<{}> {
                                    height: px2dp(160),
                                    width: px2dp(160),
                                    borderRadius: px2dp(80),
-                                   marginRight: 10
                                }}/>
                     }
 
@@ -337,7 +335,6 @@ export default class ProfileInfoScreen extends Component<{}> {
 
                     </View>
                 </ScrollView>
-
                 {/*申请成为供应商*/}
                 <Modal
                     visible={this.state.isShowModal}

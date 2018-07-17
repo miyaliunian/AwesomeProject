@@ -239,7 +239,6 @@ export default class ImpProfileInfo extends Component<{}> {
                                    height: px2dp(160),
                                    width: px2dp(160),
                                    borderRadius: px2dp(80),
-                                   marginRight: 10
                                }}/>
                         :
                         <Image source={require('../../../icons/profile/default_portrait.png')}
@@ -247,7 +246,6 @@ export default class ImpProfileInfo extends Component<{}> {
                                    height: px2dp(160),
                                    width: px2dp(160),
                                    borderRadius: px2dp(80),
-                                   marginRight: 10
                                }}/>
                     }
 
@@ -400,14 +398,14 @@ export default class ImpProfileInfo extends Component<{}> {
                                            onBlur={ () => {
                                            }}
                                 />
-                                <Text style={styles.innnerSubTitle}> 说明 : 申请成为供应商,经过平台进行审核，通过以后,</Text>
-                                <Text style={[styles.innnerSubTitle, {marginTop: 2}]}> 你就可以添加工程人员并安装冷库工程了</Text>
-
+                                <Text style={styles.innnerSubTitle}> 说明 : 申请成为供应商,警告平台进行审核，通过以后,</Text>
+                                <Text style={[styles.innnerSubTitle, {marginTop: 2}]}> 你就可以添加工程人员并安卓冷库工程了</Text>
                                 <View style={{
+                                    width:theme.screenWidth - 100,
                                     marginVertical: 17,
                                     flexDirection: 'row',
                                     alignItems: 'center',
-                                    justifyContent: 'center'
+                                    justifyContent: 'space-around'
                                 }}>
                                     <Button title={this.state.leftBtnTitle}
                                             titleStyle={{fontSize: 15, color: 'black'}}

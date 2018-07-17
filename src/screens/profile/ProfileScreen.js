@@ -121,7 +121,7 @@ export default class MyPage extends Component<{}> {
                 <ScrollView>
                     <ProfileItem icon={require('../../icons/profile/icon_me_info.png')} title='我的消息'
                                  callBack={() => this.itemClick('我的消息')}/>
-                    <ProfileItem icon={require('../../icons/profile/icon_company_info.png')} title='公司消息'
+                    <ProfileItem icon={require('../../icons/profile/icon_company_info.png')} title='公司信息'
                                  callBack={() => this.itemClick(moreMenu.ProfileScreen.menu_company_info)}/>
 
                     {/*工程商、冷库老板 显示:员工管理:1、3*/}
