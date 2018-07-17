@@ -29,6 +29,7 @@ export default class CompanyInfoScreen extends Component {
 
     static navigationOptions = ({navigation}) => ({
         headerTitle: '公司信息',
+        tabBarVisible:false
     })
 
     constructor(props) {

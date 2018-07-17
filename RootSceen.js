@@ -42,28 +42,93 @@ export default class App extends Component {
 }
 
 
+
+/**
+ * 底部tab  拆解
+ * @param
+ */
+
+const home = createStackNavigator(
+    {
+        index: {
+            screen: HomeScreen
+        }
+    }, {
+        navigationOptions: {
+            headerStyle: {
+                backgroundColor: theme.navColor,
+                borderBottomWidth: 0,
+                borderBottomColor: 'transparent'
+            }
+        }
+    }
+);
+
+const manager = createStackNavigator(
+    {
+        index: {
+            screen: ManagerScreen
+        }
+    },
+    {
+        navigationOptions: {
+            headerStyle: {
+                backgroundColor: theme.navColor,
+                borderBottomWidth: 0,
+                borderBottomColor: 'transparent'
+            }
+        }
+    }
+);
+
+
+const profile = createStackNavigator(
+    {
+        index: {
+            screen: ProfileScreen
+        },
+        ProfileInfoScreen: {
+            screen: ProfileInfoScreen
+        },
+        SupplierInfoScreen: {
+            screen: SupplierInfoScreen
+        },
+        CompanyInfoScreen: {
+            screen: CompanyInfoScreen
+        },
+    }
+    , {
+        navigationOptions: {
+            headerStyle: {
+                backgroundColor: theme.navColor,
+                borderBottomWidth: 0,
+                borderBottomColor: 'transparent',
+            },
+            headerTitleStyle: {
+                color: 'white'
+            },
+            headerBackImage: (tintColor, title) => (
+                <SimpleLineIcons
+                    name={'arrow-left'}
+                    size={20}
+                    color={'white'}/>
+            ),
+            headerBackTitle: '返回',
+            headerBackTitleStyle: {
+                color: 'white'
+            },
+            headerForceInset: {left: 7},
+        }
+    }
+);
+
+
 const TabStack = createBottomTabNavigator(
     {
         home: {
-            screen: createStackNavigator({
-                index: {
-                    screen: HomeScreen
-                },
-            }, {
-                navigationOptions: {
-                    headerStyle: {
-                        backgroundColor: theme.navColor,
-                        borderBottomWidth: 0,
-                        borderBottomColor: 'transparent'
-                    }
-                }
-
-            }),
+            screen: home,
             navigationOptions: {
                 tabBarLabel: '首页',
-                // tabBarIcon: ({focused, tintColor}) => (
-                //     <Icon name={`ios-home${focused ? '' : '-outline'}`} size={25} color={tintColor}/>
-                // )
                 tabBarIcon: ({focused, tintColor}) => (
                     <TabBarItem
                         tintColor={tintColor}
@@ -75,25 +140,9 @@ const TabStack = createBottomTabNavigator(
             }
         },
         manage: {
-            screen: createStackNavigator({
-                index: {
-                    screen: ManagerScreen
-                }
-            }, {
-                navigationOptions: {
-                    headerStyle: {
-                        backgroundColor: theme.navColor,
-                        borderBottomWidth: 0,
-                        borderBottomColor: 'transparent'
-                    }
-                }
-
-            }),
+            screen: manager,
             navigationOptions: {
                 tabBarLabel: '管理',
-                // tabBarIcon: ({focused, tintColor}) => (
-                //     <Icon name={`ios-apps${focused ? '' : '-outline'}`} size={25} color={tintColor}/>
-                // )
                 tabBarIcon: ({focused, tintColor}) => (
                     <TabBarItem
                         tintColor={tintColor}
@@ -105,43 +154,7 @@ const TabStack = createBottomTabNavigator(
             }
         },
         profile: {
-            screen: createStackNavigator({
-                index: {
-                    screen: ProfileScreen
-                },
-                ProfileInfoScreen: {
-                    screen: ProfileInfoScreen
-                },
-                SupplierInfoScreen: {
-                    screen: SupplierInfoScreen
-                },
-                CompanyInfoScreen: {
-                    screen: CompanyInfoScreen
-                },
-            }, {
-                navigationOptions: {
-                    headerStyle: {
-                        backgroundColor: theme.navColor,
-                        borderBottomWidth: 0,
-                        borderBottomColor: 'transparent',
-                    },
-                    headerTitleStyle: {
-                        color: 'white'
-                    },
-                    headerBackImage: (tintColor, title) => (
-                        <SimpleLineIcons
-                            name={'arrow-left'}
-                            size={20}
-                            color={'white'}/>
-                    ),
-                    headerBackTitle: '返回',
-                    headerBackTitleStyle: {
-                        color: 'white'
-                    },
-                    headerForceInset: {left: 7},
-                }
-
-            }),
+            screen: profile,
             navigationOptions: {
                 tabBarLabel: '我的',
                 // tabBarIcon: ({focused, tintColor}) => (
@@ -159,13 +172,50 @@ const TabStack = createBottomTabNavigator(
         },
     },
     {
-
         initialRouteName: 'home',
         order: ['home', 'manage', 'profile'],
         mode: 'card',// 页面切换模式, 左右是card(相当于iOS中的push效果), 上下是modal(相当于iOS中的modal效果)
         headerMode: 'screen',
+        navigationOptions: {
+            gesturesEnabled: true,
+        },
     }
 )
+
+
+/**
+ * 隐藏底部tab
+ * @param navigation
+ */
+
+home.navigationOptions=({navigation})=>{
+    let { routeName } = navigation.state.routes[navigation.state.index];
+    let navigationOptions = {};
+    if (routeName !== 'index') {
+        navigationOptions.tabBarVisible = false;
+    }
+    return navigationOptions;
+};
+
+manager.navigationOptions=({navigation})=>{
+    let { routeName } = navigation.state.routes[navigation.state.index];
+    let navigationOptions = {};
+    if (routeName !== 'index') {
+        navigationOptions.tabBarVisible = false;
+    }
+    return navigationOptions;
+};
+
+profile.navigationOptions=({navigation})=>{
+    let { routeName } = navigation.state.routes[navigation.state.index];
+    let navigationOptions = {};
+    if (routeName !== 'index') {
+        navigationOptions.tabBarVisible = false;
+    }
+    return navigationOptions;
+};
+
+
 
 const AppStack = createStackNavigator(
     {
@@ -182,7 +232,7 @@ const AppStack = createStackNavigator(
         },
         transitionConfig: () => ({ //切换动画
             screenInterpolator: CardStackStyleInterpolator.forHorizontal //水平动画
-        })
+        }),
     }
 );
 
