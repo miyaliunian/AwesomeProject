@@ -18,12 +18,6 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import ActionSheet from 'react-native-actionsheet'
 import {inject} from 'mobx-react/native'
 
-// ActionSheet常量定义
-const CANCEL_INDEX = 0;
-const DESTRUCTIVE_INDEX = 2;
-const options = ['是', '否'];
-const title = '确定退出登录?';
-
 @inject('account')
 export default class MyPage extends Component<{}> {
     static navigationOptions = ({navigation}) => ({
@@ -59,8 +53,8 @@ export default class MyPage extends Component<{}> {
         this.ActionSheet.show()
     }
 
-    handlePress(i) {
-        if (i == 0) {
+    handlePress(index) {
+        if (1 != index){
             //退出登录:清除本地缓存
             AsyncStorage.clear()
             //清除App注入缓存
@@ -166,12 +160,12 @@ export default class MyPage extends Component<{}> {
                     <View style={theme.line}/>
                 </ScrollView>
                 <ActionSheet
-                    ref={actionSheet => this.ActionSheet = actionSheet}
-                    title={title}
-                    options={options}
-                    cancelButtonIndex={CANCEL_INDEX}
-                    destructiveButtonIndex={DESTRUCTIVE_INDEX}
-                    onPress={async (i) => this.handlePress(i)}
+                    ref={o => this.ActionSheet = o}
+                    title={'退出后不会删除任何历史数据，下次登录依然可以使用本账号。'}
+                    options={['退出登录', '取消']}
+                    cancelButtonIndex={1}
+                    destructiveButtonIndex={0}
+                    onPress={(index) => this.handlePress(index)}
                 />
             </View>
         );
