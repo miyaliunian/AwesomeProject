@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 import  LoadingScreen from './src/screens/LoadingScreen'
 // 登录-注册-完善个人-忘记密码
-import LoginScreen from './src/screens/signIn/LoginScreen'
+import SignInScreen from './src/screens/signIn/SignInScreen'
 import ImpProfileInfo from './src/screens/signIn/impProInfo/ImpProfileInfo'
 import SignUpScreen from './src/screens/signIn/signUP/SignUpScreen'
 import SetPwdScreen from './src/screens/signIn/setPwd/SetPwdScreen'
@@ -263,7 +263,7 @@ const ImpAuthStack = createStackNavigator(
 )
 
 const AuthStackConfigs = {
-    initialRouteName: 'Login',
+    initialRouteName: 'signIn',
     navigationOptions: {
         headerStyle: {},
         alignSelf: 'center',
@@ -283,8 +283,8 @@ const AuthStackConfigs = {
 const AuthStack = createStackNavigator(
     {
         // 登录
-        Login: {
-            screen: LoginScreen,
+        signIn: {
+            screen: SignInScreen,
         },
         // 注册
         SignUp: {

@@ -146,7 +146,7 @@ export default class MyPage extends Component<{}> {
                     }
 
 
-                    {/*空角色、供应商 显示:我的账单:0、1、3、4*/}
+                    {/*空角色、工程商 显示:我的账单:0、1、3、4*/}
                     {this.state.userRole == '0' || this.state.userRole == '1' || this.state.userRole == '3' || this.state.userRole == '4'
                         ?
                         <ProfileItem icon={require('../../icons/profile/icon_wdzd.png')} title='我的账单'

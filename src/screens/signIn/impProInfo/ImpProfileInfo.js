@@ -200,7 +200,7 @@ export default class ImpProfileInfo extends Component<{}> {
             .done()
     }
 
-    //申请成为供应商
+    //申请成为工程商
     subApplyInfo() {
         if (this.mobxStore.IMP_PRO_INFO.applyInfo == '') {
             alert('申请信息不能为空');
@@ -343,13 +343,13 @@ export default class ImpProfileInfo extends Component<{}> {
                     <View style={styles.footerContent}>
                         <Text style={styles.footerLabel}>所属角色：{this.state.userRoleName}</Text>
                         <TouchableOpacity onPress={() => this.setState({isShowModal: true})}>
-                            <Text style={[styles.footerLabel, {color: theme.navColor}]}>申请成为供应商</Text>
+                            <Text style={[styles.footerLabel, {color: theme.navColor}]}>申请成为工程商</Text>
                         </TouchableOpacity>
 
                     </View>
                 </ScrollView>
 
-                {/*申请成为供应商*/}
+                {/*申请成为工程商*/}
                 <Modal
                     visible={this.state.isShowModal}
                     transparent={true}
@@ -362,7 +362,7 @@ export default class ImpProfileInfo extends Component<{}> {
 
                         <View style={styles.innerContainerTransparentStyle}>
                             <View style={{height: 50, justifyContent: 'center', alignItems: 'center'}}>
-                                <Text style={styles.innnerTitle}>申请成为供应商</Text>
+                                <Text style={styles.innnerTitle}>申请成为工程商</Text>
                             </View>
 
                             <View style={{

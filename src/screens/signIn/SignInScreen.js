@@ -28,7 +28,7 @@ import {Config} from '../../config/config';
 // RN自带加密包
 import MD5 from 'blueimp-md5'
 @observer
-export default class LoginScreen extends Component {
+export default class SignInScreen extends Component {
 
     constructor(props) {
         super(props);
@@ -141,7 +141,7 @@ export default class LoginScreen extends Component {
                     <ImageBackground source={require('../../icons/login/bg.png')} style={styles.bg}
                                      resizeMode={'stretch'}>
                         {/*logo*/}
-                        <Image source={require('../../icons/login/logo.png')} style={styles.bg_logo}/>
+                        <Image source={require('../../icons/login/logo.png')} style={styles.top_logo}/>
                         <LoginView
                             onPress={() => this.onLoginBtn()}
                             onChangeTopText={(text) => {
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
 
         alignItems: 'center',
     },
-    bg_logo: {
+    top_logo: {
         width: px2dp(180),
         height: px2dp(180),
         marginTop: isIphoneX() == true ? 57 : 26
