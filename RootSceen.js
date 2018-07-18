@@ -320,7 +320,7 @@ const SwitchNavigator = createSwitchNavigator(
 
     },
     {
-        initialRouteName: 'App',
+        initialRouteName: 'AuthLoading',
     }
 )
 

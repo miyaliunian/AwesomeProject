@@ -270,7 +270,7 @@ export default class SignUpScreen extends Component {
                                     source={{uri: this.mobxStore.USER_INFO.avatar}}/>
                                 :
                                 // 没有头像
-                                <Image source={require('../../../icons/signup/头像.png')} style={styles.avatar}
+                                <Image source={require('../../../icons/signup/avatar.png')} style={styles.avatar}
                                        resizeMode={'stretch'}/>
                             }
                         </TouchableOpacity>
@@ -353,6 +353,7 @@ const styles = StyleSheet.create({
         width: px2dp(180),
         height: px2dp(180),
         borderRadius: px2dp(90),
+        marginLeft:1.5,
         marginTop: isIphoneX() == true ? 57 : 26,
     },
     loginViewStyle: {

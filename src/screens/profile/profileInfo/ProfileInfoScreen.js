@@ -9,6 +9,7 @@ import {
     Text,
     ScrollView,
     DeviceEventEmitter,
+    TouchableWithoutFeedback
 } from 'react-native';
 // import Modal from 'react-native-modal'
 import {Button, Toast} from 'teaset';
