@@ -3,12 +3,14 @@ import {observable, action, computed, autorun} from 'mobx';
 export default class SetPwdMobxStore {
     @observable
     USER_INFO = {
-        cell_phone: '',//手机号
-        user_password: '',//密码
+        phone: '',//手机号
+        verify:'',//验证码
+        pwd: '',//密码
+        conPwd:'',//确认密码
     };
 
     @computed get btnState(){
-        if (this.USER_INFO.cell_phone!= '' && this.USER_INFO.user_password!= '' ){
+        if (this.USER_INFO.phone!= '' && this.USER_INFO.verify!= ''&& this.USER_INFO.pwd!= ''&& this.USER_INFO.conPwd!= '' ){
             return false;
         }else {
             return true

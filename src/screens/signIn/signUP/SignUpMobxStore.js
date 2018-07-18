@@ -11,7 +11,7 @@ export default class SignUpMobxStore {
     };
 
     @computed get btnState(){
-        if (this.USER_INFO.phone!= '' && this.USER_INFO.Verify!= ''&& this.USER_INFO.pwd!= ''&& this.USER_INFO.conPwd!= '' ){
+        if (this.USER_INFO.phone!= '' && this.USER_INFO.verify!= ''&& this.USER_INFO.pwd!= ''&& this.USER_INFO.conPwd!= '' ){
             return false;
         }else {
             return true
