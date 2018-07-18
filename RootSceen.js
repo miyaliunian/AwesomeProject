@@ -52,13 +52,28 @@ const home = createStackNavigator(
         index: {
             screen: HomeScreen
         }
-    }, {
+    },
+    {
         navigationOptions: {
             headerStyle: {
                 backgroundColor: theme.navColor,
                 borderBottomWidth: 0,
-                borderBottomColor: 'transparent'
-            }
+                borderBottomColor: 'transparent',
+            },
+            headerTitleStyle: {
+                color: 'white'
+            },
+            headerBackImage: (tintColor, title) => (
+                <SimpleLineIcons
+                    name={'arrow-left'}
+                    size={20}
+                    color={'white'}/>
+            ),
+            headerBackTitle: '返回',
+            headerBackTitleStyle: {
+                color: 'white'
+            },
+            headerForceInset: {left: 7,right:7},
         }
     }
 );
@@ -74,8 +89,22 @@ const manager = createStackNavigator(
             headerStyle: {
                 backgroundColor: theme.navColor,
                 borderBottomWidth: 0,
-                borderBottomColor: 'transparent'
-            }
+                borderBottomColor: 'transparent',
+            },
+            headerTitleStyle: {
+                color: 'white'
+            },
+            headerBackImage: (tintColor, title) => (
+                <SimpleLineIcons
+                    name={'arrow-left'}
+                    size={20}
+                    color={'white'}/>
+            ),
+            headerBackTitle: '返回',
+            headerBackTitleStyle: {
+                color: 'white'
+            },
+            headerForceInset: {left: 7,right:7},
         }
     }
 );
@@ -131,7 +160,7 @@ const TabStack = createBottomTabNavigator(
         home: {
             screen: home,
             navigationOptions: {
-                tabBarLabel: '首页',
+                tabBarLabel: '冷库',
                 tabBarIcon: ({focused, tintColor}) => (
                     <Icon name={`ios-home${focused ? '' : ''}`} size={25} color={tintColor}/>
                 )
@@ -150,7 +179,7 @@ const TabStack = createBottomTabNavigator(
         profile: {
             screen: profile,
             navigationOptions: {
-                tabBarLabel: '我的',
+                tabBarLabel: '个人',
                 tabBarIcon: ({focused, tintColor}) => (
                     <Icon name={`ios-person${focused ? '' : ''}`} size={25} color={tintColor}/>
                 )
@@ -158,7 +187,7 @@ const TabStack = createBottomTabNavigator(
         },
     },
     {
-        initialRouteName: 'home',
+        initialRouteName: 'manage',
         order: ['home', 'manage', 'profile'],
         mode: 'card',// 页面切换模式, 左右是card(相当于iOS中的push效果), 上下是modal(相当于iOS中的modal效果)
         headerMode: 'screen',
