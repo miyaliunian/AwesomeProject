@@ -46,10 +46,6 @@ export default class CompanyInfoScreen extends Component {
     }
 
     componentDidMount() {
-        let {account} = this.props
-        this.setState({
-            companyAvatar: account.avatar,
-        })
     }
 
     //上传头像到七牛图床
@@ -58,7 +54,6 @@ export default class CompanyInfoScreen extends Component {
         this.dataRepository.getRepository(Config.BASE_URL + Config.API_FETCH_TOKEN + PARAM)
             .then((data) => {
                 if (data.flag == '1') {
-
                     //上传头像到七牛图床
                     let key = data.data.path;//文件名
                     let token = data.data.token;//后台返回的token
@@ -123,9 +118,10 @@ export default class CompanyInfoScreen extends Component {
         })
     }
 
-    onSubmit() {
-    }
+    //提交
+    onSubmit() {}
 
+    //渲染
     render() {
         return (
             <View style={[theme.root_container, {alignItems: 'center'}]}>
@@ -133,7 +129,7 @@ export default class CompanyInfoScreen extends Component {
                     <TouchableOpacity onPress={() => this.picPicker()}>
                         {this.mobxStore.COMP_INFO.avatar
                             ?
-                            <Image source={{uri: this.state.companyAvatar}}
+                            <Image source={{uri: this.mobxStore.COMP_INFO.avatar}}
                                    style={{
                                        height: px2dp(160),
                                        width: px2dp(160),

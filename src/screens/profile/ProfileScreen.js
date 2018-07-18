@@ -35,6 +35,11 @@ export default class MyPage extends Component<{}> {
     }
 
     componentDidMount() {
+        this.refreshScreen()
+    }
+
+    //刷新数据
+    refreshScreen(){
         let {account} = this.props
         this.setState({
             phone: account.phone,
@@ -44,11 +49,13 @@ export default class MyPage extends Component<{}> {
         })
     }
 
-
+    //导航菜单
     itemClick(target) {
-        this.props.navigation.navigate(target)
+        //回调函数
+        this.props.navigation.navigate(target,{ callback: () => this.refreshScreen()})
     }
 
+    //弹出actionSheet
     showActionSheet() {
         this.ActionSheet.show()
     }
@@ -103,7 +110,7 @@ export default class MyPage extends Component<{}> {
                             <Text style={styles.txtStyle}>{this.state.phone}</Text>
                         </View>
                     </View>
-                    <TouchableOpacity style={{width: 50, height: 50, alignItems: 'flex-end'}}
+                    <TouchableOpacity style={{width: 50, height: 50, alignItems: 'flex-end',justifyContent:'center'}}
                                       onPress={() => this.itemClick(moreMenu.ProfileScreen.menu_profile_info)}>
                         <SimpleLineIcons
                             name={'note'}

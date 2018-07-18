@@ -9,7 +9,7 @@ export default class CompInfoMobxStore {
     };
 
     @computed get btnState(){
-        if (this.COMP_INFO.name!= '' && this.COMP_INFO.Verify!= ''){
+        if (this.COMP_INFO.name!= '' && this.COMP_INFO.addr!= ''){
             return false;
         }else {
             return true

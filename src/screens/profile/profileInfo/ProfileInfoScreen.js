@@ -8,8 +8,7 @@ import {
     TextInput,
     Text,
     ScrollView,
-    DeviceEventEmitter,
-    TouchableWithoutFeedback
+    DeviceEventEmitter
 } from 'react-native';
 import {Button, Toast} from 'teaset';
 import theme from '../../../common/theme';
@@ -233,13 +232,19 @@ export default class ProfileInfoScreen extends Component<{}> {
         //发送登录请求
         this.dataRepository.postFormRepository(Config.BASE_URL + Config.API_PRO_INFO, PARAM)
             .then((data) => {
-                debugger
+
                 if (data.flag == '1') {
                     this.setState({
                         isLoginModal: false,
                     });
                     DeviceEventEmitter.emit('toastInfo', '更新成功', 'success');
                     this.saveAccountInfo(data.data);
+                    //回调函数
+                    this.props.navigation.state.params.callback();
+                    //返回上一页
+                    this.props.navigation.goBack()
+
+
                 } else {
                     this.setState({
                         isLoginModal: false,
@@ -285,7 +290,7 @@ export default class ProfileInfoScreen extends Component<{}> {
         //发送请求
         this.dataRepository.postFormRepository(Config.BASE_URL + Config.API_SUPPLIER_APPLICATION, PARAM)
             .then((data) => {
-            debugger
+
                 if (data.flag == '1') {
                     alert(data.data);
                     this.setState({leftBtnTitle: '关 闭'})
@@ -298,7 +303,6 @@ export default class ProfileInfoScreen extends Component<{}> {
             })
             .done()
     }
-
 
     //页面渲染
     render() {
