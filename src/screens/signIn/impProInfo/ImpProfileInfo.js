@@ -309,6 +309,7 @@ export default class ImpProfileInfo extends Component<{}> {
                                            this.mobxStore.IMP_PRO_INFO.phone = text;
                                        }}
                                        defaultValue={this.state.phone}
+                                       editable={false}
                             />
                         </View>
                     </View>
@@ -379,9 +380,10 @@ export default class ImpProfileInfo extends Component<{}> {
                                     borderColor: 'rgba(190,190,190,0.5)',
                                     color: '#333',
                                     textAlignVertical: 'top',
-                                    backgroundColor: '#f0eff0'
+                                    backgroundColor: '#f0eff0',
+                                    padding:5
                                 }}
-                                           placeholder={'申请成为工程商需要填写申请说明'}
+                                           placeholder={'申请成为工程商需要填写申请说明:XXXXXX'}
                                            ref="textInput"
                                            placeholderTextColor='#b3b3b3'
                                            multiline={true}
@@ -398,8 +400,8 @@ export default class ImpProfileInfo extends Component<{}> {
                                            onBlur={ () => {
                                            }}
                                 />
-                                <Text style={styles.innnerSubTitle}> 说明 : 申请成为供应商,经过平台进行审核，通过以后,</Text>
-                                <Text style={[styles.innnerSubTitle, {marginTop: 2}]}> 你就可以添加工程人员并安装冷库工程了</Text>
+                                <Text style={styles.innnerSubTitle}> ✨说明 : 申请成为工程商,经平台进行审核，通过以后,</Text>
+                                <Text style={[styles.innnerSubTitle, {marginTop: 2}]}> 您就可以添加工程人员并安装冷库工程了</Text>
                                 <View style={{
                                     width:theme.screenWidth - 100,
                                     marginVertical: 17,
@@ -451,7 +453,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     rowLabel: {
-        width: 100,
+        width: 50,
         marginLeft: px2dp(30)
     },
     rowContent: {
@@ -461,7 +463,7 @@ const styles = StyleSheet.create({
     },
     TextInputStyle: {
         height: px2dp(90),
-        width: 200,
+        width: theme.screenWidth - 90,
         marginRight: px2dp(20),
         paddingTop: 0,
         paddingBottom: 0,

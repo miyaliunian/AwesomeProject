@@ -112,7 +112,7 @@ export default class MyPage extends Component<{}> {
                     <TouchableOpacity style={{width: 50, height: 50, alignItems: 'flex-end'}}
                                       onPress={() => this.itemClick(moreMenu.ProfileScreen.menu_profile_info)}>
                         <SimpleLineIcons
-                            name={'arrow-right'}
+                            name={'note'}
                             size={20}
                             color={'white'}/>
                     </TouchableOpacity>
