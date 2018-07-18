@@ -70,7 +70,7 @@ export default class SetPwdScreen extends Component {
         let PARAM = new FormData();
         PARAM.append('phone', this.mobxStore.USER_INFO.phone)
         PARAM.append('validCode', this.mobxStore.USER_INFO.verify)
-        PARAM.append('pwd', MD5(this.mobxStore.USER_INFO.pwd))
+        PARAM.append('newPwd', MD5(this.mobxStore.USER_INFO.pwd))
 
         //发送登录请求
         this.dataRepository.postFormRepository(Config.BASE_URL + Config.API_UPDATE_PWD, PARAM)

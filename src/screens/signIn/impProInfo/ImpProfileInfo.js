@@ -19,12 +19,14 @@ import {Config} from '../../../config/config';
 import LoadingModal from "../../../components/LoadingModal";
 import px2dp from '../../../common/px2dp';
 import {moreMenu} from '../../../config/moreMenu';
+import ImagePicker from "react-native-image-crop-picker";
 import DataRepository from '../../../common/DataRepository'
 import HeaderButtons from 'react-navigation-header-buttons'
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import Account from "../../../store/common/Account";
 import ImpProMobxStore from '../../../components/ImpProMobxStore'
 import {inject,observer} from 'mobx-react/native'
+import uuid from 'uuid'
 @observer
 @inject('account')
 export default class ImpProfileInfo extends Component<{}> {
@@ -53,8 +55,29 @@ export default class ImpProfileInfo extends Component<{}> {
     }
 
     componentDidMount() {
+
+        this.subscription = DeviceEventEmitter.addListener('userInfoToastInfo', (info, type) => {
+            if (type === 'success') {
+                Toast.success(info, 1500, 'center');
+                return
+            }
+            if (type === 'fail') {
+                Toast.fail(info, 1500, 'center');
+                return
+            }
+            if (type === 'smile') {
+                Toast.smile(info, 1500, 'center');
+                return
+            }
+            if (type === 'sad') {
+                Toast.sad(info, 1500, 'center');
+                return
+            }
+            if (type === 'stop') {
+                Toast.stop(info, 1500, 'center');
+            }
+        })
         let {account} = this.props
-        debugger
         let userRoleName;
         //用户角色解析
         if (account.userRole == '0'){
@@ -88,6 +111,89 @@ export default class ImpProfileInfo extends Component<{}> {
         })
     }
 
+    //上传头像到七牛图床
+    uploadAvatar(imageUrl, imageUUID) {
+        debugger
+        let PARAM = imageUUID;
+        this.dataRepository.getRepository(Config.BASE_URL + Config.API_FETCH_TOKEN + PARAM)
+            .then((data) => {
+                if (data.flag == '1') {
+                    this.setState({
+                        isLoginModal: false,
+                    });
+                    //上传头像到七牛图床
+                    let key = data.data.path;//文件名
+                    let token = data.data.token;//后台返回的token
+                    //创建FormData表单
+                    let body = new FormData();
+                    body.append('token', token);
+                    body.append('key', key);
+                    body.append('file', {
+                        type:'image/jpeg',
+                        uri:imageUrl,
+                        name:key,
+                    });
+                    //创建请求
+                    let xhr = new XMLHttpRequest();
+                    xhr.open('POST',Config.API_QI_NIU_UPLOAD)
+                    xhr.onload = () => {
+
+                        if (xhr.status !== 200){
+                            DeviceEventEmitter.emit('signInToastInfo', '请求失败', 'sad');
+                            console.log(xhr.responseText)
+                            return
+                        }
+
+                        if ( !xhr.responseText ){
+                            DeviceEventEmitter.emit('signInToastInfo', '请求失败', 'sad');
+                            return
+                        }
+
+                        let response
+
+                        try {
+                            response = JSON.parse(xhr.response)
+                        } catch (e) {
+                            DeviceEventEmitter.emit('signInToastInfo', e, 'sad');
+                        }
+
+                        if (response && response.key){
+                            this.mobxStore.IMP_PRO_INFO.avatar = Config.API_QI_NIU_AVATAR+response.key;
+                            //替换本地图片
+                            this.setState({avatar:this.mobxStore.IMP_PRO_INFO.avatar})
+                        }
+                    }
+                    // 发起请求
+                    xhr.send(body)
+                } else {
+                    this.setState({
+                        isLoginModal: false,
+                    });
+                    DeviceEventEmitter.emit('signInToastInfo', data.msg, 'sad');
+                }
+            })
+            .catch((err) => {
+                this.setState({
+                    isLoginModal: false,
+                })
+                DeviceEventEmitter.emit('signInToastInfo', err.status, 'stop');
+            })
+            .done()
+    }
+
+    //调用相机胶卷
+    picPicker() {
+        ImagePicker.openPicker({
+            width: 300,
+            height: 300,
+            cropping: true
+        }).then(image => {
+            let imageUUID = uuid.v4() + '.jpeg'
+            this.mobxStore.IMP_PRO_INFO.avatar = image.path
+            this.uploadAvatar(image.path, imageUUID)
+        })
+    }
+
     //保存个人信息
     onSave() {
         debugger
@@ -96,7 +202,7 @@ export default class ImpProfileInfo extends Component<{}> {
             if (this.state.avatar != '') {
                 this.mobxStore.IMP_PRO_INFO.avatar = this.state.avatar
             } else {
-                DeviceEventEmitter.emit('toastInfo', '头像不能为空!', 'sad');
+                DeviceEventEmitter.emit('userInfoToastInfo', '头像不能为空!', 'sad');
                 return
             }
         }
@@ -106,7 +212,7 @@ export default class ImpProfileInfo extends Component<{}> {
             if (this.state.userName != '') {
                 this.mobxStore.IMP_PRO_INFO.userName = this.state.userName
             } else {
-                DeviceEventEmitter.emit('toastInfo', '姓名不能为空!', 'sad');
+                DeviceEventEmitter.emit('userInfoToastInfo', '姓名不能为空!', 'sad');
                 return
             }
         }
@@ -123,7 +229,7 @@ export default class ImpProfileInfo extends Component<{}> {
             if (this.state.phone != '') {
                 this.mobxStore.IMP_PRO_INFO.phone = this.state.phone
             } else {
-                DeviceEventEmitter.emit('toastInfo', '电话不能为空!', 'sad');
+                DeviceEventEmitter.emit('userInfoToastInfo', '电话不能为空!', 'sad');
                 return
             }
         }
@@ -133,14 +239,14 @@ export default class ImpProfileInfo extends Component<{}> {
             if (this.state.addr != undefined) {
                 this.mobxStore.IMP_PRO_INFO.addr = this.state.addr
             } else {
-                DeviceEventEmitter.emit('toastInfo', '地址不能为空!', 'sad');
+                DeviceEventEmitter.emit('userInfoToastInfo', '地址不能为空!', 'sad');
                 return
             }
         }
 
         let regex = /^1[34578]\d{9}$/;
         if (!regex.test(this.mobxStore.IMP_PRO_INFO.phone)) {
-            DeviceEventEmitter.emit('toastInfo', '手机号格式不正确', 'sad');
+            DeviceEventEmitter.emit('userInfoToastInfo', '手机号格式不正确', 'sad');
             return;
         }
 
@@ -188,6 +294,7 @@ export default class ImpProfileInfo extends Component<{}> {
         this.account = Account;
         this.account.avatar = data.avatar;
         this.account.phone = data.phone;
+        this.account.nickName = data.nickName;
         this.account.addr = data.addr;
         this.account.userName = data.userName;
         this.dataRepository.mergeLocalRepository('ACCOUNT', data)
@@ -232,6 +339,7 @@ export default class ImpProfileInfo extends Component<{}> {
         return (
             <View style={[theme.root_container, {alignItems: 'center'}]}>
                 <View style={styles.headerStyle}>
+                    <TouchableOpacity onPress={() => this.picPicker()}>
                     {this.state.avatar
                         ?
                         <Image source={{uri: this.state.avatar}}
@@ -248,7 +356,7 @@ export default class ImpProfileInfo extends Component<{}> {
                                    borderRadius: px2dp(80),
                                }}/>
                     }
-
+                    </TouchableOpacity>
                 </View>
                 <View style={theme.line_space_10}/>
                 <ScrollView>
