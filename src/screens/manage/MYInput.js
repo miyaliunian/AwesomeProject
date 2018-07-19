@@ -30,6 +30,7 @@ const MYInput = (props) => {
                    onBlur={props.onBlur}
                    maxLength={props.maxLength}
                    editable={props.editable}
+                   returnKeyType={'done'}
                    autoCapitalize='none'
                    clearButtonMode={'always'}
                    underlineColorAndroid='transparent'

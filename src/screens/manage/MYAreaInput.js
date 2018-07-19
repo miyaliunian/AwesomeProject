@@ -31,6 +31,8 @@ const MYAreaInput = (props) => {
                    onBlur={props.onBlur}
                    maxLength={props.maxLength}
                    autoCapitalize='none'
+                   returnKeyType={'done'}
+                   keyboardType={'numeric'}
                    clearButtonMode={'always'}
                    underlineColorAndroid='transparent'
             />

@@ -18,6 +18,8 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import MYInput from './MYInput'
 import MYAreaInput from './MYAreaInput'
 import {Checkbox, Select, Button, Toast} from 'teaset'
+// import {ActionSheetCustom as ActionSheet} from 'react-native-actionsheet'
+import ActionSheet from 'react-native-actionsheet'
 import TouchableItem from "react-navigation/src/views/TouchableItem";
 
 
@@ -26,6 +28,21 @@ const CACHE_RESULTS = {
     total: 5,//总记录数
     rows: [],//数据集
 };
+
+// 自定义actionSheet
+const options = [
+    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: px2dp(130)}}>
+        <Icon name={`ios-search`} size={28} color={'black'}/>
+        <Text style={{fontSize: 18, marginLeft: px2dp(30)}}>搜 索</Text>
+    </View>,
+    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: px2dp(130)}}>
+        <Icon name={`ios-qr-scanner`} size={28} color={'black'}/>
+        <Text style={{fontSize: 18, marginLeft: px2dp(30)}}>扫一扫</Text>
+    </View>,
+    '取消',
+
+]
+
 
 export default class ManagerScreen extends Component {
     static navigationOptions = ({navigation}) => ({
@@ -90,7 +107,13 @@ export default class ManagerScreen extends Component {
                 <View style={styles.cellHeaderStyle}>
                     <MYInput editable={false} title={item.item.key}/>
                     <MYAreaInput title={'工作电压 : '} isCell={true}/>
-                    <Icon name={`ios-close-circle-outline`} size={28} color={'black'} style={styles.cellDelIcon}/>
+                    {item.index != 0
+                        ?
+                        <Icon name={`ios-close-circle-outline`} size={28} color={'black'} style={styles.cellDelIcon}/>
+                        :
+                        null
+                    }
+
                 </View>
             </TouchableItem>
         )
@@ -129,6 +152,21 @@ export default class ManagerScreen extends Component {
         this.setState({
             data: CACHE_RESULTS.rows
         })
+    }
+
+
+    showActionSheet() {
+        this.ActionSheet.show()
+    }
+
+    handlePress(index) {
+        if (1 != index) {
+            //退出登录:清除本地缓存
+            AsyncStorage.clear()
+            //清除App注入缓存
+            this.removeRepository()
+            this.props.navigation.navigate('Auth');
+        }
     }
 
     //渲染方法
@@ -222,13 +260,20 @@ export default class ManagerScreen extends Component {
                                 />
                             </View>
                             :
-                            null
+                            <Checkbox
+                                style={{marginLeft: px2dp(50), marginBottom: px2dp(40), marginTop: px2dp(30)}}
+                                title='以上参数保存为默认值'
+                                size='lg'
+                                titleStyle={{fontSize: 13, color: theme.navColor}}
+                                checked={false}
+                                // onChange={checked => alert(checked)}
+                            />
                         }
                     </View>
 
 
                     {/*签发冷库、批量添加*/}
-                    <View style={[styles.footer2Style,{height:this.state.isYesBatch? px2dp(400):px2dp(200)}]}>
+                    <View style={[styles.footer2Style, {height: this.state.isYesBatch ? px2dp(400) : px2dp(200)}]}>
                         <View style={{
                             flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start',
                             marginRight: px2dp(30),
@@ -304,7 +349,9 @@ export default class ManagerScreen extends Component {
 
                         }}>
                             <Text >设备绑定 : </Text>
-                            <Text style={{fontSize: 16, color: theme.navColor}}>请选择 </Text>
+                            <TouchableItem onPress={() => this.showActionSheet() }>
+                                <Text style={{fontSize: 16, color: theme.navColor}}>请选择 </Text>
+                            </TouchableItem>
                         </View>
                     </View>
 
@@ -313,11 +360,17 @@ export default class ManagerScreen extends Component {
                     <Button title={'确认添加'}
                             style={styles.loginEnableButtonStyle}
                             titleStyle={{fontSize: 18, color: 'white'}}
-                            onPress={() => {
-                            }}
+                        // onPress={() => }
                     />
                 </ScrollView>
-
+                {/*ActionSheet*/}
+                <ActionSheet
+                    ref={o => this.ActionSheet = o}
+                    options={['搜   索', '扫一扫','取消']}
+                    cancelButtonIndex={2}
+                    // onPress={(index) => this.handlePress(index)}
+                    onPress={(index) => alert(index)}
+                />
             </View>
         );
     }
