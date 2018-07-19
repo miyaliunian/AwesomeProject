@@ -29,6 +29,7 @@ const MYInput = (props) => {
                    onFocus={props.onFocus}
                    onBlur={props.onBlur}
                    maxLength={props.maxLength}
+                   editable={props.editable}
                    autoCapitalize='none'
                    clearButtonMode={'always'}
                    underlineColorAndroid='transparent'
@@ -42,7 +43,7 @@ export default MYInput;
 
 const iStyle = StyleSheet.create({
     inputViewStyle:{
-        height:px2dp(48),
+        height:px2dp(70),
         marginTop:px2dp(20),
         marginBottom:px2dp(12),
         marginLeft:px2dp(30),

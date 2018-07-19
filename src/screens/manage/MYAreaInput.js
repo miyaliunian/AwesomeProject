@@ -34,7 +34,12 @@ const MYAreaInput = (props) => {
                    clearButtonMode={'always'}
                    underlineColorAndroid='transparent'
             />
-            <Text style={{marginLeft:px2dp(10)}}>立方米</Text>
+            {props.isCell
+                ?
+                <Text style={{marginLeft:px2dp(10)}}>V</Text>
+                :
+                <Text style={{marginLeft:px2dp(10)}}>立方米</Text>}
+
         </View>
     )
 };
@@ -43,10 +48,10 @@ export default MYAreaInput;
 
 const iStyle = StyleSheet.create({
     inputViewStyle:{
-        height:px2dp(48),
+        height:px2dp(70),
         width:theme.screenWidth - px2dp(70),
         marginTop:px2dp(8),
-        marginLeft:px2dp(30),
+        marginLeft:px2dp(35),
         marginRight:px2dp(30),
         marginBottom:px2dp(20),
         flexDirection:'row',

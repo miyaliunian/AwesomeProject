@@ -42,7 +42,7 @@ export default module = {
     // 每个页面的根样式
     root_container: {
         flex: 1,
-        backgroundColor:'#f2f2f2',
+        backgroundColor:'white',
         alignItems:'center',
     },
     btnActiveOpacity: 0.5,

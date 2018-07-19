@@ -23,8 +23,8 @@ export default class ProfileItem extends Component {
     render() {
         let {icon , title , callBack} = this.props
         return (
-            <TouchableOpacity style={[styles.rowItem, styles.topBorder, {height: px2dp(120)}]} onPress = {callBack}>
-                <View style={[theme.root_container,{flexDirection:'row'}]}>
+            <TouchableOpacity style={[styles.rowItem, styles.topBorder, {height: px2dp(120),backgroundColor:'white'}]} onPress = {callBack}>
+                <View style={[theme.root_container,{flexDirection:'row',backgroundColor:'white'}]}>
                     <Image source={icon} style={styles.iconStyle}/>
                     <TextFix style={{fontSize: px2dp(32), color: '#333333', flex: 1}}>{title}</TextFix>
                     <SimpleLineIcons
