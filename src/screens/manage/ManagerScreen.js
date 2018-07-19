@@ -36,9 +36,17 @@ export default class ManagerScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            // 添加冷库
+            data: '',//FlatList 数据
+            // 冷库划区域
+            isYesArea: false,//是
+            isNoArea: true,//否
             valueVCustom: 'A',
             valueHCustom: '1',
-            data: '',//FlatList 数据
+            // 批量添加
+            isYesBatch: false, //是
+            isNoBatch: true,//否
+
         }
     }
 
@@ -109,14 +117,14 @@ export default class ManagerScreen extends Component {
     }
 
     //点击cell右侧删除图标调用此方法
-    delItem(item){
-        if (CACHE_RESULTS.rows.length == 1){
+    delItem(item) {
+        if (CACHE_RESULTS.rows.length == 1) {
             DeviceEventEmitter.emit('toastInfo', '压缩机至少保留一个!', 'fail')
             return
         }
         CACHE_RESULTS.current_row -= 1
         //根据索引删除数组数据
-        CACHE_RESULTS.rows.splice(item.index,1)
+        CACHE_RESULTS.rows.splice(item.index, 1)
         //更新状态机
         this.setState({
             data: CACHE_RESULTS.rows
@@ -134,6 +142,7 @@ export default class ManagerScreen extends Component {
                         <MYAreaInput title={'冷库容积 : '}/>
 
                     </View>
+
                     {/*添加冷库*/}
                     <View style={{alignItems: 'center', flex: 1}}>
                         <FlatList
@@ -166,68 +175,80 @@ export default class ManagerScreen extends Component {
                                 title='否'
                                 size='lg'
                                 titleStyle={styles.checkedTxtStyle}
-                                checked={false}
-                                // onChange={checked => alert(checked)}
+                                checked={this.state.isNoArea}
+                                onChange={checked => this.setState({isNoArea: checked, isYesArea: !checked})}
                             />
                             <Checkbox
                                 title='是'
                                 size='lg'
                                 titleStyle={styles.checkedTxtStyle}
-                                checked={false}
-                                // onChange={checked => alert(checked)}
+                                checked={this.state.isYesArea}
+                                onChange={checked => this.setState({isNoArea: !checked, isYesArea: checked})}
                             />
                         </View>
-                        <View style={styles.SelectContainStyle}>
-                            <Text>横向 : </Text>
-                            <Select
-                                style={{width: px2dp(200)}}
-                                value={this.state.valueVCustom}
-                                items={['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']}
-                                placeholder='请选择'
-                                pickerTitle='横向选择范围:A~Z'
-                                onSelected={(item, index) => this.setState({valueVCustom: item})}
-                            />
-                        </View>
-                        <View style={styles.SelectContainStyle}>
-                            <Text>纵向 : </Text>
-                            <Select
-                                style={{width: px2dp(200)}}
-                                value={this.state.valueHCustom}
-                                items={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30']}
-                                placeholder='请选择'
-                                pickerTitle='纵向选择范围:1~30'
-                                onSelected={(item, index) => this.setState({valueHCustom: item})}
-                            />
-                        </View>
-                        <Checkbox
-                            style={{marginLeft: px2dp(50), marginBottom: px2dp(40), marginTop: px2dp(30)}}
-                            title='以上参数保存为默认值'
-                            size='lg'
-                            titleStyle={{fontSize: 13, color: theme.navColor}}
-                            checked={false}
-                            // onChange={checked => alert(checked)}
-                        />
+                        {/*划分区域选择是*/}
+                        {this.state.isYesArea ?
+                            <View>
+                                <View style={styles.SelectContainStyle}>
+                                    <Text>横向 : </Text>
+                                    <Select
+                                        style={{width: px2dp(200)}}
+                                        value={this.state.valueVCustom}
+                                        items={['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']}
+                                        placeholder='请选择'
+                                        pickerTitle='横向选择范围:A~Z'
+                                        onSelected={(item, index) => this.setState({valueVCustom: item})}
+                                    />
+                                </View>
+                                <View style={styles.SelectContainStyle}>
+                                    <Text>纵向 : </Text>
+                                    <Select
+                                        style={{width: px2dp(200)}}
+                                        value={this.state.valueHCustom}
+                                        items={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30']}
+                                        placeholder='请选择'
+                                        pickerTitle='纵向选择范围:1~30'
+                                        onSelected={(item, index) => this.setState({valueHCustom: item})}
+                                    />
+                                </View>
+                                <Checkbox
+                                    style={{marginLeft: px2dp(50), marginBottom: px2dp(40), marginTop: px2dp(30)}}
+                                    title='以上参数保存为默认值'
+                                    size='lg'
+                                    titleStyle={{fontSize: 13, color: theme.navColor}}
+                                    checked={false}
+                                    // onChange={checked => alert(checked)}
+                                />
+                            </View>
+                            :
+                            null
+                        }
                     </View>
-                    {/*签发冷库*/}
+
+                    {/*签发冷库、批量添加*/}
                     <View style={styles.footer2Style}>
                         <View style={{
                             flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start',
                             marginRight: px2dp(30),
                             height: px2dp(80),
                             marginLeft: px2dp(30),
-
+                            marginTop:px2dp(16),
+                            // backgroundColor:'red'
                         }}>
                             <Text >签发冷库 : 张三(17716879324)</Text>
                             <TouchableItem>
                                 <Text style={{marginLeft: px2dp(20), fontSize: 13, color: theme.navColor}}>更改</Text>
                             </TouchableItem>
                         </View>
+                        {/*批量添加*/}
                         <View style={{
                             flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start',
                             marginRight: px2dp(30),
                             height: px2dp(80),
                             marginLeft: px2dp(30),
-                            // backgroundColor:'blue'
+                            // backgroundColor:'blue',
+                            borderBottomColor: '#d1d1d1',
+                            borderBottomWidth: theme.onePixel,
                         }}>
                             <Text >批量添加 : </Text>
                             <Checkbox
@@ -235,19 +256,50 @@ export default class ManagerScreen extends Component {
                                 title='否'
                                 size='lg'
                                 titleStyle={styles.checkedTxtStyle}
-                                checked={false}
-                                // onChange={checked => alert(checked)}
+                                checked={this.state.isNoBatch}
+                                onChange={checked => this.setState({isNoBatch: checked, isYesBatch: !checked})}
                             />
                             <Checkbox
                                 title='是'
                                 size='lg'
                                 titleStyle={styles.checkedTxtStyle}
-                                checked={false}
-                                // onChange={checked => alert(checked)}
+                                checked={this.state.isYesBatch}
+                                onChange={checked => this.setState({isNoBatch: !checked, isYesBatch: checked})}
                             />
                         </View>
+                        <View>
+                            <MYAreaInput title={'添加数量 : '}/>
+                            <View style = {{flexDirection:'row',marginLeft:px2dp(94),marginRight:px2dp(120)}}>
+                                <Text >注意 : </Text>
+                                <Text style={{marginLeft:px2dp(12),fontSize: 12, color: '#ff6868',height:px2dp(120),flex:1}}>冷库的名称将被重新命名成您输入的冷库名称后面再拼接一个编号的形式，如"冷库#1"、"冷库#2"
+                                    ...</Text>
+                            </View>
+                        </View>
                     </View>
+                    {/*设置绑定*/}
+                    <View style={styles.footerStyle}>
+                        <View style={{
+                            flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start',
+                            marginRight: px2dp(30),
+                            height: px2dp(100),
+                            borderBottomColor: '#d1d1d1',
+                            borderBottomWidth: theme.onePixel,
+                            marginLeft: px2dp(30),
+
+                        }}>
+                            <Text >设备绑定 : </Text>
+                            <Text style={{fontSize: 16, color: theme.navColor}}>请选择 </Text>
+                        </View>
+                    </View>
+                    {/*确认添加按钮*/}
+                    <Button title={'确认添加'}
+                            style={styles.loginEnableButtonStyle}
+                            titleStyle={{fontSize: 18, color: 'white'}}
+                            onPress={() => {
+                            }}
+                    />
                 </ScrollView>
+
             </View>
         );
     }
@@ -312,7 +364,7 @@ const styles = StyleSheet.create({
         marginLeft: px2dp(120),
     },
     footer2Style: {
-        height: px2dp(160),
+        height: px2dp(400),
         width: theme.screenWidth - px2dp(32),
         justifyContent: 'center',
         backgroundColor: 'white',
@@ -322,6 +374,15 @@ const styles = StyleSheet.create({
         shadowColor: 'black',
         shadowOpacity: 0.2,
         elevation: 1,
+    },
+    // 确认添加按钮
+    loginEnableButtonStyle: {
+        width: theme.screenWidth - px2dp(48),
+        height: px2dp(68),
+        marginVertical: px2dp(28),
+        backgroundColor: theme.navColor,
+        borderColor: 'transparent',
+        borderRadius: 5
     },
 });
 
