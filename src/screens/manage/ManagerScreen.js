@@ -140,8 +140,8 @@ export default class ManagerScreen extends Component {
                     <View style={styles.headerStyle}>
                         <MYInput placeholder='请输入' title={'冷库名称 : '}/>
                         <MYAreaInput title={'冷库容积 : '}/>
-
                     </View>
+
 
                     {/*添加冷库*/}
                     <View style={{alignItems: 'center', flex: 1}}>
@@ -157,6 +157,7 @@ export default class ManagerScreen extends Component {
                                 onPress={() => this.insertCell()}
                         />
                     </View>
+
 
                     {/*冷库划区*/}
                     <View style={styles.footerStyle}>
@@ -225,14 +226,15 @@ export default class ManagerScreen extends Component {
                         }
                     </View>
 
+
                     {/*签发冷库、批量添加*/}
-                    <View style={styles.footer2Style}>
+                    <View style={[styles.footer2Style,{height:this.state.isYesBatch? px2dp(400):px2dp(200)}]}>
                         <View style={{
                             flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start',
                             marginRight: px2dp(30),
                             height: px2dp(80),
                             marginLeft: px2dp(30),
-                            marginTop:px2dp(16),
+                            marginTop: px2dp(16),
                             // backgroundColor:'red'
                         }}>
                             <Text >签发冷库 : 张三(17716879324)</Text>
@@ -267,15 +269,29 @@ export default class ManagerScreen extends Component {
                                 onChange={checked => this.setState({isNoBatch: !checked, isYesBatch: checked})}
                             />
                         </View>
-                        <View>
-                            <MYAreaInput title={'添加数量 : '}/>
-                            <View style = {{flexDirection:'row',marginLeft:px2dp(94),marginRight:px2dp(120)}}>
-                                <Text >注意 : </Text>
-                                <Text style={{marginLeft:px2dp(12),fontSize: 12, color: '#ff6868',height:px2dp(120),flex:1}}>冷库的名称将被重新命名成您输入的冷库名称后面再拼接一个编号的形式，如"冷库#1"、"冷库#2"
-                                    ...</Text>
+                        {/*批量添加选择是*/}
+                        {this.state.isYesBatch ?
+                            <View>
+                                <MYAreaInput title={'添加数量 : '}/>
+                                <View style={{flexDirection: 'row', marginLeft: px2dp(94), marginRight: px2dp(120)}}>
+                                    <Text >注意 : </Text>
+                                    <Text style={{
+                                        marginLeft: px2dp(12),
+                                        fontSize: 12,
+                                        color: '#ff6868',
+                                        height: px2dp(120),
+                                        flex: 1
+                                    }}>冷库的名称将被重新命名成您输入的冷库名称后面再拼接一个编号的形式，如"冷库#1"、"冷库#2"
+                                        ...</Text>
+                                </View>
                             </View>
-                        </View>
+                            :
+                            null
+                        }
+
                     </View>
+
+
                     {/*设置绑定*/}
                     <View style={styles.footerStyle}>
                         <View style={{
@@ -291,6 +307,8 @@ export default class ManagerScreen extends Component {
                             <Text style={{fontSize: 16, color: theme.navColor}}>请选择 </Text>
                         </View>
                     </View>
+
+
                     {/*确认添加按钮*/}
                     <Button title={'确认添加'}
                             style={styles.loginEnableButtonStyle}
