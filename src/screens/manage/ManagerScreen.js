@@ -18,7 +18,6 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import MYInput from './MYInput'
 import MYAreaInput from './MYAreaInput'
 import {Checkbox, Select, Button, Toast} from 'teaset'
-// import {ActionSheetCustom as ActionSheet} from 'react-native-actionsheet'
 import ActionSheet from 'react-native-actionsheet'
 import TouchableItem from "react-navigation/src/views/TouchableItem";
 
@@ -28,20 +27,6 @@ const CACHE_RESULTS = {
     total: 5,//总记录数
     rows: [],//数据集
 };
-
-// 自定义actionSheet
-const options = [
-    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: px2dp(130)}}>
-        <Icon name={`ios-search`} size={28} color={'black'}/>
-        <Text style={{fontSize: 18, marginLeft: px2dp(30)}}>搜 索</Text>
-    </View>,
-    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: px2dp(130)}}>
-        <Icon name={`ios-qr-scanner`} size={28} color={'black'}/>
-        <Text style={{fontSize: 18, marginLeft: px2dp(30)}}>扫一扫</Text>
-    </View>,
-    '取消',
-
-]
 
 
 export default class ManagerScreen extends Component {
@@ -53,6 +38,10 @@ export default class ManagerScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            //冷库名称
+            colStorageName:'',//冷库名称
+            colStorageVolume:'',//冷库容积
+            ysjV:'',//压缩机工作电压
             // 添加冷库
             data: '',//FlatList 数据
             // 冷库划区域
@@ -68,6 +57,7 @@ export default class ManagerScreen extends Component {
     }
 
     componentDidMount() {
+        //toast
         this.subscription = DeviceEventEmitter.addListener('toastInfo', (info, type) => {
             if (type === 'success') {
                 Toast.success(info, 1500, 'center');
@@ -92,7 +82,7 @@ export default class ManagerScreen extends Component {
         })
         //1数据集清空
         CACHE_RESULTS.current_row = 1
-        CACHE_RESULTS.rows = [{key: '压缩机#1：'}]
+        CACHE_RESULTS.rows = [{key: '压缩机#1：',index:0}]
         CACHE_RESULTS.total = 5
         //拼接FlatList数据
         this.setState({
@@ -104,10 +94,10 @@ export default class ManagerScreen extends Component {
     renderRow(item) {
         return (
             <TouchableItem onPress={() => this.delItem(item)}>
-                <View style={styles.cellHeaderStyle}>
-                    <MYInput editable={false} title={item.item.key}/>
-                    <MYAreaInput title={'工作电压 : '} isCell={true}/>
-                    {item.index != 0
+                <View style={styles.cellHeaderStyle} >
+                    <MYInput editable={false} title={item.item.key} />
+                    <MYAreaInput title={'工作电压 : '} ref="textInputRefer" isCell={true}  onBlur={() => this.onSubmitEditing()} onChangeText={(text) => this.setState({ysjV:text})}/>
+                    {item.index == (CACHE_RESULTS.current_row - 1) && item.index != 0
                         ?
                         <Icon name={`ios-close-circle-outline`} size={28} color={'black'} style={styles.cellDelIcon}/>
                         :
@@ -119,8 +109,22 @@ export default class ManagerScreen extends Component {
         )
     }
 
+    //
+    onSubmitEditing(){
+        // debugger
+        // console.log(this.refs)
+        // let regex = /^0\.([1-9]|\d[1-9])$|^[1-9]\d{0,8}\.\d{0,2}$|^[1-9]\d{0,8}$/
+        // if (regex.test(this.state.ysjV)) {
+        //     alert('真')
+        // }else{
+        //     alert('假')
+        // }
+
+    }
+
     //点击添加按钮调用此方法
     insertCell() {
+        //debugger
         if (CACHE_RESULTS.current_row == 5) {
             DeviceEventEmitter.emit('toastInfo', '压缩机总数不能大于5!', 'fail')
             return
@@ -130,7 +134,7 @@ export default class ManagerScreen extends Component {
         for (let i = 0; i <= CACHE_RESULTS.current_row; i++) {
             // 只操作新增的数据，而不修改已经添加的数据
             if (i > this.state.data.length) {
-                CACHE_RESULTS.rows.push({key: '压缩机#' + i + '：'})
+                CACHE_RESULTS.rows.push({key: '压缩机#' + i + '：',index:i - 1})
                 //更新状态机
                 this.setState({
                     data: CACHE_RESULTS.rows
@@ -145,15 +149,23 @@ export default class ManagerScreen extends Component {
             DeviceEventEmitter.emit('toastInfo', '压缩机至少保留一个!', 'fail')
             return
         }
+        if (item.index != (CACHE_RESULTS.current_row - 1)){
+            return
+        }
         CACHE_RESULTS.current_row -= 1
         //根据索引删除数组数据
         CACHE_RESULTS.rows.splice(item.index, 1)
+        CACHE_RESULTS.rows.map((item,index) => {
+            if (item.index != index){
+                item.key = '压缩机#'+(index+1)
+                item.index = index
+            }
+        })
         //更新状态机
         this.setState({
             data: CACHE_RESULTS.rows
         })
     }
-
 
     showActionSheet() {
         this.ActionSheet.show()
@@ -169,6 +181,10 @@ export default class ManagerScreen extends Component {
         }
     }
 
+    onSubmit(){
+        console.log(this.state)
+    }
+
     //渲染方法
     render() {
         return (
@@ -176,8 +192,8 @@ export default class ManagerScreen extends Component {
                 <ScrollView>
                     {/*冷库名称*/}
                     <View style={styles.headerStyle}>
-                        <MYInput placeholder='请输入' title={'冷库名称 : '}/>
-                        <MYAreaInput title={'冷库容积 : '}/>
+                        <MYInput placeholder='请输入' title={'冷库名称 : '} onChangeText={(text) => this.setState({colStorageName:text})}/>
+                        <MYAreaInput title={'冷库容积 : '} onChangeText={(text) => this.setState({colStorageVolume:text})}/>
                     </View>
 
 
@@ -195,7 +211,6 @@ export default class ManagerScreen extends Component {
                                 onPress={() => this.insertCell()}
                         />
                     </View>
-
 
                     {/*冷库划区*/}
                     <View style={styles.footerStyle}>
@@ -283,7 +298,7 @@ export default class ManagerScreen extends Component {
                             // backgroundColor:'red'
                         }}>
                             <Text >签发冷库 : 张三(17716879324)</Text>
-                            <TouchableItem>
+                            <TouchableItem onPress = {() => this.showActionSheet()}>
                                 <Text style={{marginLeft: px2dp(20), fontSize: 13, color: theme.navColor}}>更改</Text>
                             </TouchableItem>
                         </View>
@@ -360,7 +375,7 @@ export default class ManagerScreen extends Component {
                     <Button title={'确认添加'}
                             style={styles.loginEnableButtonStyle}
                             titleStyle={{fontSize: 18, color: 'white'}}
-                        // onPress={() => }
+                            onPress={() => this.onSubmit() }
                     />
                 </ScrollView>
                 {/*ActionSheet*/}

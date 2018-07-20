@@ -27,6 +27,8 @@ const MYAreaInput = (props) => {
                    textAlignVertical={'end'}
                    secureTextEntry={props.secureTextEntry}
                    onChangeText={props.onChangeText}
+                   onEndEditing={props.onEndEditing}
+                   onSubmitEditing={props.onSubmitEditing}
                    onFocus={props.onFocus}
                    onBlur={props.onBlur}
                    maxLength={props.maxLength}
