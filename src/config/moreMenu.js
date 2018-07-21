@@ -19,7 +19,7 @@ export const moreMenu = {
 
     },
 
-    // 我的S
+    // 我
     ProfileScreen: {
         menu_profile_info:'ProfileInfoScreen',
         menu_supplier_info:'SupplierInfoScreen',

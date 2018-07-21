@@ -20,4 +20,9 @@ export const Config ={
     API_PRO_INFO:'/u/info',//完善资料
 
     API_SUPPLIER_APPLICATION:'company/apply4Engineer',//申请成为工程商
+
+
+
+    //管理
+    API_MANAGE_ADD:'fz/add',//添加冷库
 };

@@ -340,10 +340,25 @@ const AuthLoading = createStackNavigator(
     }
 )
 
+
+
+const PerSignIn = createStackNavigator(
+    {
+        index: {
+            screen: SignInScreen,
+        },
+    },
+    {
+        mode: 'modal',
+        headerMode: 'none',
+    }
+)
+
 const SwitchNavigator = createSwitchNavigator(
     {
         AuthLoading: AuthLoading,
         Auth: AuthStack,
+        PerSignIn:PerSignIn,
         ImpAuth: ImpAuthStack,
         App: AppStack,
 

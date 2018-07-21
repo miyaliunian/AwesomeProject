@@ -157,7 +157,7 @@ export default class MyPage extends Component<{}> {
                     {this.state.userRole == '0' || this.state.userRole == '1' || this.state.userRole == '3' || this.state.userRole == '4'
                         ?
                         <ProfileItem icon={require('../../icons/profile/icon_wdzd.png')} title='我的账单'
-                                     callBack={() => this.itemClick('我的账单')}/>
+                                     callBack={() => this.itemClick('PerSignIn')}/>
                         :
                         null
                     }
