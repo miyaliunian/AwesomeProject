@@ -121,7 +121,7 @@ export default class MyPage extends Component<{}> {
                 <View style={theme.line_space_10}/>
                 <ScrollView>
                     <ProfileItem icon={require('../../icons/profile/icon_me_info.png')} title='我的消息'
-                                 callBack={() => this.itemClick('我的消息')}/>
+                                 callBack={() => this.itemClick(moreMenu.ProfileScreen.menu_message_info)}/>
                     <ProfileItem icon={require('../../icons/profile/icon_company_info.png')} title='公司信息'
                                  callBack={() => this.itemClick(moreMenu.ProfileScreen.menu_company_info)}/>
 

@@ -27,6 +27,7 @@ import  HomeScreen from './src/screens/home/HomeScreen'
 import  ManagerScreen from './src/screens/manage/ManagerScreen'
 //我的
 import  ProfileScreen from './src/screens/profile/ProfileScreen'
+import  MessageInfoScreen from './src/screens/profile/messageInfo/MessageInfoScreen'
 import  ProfileInfoScreen from './src/screens/profile/profileInfo/ProfileInfoScreen'
 import  SupplierInfoScreen from './src/screens/profile/supplier/SupplierInfoScreen'
 import  CompanyInfoScreen from './src/screens/profile/companyInfo/CompanyInfoScreen'
@@ -118,6 +119,9 @@ const profile = createStackNavigator(
         ProfileInfoScreen: {
             screen: ProfileInfoScreen
         },
+        MessageInfoScreen: {
+            screen: MessageInfoScreen //我的消息
+        },
         SupplierInfoScreen: {
             screen: SupplierInfoScreen
         },
@@ -187,7 +191,7 @@ const TabStack = createBottomTabNavigator(
         },
     },
     {
-        initialRouteName: 'manage',
+        initialRouteName: 'profile',
         order: ['home', 'manage', 'profile'],
         mode: 'card',// 页面切换模式, 左右是card(相当于iOS中的push效果), 上下是modal(相当于iOS中的modal效果)
         headerMode: 'screen',

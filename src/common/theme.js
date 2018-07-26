@@ -56,7 +56,7 @@ export default module = {
     // 常用颜色
     sBarColor:'rgba(20,108,187,0.85)',
     navColor: '#55acee',
-    themeColor:'rgb(75,162,253)',
+    themeColor:'#55acee',
     primaryColor: 'white',
     buttonColor: '#97b5d3',
     lightGray: '#cccccc',

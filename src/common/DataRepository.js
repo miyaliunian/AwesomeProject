@@ -96,12 +96,11 @@ export default class DataRepository {
             this.timeout_fetch(fetch(url, {
                 method: 'POST',
                 headers: {
-                    'Accept': 'application/json, text/javascript, */*; q=0.01',
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                    // 'Accept':'application/json',
-                    // 'Content-Type':'application/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data; boundary=v.DxZe.NAsDgWBC6SN3Yzrg3JcRV_ZH0cvkzrV3qYMhyS1Gbi05moWD-8O5Y8jlSK; charset=UTF-8',
 
                 },
+                // body: JSON.stringify(formData),
                 body: formData,
             }))
                 .then(response => response.json())

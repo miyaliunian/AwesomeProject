@@ -23,6 +23,7 @@ export const moreMenu = {
     ProfileScreen: {
         menu_profile_info:'ProfileInfoScreen',
         menu_supplier_info:'SupplierInfoScreen',
+        menu_message_info:'MessageInfoScreen',
         //公司信息
         menu_company_info:'CompanyInfoScreen',
         //租客管理
